@@ -1,8 +1,13 @@
 {
     "symbolSize": 140,
+    "spaceBetweenReels": 20,
+
     "numOfRows": 3,
-    "numOfReels": 3,
-    "numOfSpinsBeforeStop": 2,
+    "numOfReels": 5,
+    "symbolsAmount": 10,
+
+    "numOfSpinsBeforeStop": 3,
+
     "delayBeforeSpinNextReel": 300,
     "spinAnimationTimeInSec": 2,
     "spinAnimTimingFunc": "ease-in-out"

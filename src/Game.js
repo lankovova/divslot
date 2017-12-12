@@ -16,8 +16,12 @@ class Game {
 		this.gameNode.appendChild(reelsWrapper);
 
 		for (let i = 0; i < settings.numOfReels; i++) {
-			this.reels.push(new Reel());
-			this.reels[i].initSymbols([8, 9, 4]);
+			let reelSymbols = [];
+			for (let j = 0; j < settings.numOfRows; j++) {
+				reelSymbols.push(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
+			}
+
+			this.reels.push(new Reel(reelSymbols));
 		}
 	}
 
@@ -28,6 +32,8 @@ class Game {
 			// Wait previous reel to resolve before startinf next
 			await this.reels[i].spin();
 		}
+
+		console.log('Last reel start spinning');
 	}
 }
 

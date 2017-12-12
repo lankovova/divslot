@@ -4,13 +4,23 @@ import settings from './settings.json';
 
 // TODO: Think about storing reel symbols in reelParts
 class Reel {
-	constructor() {
+	constructor(symbolsArray) {
 		this.reelNode = document.createElement('div');
 		this.reelNode.className = 'reel';
 		this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInSec}s ${settings.spinAnimTimingFunc}`;
 
+		// Init starting symbols
+		for (let i = 0; i < symbolsArray.length; i++) {
+			const symbol = new Symbol(symbolsArray[i]);
+			// Add symbol into reel node
+			this.reelNode.appendChild(symbol.node);
+		}
+
 		const reelWrapperNode = document.createElement('div');
 		reelWrapperNode.className = 'reel_wrapper';
+		reelWrapperNode.style.width = `${settings.symbolSize}px`;
+		reelWrapperNode.style.height = `${settings.symbolSize * settings.numOfRows}px`;
+		reelWrapperNode.style.margin = `0 ${settings.spaceBetweenReels / 2}px`;
 		reelWrapperNode.appendChild(this.reelNode);
 
 		document.querySelector('#reels_wrapper').appendChild(reelWrapperNode);
@@ -20,15 +30,6 @@ class Reel {
 			console.log('End spin');
 			this.resetReel();
 		});
-	}
-
-	// FIXME:
-	initSymbols(symbolsArray) {
-		for (let i = 0; i < symbolsArray.length; i++) {
-			const symbol = new Symbol(symbolsArray[i]);
-
-			this.reelNode.appendChild(symbol.node);
-		}
 	}
 
 	spin() {
@@ -47,14 +48,15 @@ class Reel {
 
 	addSpinningSymbols() {
 		for (let i = 0; i < settings.numOfSpinsBeforeStop * settings.numOfRows; i++) {
-			const symbol = new Symbol(10);
+			const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
 			this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
 		}
 	}
 
 	addFinalSymbols() {
 		for (let i = 0; i < settings.numOfRows; i++) {
-			const symbol = new Symbol(i * 3 + 1);
+			// const symbol = new Symbol(9);
+			const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
 			this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
 		}
 	}
@@ -65,10 +67,12 @@ class Reel {
 			this.reelNode.removeChild(this.reelNode.childNodes[settings.numOfRows]);
 		}
 
-		// Set reel in default position
+		// Remove spin animation time to move reel
 		this.reelNode.style.transitionDuration = '0s';
+		// Set reel in default position
 		this.reelNode.style.transform = '';
 
+		// Set spin animation time back
 		setTimeout(() => {
 			this.reelNode.style.transitionDuration = `${settings.spinAnimationTimeInSec}s`;
 		}, 0);

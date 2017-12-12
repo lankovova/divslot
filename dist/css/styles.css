@@ -27,11 +27,7 @@ body {
 }
 
 #game #reels_wrapper .reel_wrapper {
-    height: calc(140px * 3);
-    width: 140px;
     background: lightcyan;
-
-    margin: 0 10px;
 
     position: relative;
 
@@ -42,8 +38,6 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
-
-    /* transition: transform 2s ease-in-out; */
 }
 
 #game #reels_wrapper .reel_wrapper .reel .symbol {
