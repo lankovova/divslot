@@ -1,0 +1,9 @@
+{
+    "symbolSize": 140,
+    "numOfRows": 3,
+    "numOfReels": 3,
+    "numOfSpinsBeforeStop": 2,
+    "delayBeforeSpinNextReel": 300,
+    "spinAnimationTimeInSec": 2,
+    "spinAnimTimingFunc": "ease-in-out"
+}

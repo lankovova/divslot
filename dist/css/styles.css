@@ -1,0 +1,63 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+}
+
+.game_wrapper {
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+#game {
+    background: cadetblue;
+    width: 100%;
+}
+
+#game #reels_wrapper {
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+}
+
+#game #reels_wrapper .reel_wrapper {
+    height: calc(140px * 3);
+    width: 140px;
+    background: lightcyan;
+
+    margin: 0 10px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+#game #reels_wrapper .reel_wrapper .reel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    /* transition: transform 2s ease-in-out; */
+}
+
+#game #reels_wrapper .reel_wrapper .reel .symbol {
+    width: 140px;
+    height: 140px;
+}
+
+#game #reels_wrapper .reel_wrapper .reel .symbol.symbol1 { background: url('./../assets/images/symbols/1.png'); }
+#game #reels_wrapper .reel_wrapper .reel .symbol.symbol2 { background: url('./../assets/images/symbols/2.png'); }
+#game #reels_wrapper .reel_wrapper .reel .symbol.symbol3 { background: url('./../assets/images/symbols/3.jpg'); }
+#game #reels_wrapper .reel_wrapper .reel .symbol.symbol4 { background: url('./../assets/images/symbols/4.jpg'); }
+#game #reels_wrapper .reel_wrapper .reel .symbol.symbol5 { background: url('./../assets/images/symbols/5.png'); }
+#game #reels_wrapper .reel_wrapper .reel .symbol.symbol6 { background: url('./../assets/images/symbols/6.png'); }
+#game #reels_wrapper .reel_wrapper .reel .symbol.symbol7 { background: url('./../assets/images/symbols/7.jpg'); }
+#game #reels_wrapper .reel_wrapper .reel .symbol.symbol8 { background: url('./../assets/images/symbols/8.png'); }
+#game #reels_wrapper .reel_wrapper .reel .symbol.symbol9 { background: url('./../assets/images/symbols/9.png'); }
+#game #reels_wrapper .reel_wrapper .reel .symbol.symbol10 { background: url('./../assets/images/symbols/10.png'); }
