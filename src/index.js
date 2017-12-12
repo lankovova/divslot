@@ -1,8 +1,11 @@
 import Game from './Game';
 
 (function() {
+	document.body.onload = () => {
+		console.log('All images loaded');
+	};
+
 	const game = new Game('babyOnFire');
-	game.initReels();
 
 	window.onkeyup = e => {
 		if (e.keyCode === 32) {

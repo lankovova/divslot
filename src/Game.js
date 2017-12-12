@@ -7,6 +7,8 @@ class Game {
 		this.reels = [];
 
 		this.gameNode = document.querySelector('#game');
+
+		this.initReels();
 	}
 
 	initReels() {
@@ -18,9 +20,9 @@ class Game {
 		for (let i = 0; i < settings.numOfReels; i++) {
 			let reelSymbols = [];
 			for (let j = 0; j < settings.numOfRows; j++) {
-				reelSymbols.push(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
+				reelSymbols.push(9);
+				// reelSymbols.push(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
 			}
-
 			this.reels.push(new Reel(reelSymbols));
 		}
 	}
