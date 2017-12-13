@@ -7,7 +7,7 @@ import axios from 'axios';
 
 class Game {
     /**
-     *  Create game object
+     * Create game object
      * @param {String} gameName Game name
      */
     constructor(gameName) {
