@@ -41,11 +41,6 @@ body {
 }
 
 #preloader {
-    position: absolute;
-    /* left: 99999px; */
-    display: none;
-    width: 100px;
-    height: 100px;
     background: url('./../assets/images/symbols/1.png'),
                 url('./../assets/images/symbols/2.png'),
                 url('./../assets/images/symbols/3.jpg'),
@@ -58,14 +53,3 @@ body {
                 url('./../assets/images/symbols/10.png');
                 /* url('./../assets/images/sizeTest.jpg'); */
 }
-
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol1 { background: url('./../assets/images/symbols/1.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol2 { background: url('./../assets/images/symbols/2.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol3 { background: url('./../assets/images/symbols/3.jpg'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol4 { background: url('./../assets/images/symbols/4.jpg'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol5 { background: url('./../assets/images/symbols/5.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol6 { background: url('./../assets/images/symbols/6.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol7 { background: url('./../assets/images/symbols/7.jpg'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol8 { background: url('./../assets/images/symbols/8.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol9 { background: url('./../assets/images/symbols/9.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol10 { background: url('./../assets/images/symbols/10.png'); }
