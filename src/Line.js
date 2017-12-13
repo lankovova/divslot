@@ -49,58 +49,61 @@ class Line {
     }
 
     connectHighlites() {
-        let lineNode;
+        let linNode;
         let correction = 5;
         let lastRectI = this.rectNodes.length - 1;
         let rWidth = s.symbolSize;
-        let rx, ry, rx2, ry2,
+        
+            // current highlite coordinates
+        let rCoord = {x, y},
+            // next highlite coordinates
+            rNextCoord = {x, y},
             // Start coordinates of line
-            x1, y1,
+            start = {x, y}
             // End coordinates of line
-            x2, y2;
+            end = {x, y}
 
         for (const [i, rectNode] of this.rectNodes.entries()) {
-            let lineNode = document.createElementNS(this.namespaceURI, 'line');
+            lineNode = document.createElementNS(this.namespaceURI, 'line');
             this.svgNode.appendChild(lineNode);
             // If its` last element
             if (i === lastRectI) break;
-            // Get x, y of element
-            rx = parseFloat(rectNode.getAttribute('x'));
-            ry = parseFloat(rectNode.getAttribute('y'));
+            // Get x, y of current element
+            rCoord.x = parseFloat(rectNode.getAttribute('x'));
+            rCoord.y = parseFloat(rectNode.getAttribute('y'));
             // Get x, y of next element
-            rx2 = parseFloat(this.rectNodes[i + 1].getAttribute('x'));
-            ry2 = parseFloat(this.rectNodes[i + 1].getAttribute('y'));
+            rNextCoord.x = parseFloat(this.rectNodes[i + 1].getAttribute('x'));
+            rNextCoord.y = parseFloat(this.rectNodes[i + 1].getAttribute('y'));
 
             if (ry === ry2) { // If element in a line with next element
 
-                x1 = rx + rWidth - correction;
-                y1 = ry + rWidth / 2;
-                x2 = rx2 + 1;
-                y2 = ry2 + rWidth / 2;
+                start.x = rCoord.x + rWidth - correction;
+                start.y = rCoord.y + rWidth / 2;
+                end.x = rNextCoord.x + 1;
+                end.y = rNextCoord.y + rWidth / 2;
 
             } else if (ry > ry2) { // If element below next element
 
-                x1 = rx + rWidth - correction;
-                y1 = ry;
-                x2 = rx2 ;
-                y2 = ry2 + rWidth - correction;
+                start.x = rCoord.x + rWidth - correction;
+                start.y = rCoord.y;
+                end.x = rNextCoord.x ;
+                end.y = rNextCoord.y + rWidth - correction;
 
             } else if (ry < ry2) { // If element higher next element
 
-                x1 = rx + rWidth - correction;
-                y1 = ry + rWidth - correction;
-                x2 = rx2;
-                y2 = ry2;
+                start.x = rx + rWidth - correction;
+                start.y = ry + rWidth - correction;
+                end.x = rx2;
+                end.y = ry2;
 
             }
 
-            lineNode.setAttributeNS(null, "x1", x1);
-            lineNode.setAttributeNS(null, "y1", y1);
-            lineNode.setAttributeNS(null, "x2", x2);
-            lineNode.setAttributeNS(null, "y2", y2);
+            lineNode.setAttributeNS(null, "x1", start.x);
+            lineNode.setAttributeNS(null, "y1", start.y);
+            lineNode.setAttributeNS(null, "x2", end.x);
+            lineNode.setAttributeNS(null, "y2", end.y);
             lineNode.setAttributeNS(null, "stroke", this.strokeColor);
-            lineNode.setAttributeNS(null, "stroke-width", this.strokeWidth); 
-
+            lineNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
         } 
     }
 
