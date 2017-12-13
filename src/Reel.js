@@ -5,13 +5,17 @@ import settings from './settings.json';
 // TODO: Think about storing reel symbols in reelParts
 class Reel {
 	/**
-	 * Creates reel with starting symbols in it
-	 * @param {Array<Symbol>} symbolsArray
+	 * Create reel with starting symbols in it
+	 * @param {Number} reelIndex Index of reel in Game
+	 * @param {*} symbolsArray Array of init symbols
+	 * @param {*} onStop Function to call when reel has stopped
 	 */
-	constructor(symbolsArray) {
+	constructor(reelIndex, symbolsArray, onStop) {
+		this.reelIndex = reelIndex;
+
 		this.reelNode = document.createElement('div');
 		this.reelNode.className = 'reel';
-		this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInSec}s ${settings.spinAnimTimingFunc}`;
+		this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInMs}ms ${settings.spinAnimTimingFunc}`;
 
 		// Init starting symbols
 		for (let i = 0; i < symbolsArray.length; i++) {
@@ -31,14 +35,16 @@ class Reel {
 
 		// End spin animation event
 		this.reelNode.addEventListener(transitionEnd, () => {
-			console.log('End spin');
 			this.resetReel();
+			// Call passed function in constuct
+			onStop(this.reelIndex);
 		});
 	}
 
 	spin(finalSymbols) {
 		this.addSpinningSymbols();
 		this.addFinalSymbols(finalSymbols);
+
 		// Animate spin
 		this.reelNode.style.transform = `translate(0, ${(settings.numOfSpinsBeforeStop * settings.numOfRows + settings.numOfRows)* settings.symbolSize}px)`;
 
@@ -76,14 +82,19 @@ class Reel {
 		}
 
 		// Remove spin animation time to move reel
-		this.reelNode.style.transitionDuration = '0s';
+		this.setSpinDuration(0);
 		// Set reel in default position
 		this.reelNode.style.transform = '';
 
 		// Set spin animation time back
 		setTimeout(() => {
-			this.reelNode.style.transitionDuration = `${settings.spinAnimationTimeInSec}s`;
+			// Reset spin duration
+			this.setSpinDuration(settings.spinAnimationTimeInMs);
 		}, 0);
+	}
+
+	setSpinDuration(seconds) {
+		this.reelNode.style.transitionDuration = `${seconds}ms`;
 	}
 }
 
