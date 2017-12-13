@@ -4,6 +4,10 @@ import settings from './settings.json';
 
 // TODO: Think about storing reel symbols in reelParts
 class Reel {
+	/**
+	 * Creates reel with starting symbols in it
+	 * @param {Array<Symbol>} symbolsArray
+	 */
 	constructor(symbolsArray) {
 		this.reelNode = document.createElement('div');
 		this.reelNode.className = 'reel';
@@ -11,7 +15,7 @@ class Reel {
 
 		// Init starting symbols
 		for (let i = 0; i < symbolsArray.length; i++) {
-			const symbol = new Symbol(symbolsArray[i]);
+			const symbol = symbolsArray[i];
 			// Add symbol into reel node
 			this.reelNode.appendChild(symbol.node);
 		}
@@ -32,9 +36,9 @@ class Reel {
 		});
 	}
 
-	spin() {
+	spin(finalSymbols) {
 		this.addSpinningSymbols();
-		this.addFinalSymbols();
+		this.addFinalSymbols(finalSymbols);
 		// Animate spin
 		this.reelNode.style.transform = `translate(0, ${(settings.numOfSpinsBeforeStop * settings.numOfRows + settings.numOfRows)* settings.symbolSize}px)`;
 
@@ -48,15 +52,19 @@ class Reel {
 
 	addSpinningSymbols() {
 		for (let i = 0; i < settings.numOfSpinsBeforeStop * settings.numOfRows; i++) {
+			// Randomize symbols
 			const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
 			this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
 		}
 	}
 
-	addFinalSymbols() {
-		for (let i = 0; i < settings.numOfRows; i++) {
-			// const symbol = new Symbol(9);
-			const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
+	/**
+	 * Add final symbols to reel
+	 * @param {Array<Symbol>} finalSymbols Array of Symbols
+	 */
+	addFinalSymbols(finalSymbols) {
+		for (let i = 0; i < finalSymbols.length; i++) {
+			const symbol = finalSymbols[i];
 			this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
 		}
 	}

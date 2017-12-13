@@ -1,4 +1,5 @@
 import Reel from './Reel';
+import Symbol from './Symbol';
 import settings from './settings.json';
 
 class Game {
@@ -20,7 +21,7 @@ class Game {
 		for (let i = 0; i < settings.numOfReels; i++) {
 			let reelSymbols = [];
 			for (let j = 0; j < settings.numOfRows; j++) {
-				reelSymbols.push(9);
+				reelSymbols.push(new Symbol(9));
 				// reelSymbols.push(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
 			}
 			this.reels.push(new Reel(reelSymbols));
@@ -30,12 +31,18 @@ class Game {
 	async spin() {
 		console.log('Spinning');
 
+		// For each reel
 		for (let i = 0; i < this.reels.length; i++) {
-			// Wait previous reel to resolve before startinf next
-			await this.reels[i].spin();
-		}
+			let finalSymbols = [];
+			for (let i = 0; i < settings.numOfRows; i++) {
+				// Randomize symbols
+				const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
+				finalSymbols.push(symbol);
+			}
 
-		console.log('Last reel start spinning');
+			// Wait previous reel to resolve before spinning next
+			await this.reels[i].spin(finalSymbols);
+		}
 	}
 }
 
