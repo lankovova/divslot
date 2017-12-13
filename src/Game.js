@@ -40,6 +40,7 @@ class Game {
         // Check if last reel has stopped
         if (reelIndex === this.reels.length - 1) {
             this.interface.state.spin = true;
+
             this.setDelayBeforeReelSpins(settings.delayBeforeSpinNextReel);
         }
     }
@@ -68,6 +69,8 @@ class Game {
     }
 
     stopReels() {
+        this.interface.state.stop = false;
+
         this.setDelayBeforeReelSpins(0);
     }
 
