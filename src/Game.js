@@ -1,5 +1,6 @@
 import Reel from './Reel';
 import Symbol from './Symbol';
+import Interface from './Interface';
 import settings from './settings.json';
 
 class Game {
@@ -7,6 +8,8 @@ class Game {
 		this.gameName = gameName;
 		this.reels = [];
 		this.gameNode = document.querySelector('#game');
+
+		this.interface = new Interface(this);
 
 		this.initReels();
 	}
@@ -23,12 +26,23 @@ class Game {
 				reelSymbols.push(new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1));
 			}
 			// Fill created reel with random symbols
-			this.reels.push(new Reel(reelSymbols));
+			this.reels.push(new Reel(i, reelSymbols, this.onStop.bind(this)));
+		}
+	}
+
+	/**
+	 * Enable interface spin if last reel has stopped
+	 * @param {Number} reelIndex Index of reel that has stopped
+	 */
+	onStop(reelIndex) {
+		// Check if last reel has stopped
+		if (reelIndex === this.reels.length - 1) {
+			this.interface.state.spin = true;
 		}
 	}
 
 	async spin() {
-		console.log('Spinning');
+		this.interface.state.spin = false;
 
 		// For each reel
 		for (let i = 0; i < this.reels.length; i++) {
