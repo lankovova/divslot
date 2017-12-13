@@ -13,6 +13,8 @@ class Reel {
 	constructor(reelIndex, symbolsArray, onStop) {
 		this.reelIndex = reelIndex;
 
+		this.delayBeforeSpinNextReel = settings.delayBeforeSpinNextReel;
+
 		this.reelNode = document.createElement('div');
 		this.reelNode.className = 'reel';
 		this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInMs}ms ${settings.spinAnimTimingFunc}`;
@@ -52,7 +54,7 @@ class Reel {
 		return new Promise(resolve => {
 			setTimeout(() => {
 				resolve();
-			}, settings.delayBeforeSpinNextReel);
+			}, this.delayBeforeSpinNextReel);
 		});
 	}
 
@@ -82,19 +84,19 @@ class Reel {
 		}
 
 		// Remove spin animation time to move reel
-		this.setSpinDuration(0);
+		this.reelNode.style.transitionDuration = '0ms';
 		// Set reel in default position
 		this.reelNode.style.transform = '';
 
 		// Set spin animation time back
 		setTimeout(() => {
 			// Reset spin duration
-			this.setSpinDuration(settings.spinAnimationTimeInMs);
+			this.reelNode.style.transitionDuration = `${settings.spinAnimationTimeInMs}ms`;
 		}, 0);
 	}
 
-	setSpinDuration(seconds) {
-		this.reelNode.style.transitionDuration = `${seconds}ms`;
+	setDelayBeforeSpinNextReel(milliseconds) {
+		this.delayBeforeSpinNextReel = milliseconds;
 	}
 }
 

@@ -22,12 +22,13 @@ class Interface {
 						this.game.spin();
 					} else if (this.state.stop) {
 						console.log('Stop reels');
+						this.game.stopReels();
 					}
 
 					break;
 				}
 				default: {
-					console.log(`Key ${keyCode} pressed`);
+					// console.log(`Key ${keyCode} pressed`);
 				}
 			}
 		}
