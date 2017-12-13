@@ -44,6 +44,7 @@ class Reel {
 	spin(finalSymbols) {
 		this.addSpinningSymbols();
 		this.addFinalSymbols(finalSymbols);
+
 		// Animate spin
 		this.reelNode.style.transform = `translate(0, ${(settings.numOfSpinsBeforeStop * settings.numOfRows + settings.numOfRows)* settings.symbolSize}px)`;
 
