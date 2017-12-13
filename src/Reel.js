@@ -7,8 +7,8 @@ class Reel {
 	/**
 	 * Create reel with starting symbols in it
 	 * @param {Number} reelIndex Index of reel in Game
-	 * @param {*} symbolsArray Array of init symbols
-	 * @param {*} onStop Function to call when reel has stopped
+	 * @param {Array<Symbol>} symbolsArray Array of init symbols
+	 * @param {Function} onStop Function to call when reel has stopped
 	 */
 	constructor(reelIndex, symbolsArray, onStop) {
 		this.reelIndex = reelIndex;
@@ -43,6 +43,10 @@ class Reel {
 		});
 	}
 
+	/**
+	 * Spin reel to final symbols
+	 * @param {Array<Symbol>} finalSymbols Array of final symbols
+	 */
 	spin(finalSymbols) {
 		this.addSpinningSymbols();
 		this.addFinalSymbols(finalSymbols);
@@ -95,7 +99,11 @@ class Reel {
 		}, 0);
 	}
 
-	setDelayBeforeSpinNextReel(milliseconds) {
+	/**
+	 * Set new delay between reels spin
+	 * @param {Number} milliseconds Delay between spinning reels in milliseconds
+	 */
+	setDelayBetweenReelsSpin(milliseconds) {
 		this.delayBeforeSpinNextReel = milliseconds;
 	}
 }

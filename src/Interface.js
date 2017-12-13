@@ -1,8 +1,8 @@
 import settings from './settings.json';
 
 class Interface {
-	constructor(game) {
-		this.game = game;
+	constructor(gameInstance) {
+		this.game = gameInstance;
 		this.state = {
 			spin: true,
 			stop: false
