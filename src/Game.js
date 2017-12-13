@@ -6,6 +6,10 @@ import settings from './settings.json';
 import axios from 'axios';
 
 class Game {
+    /**
+     *  Create game object
+     * @param {String} gameName Game name
+     */
     constructor(gameName) {
         this.gameName = gameName;
         this.reels = [];
@@ -74,9 +78,13 @@ class Game {
         this.setDelayBeforeReelSpins(0);
     }
 
+    /**
+     * Set new delay for all reels between each reel spin
+     * @param {Number} ms Delay between reels in milliseconds
+     */
     setDelayBeforeReelSpins(ms) {
         for (const reel of this.reels) {
-            reel.setDelayBeforeSpinNextReel(ms);
+            reel.setDelayBetweenReelsSpin(ms);
         }
     }
 }
