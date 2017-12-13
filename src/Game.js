@@ -3,10 +3,9 @@ import Symbol from './Symbol';
 import settings from './settings.json';
 
 class Game {
-	constructor(name) {
-		this.name = name;
+	constructor(gameName) {
+		this.gameName = gameName;
 		this.reels = [];
-
 		this.gameNode = document.querySelector('#game');
 
 		this.initReels();
@@ -21,9 +20,9 @@ class Game {
 		for (let i = 0; i < settings.numOfReels; i++) {
 			let reelSymbols = [];
 			for (let j = 0; j < settings.numOfRows; j++) {
-				reelSymbols.push(new Symbol(9));
-				// reelSymbols.push(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
+				reelSymbols.push(new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1));
 			}
+			// Fill created reel with random symbols
 			this.reels.push(new Reel(reelSymbols));
 		}
 	}
