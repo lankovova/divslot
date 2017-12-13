@@ -30,12 +30,18 @@ class Game {
 	async spin() {
 		console.log('Spinning');
 
+		// Spin all reels
 		for (let i = 0; i < this.reels.length; i++) {
-			// Wait previous reel to resolve before startinf next
-			await this.reels[i].spin();
-		}
 
-		console.log('Last reel start spinning');
+			let finalSymbols = [];
+			for (let i = 0; i < settings.numOfRows; i++) {
+				// TODO: Rethink. Maybe pass array of Symbol instead array of numbers
+				finalSymbols.push(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
+			}
+
+			// Wait previous reel to resolve before startinf next
+			await this.reels[i].spin(finalSymbols);
+		}
 	}
 }
 
