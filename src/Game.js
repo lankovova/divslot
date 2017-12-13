@@ -26,9 +26,10 @@ class Game {
 
         this.gameNode.appendChild(reelsWrapper);
 
+        // FIXME: Move to Reel
         for (let i = 0; i < settings.numOfReels; i++) {
             let reelSymbols = [];
-            for (let j = 0; j < settings.numOfRows; j++) {
+            for (let j = settings.numOfRows - 1; j >= 0; j--) {
                 reelSymbols.push(new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1));
             }
             // Fill created reel with random symbols
@@ -53,23 +54,30 @@ class Game {
         this.interface.state.spin = false;
         this.interface.state.stop = true;
 
-        // TODO: Use data from response
-        // TEMP: Getting spin result
+        // Getting spin data
         const response = await axios.get('https://5a3118e8e1dbbf00127011f8.mockapi.io/api/spin');
-        console.log(response.data[0]);
+        const spinData = response.data[0];
+        console.log(spinData);
+
+        const symbolsMap = spinData.game.symbols_map;
 
         // For each reel
         for (let i = 0; i < this.reels.length; i++) {
-            let finalSymbols = [];
-            for (let i = 0; i < settings.numOfRows; i++) {
-                // Randomize symbols
-                const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
-                finalSymbols.push(symbol);
-            }
+            let finalSymbols = this.getSymbolsInSpecificReel(symbolsMap, i);
 
             // Wait previous reel to resolve before spinning next
             await this.reels[i].spin(finalSymbols);
         }
+    }
+
+    getSymbolsInSpecificReel(symbolsMap, reelIndex) {
+        let resultArray = [];
+
+        for (let i = 0; i < symbolsMap.length; i++) {
+            resultArray.push(new Symbol(symbolsMap[i][reelIndex]));
+        }
+
+        return resultArray;
     }
 
     stopReels() {

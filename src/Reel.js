@@ -63,7 +63,7 @@ class Reel {
 	}
 
 	addSpinningSymbols() {
-		for (let i = 0; i < settings.numOfSpinsBeforeStop * settings.numOfRows; i++) {
+		for (let i = settings.numOfSpinsBeforeStop * settings.numOfRows - 1; i >= 0 ; i--) {
 			// Randomize symbols
 			const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
 			this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
@@ -75,7 +75,7 @@ class Reel {
 	 * @param {Array<Symbol>} finalSymbols Array of Symbols
 	 */
 	addFinalSymbols(finalSymbols) {
-		for (let i = 0; i < finalSymbols.length; i++) {
+		for (let i = finalSymbols.length - 1; i >= 0; i--) {
 			const symbol = finalSymbols[i];
 			this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
 		}
