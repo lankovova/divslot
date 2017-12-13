@@ -9,7 +9,7 @@
 	"numOfSpinsBeforeStop": 3,
 
 	"delayBeforeSpinNextReel": 300,
-	"spinAnimationTimeInSec": 2,
+	"spinAnimationTimeInMs": 2000,
 	"spinAnimTimingFunc": "ease-in-out",
 
 	"symbolsPath": "./assets/images/symbols/",

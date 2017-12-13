@@ -15,7 +15,7 @@ class Reel {
 
 		this.reelNode = document.createElement('div');
 		this.reelNode.className = 'reel';
-		this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInSec}s ${settings.spinAnimTimingFunc}`;
+		this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInMs}ms ${settings.spinAnimTimingFunc}`;
 
 		// Init starting symbols
 		for (let i = 0; i < symbolsArray.length; i++) {
@@ -82,14 +82,19 @@ class Reel {
 		}
 
 		// Remove spin animation time to move reel
-		this.reelNode.style.transitionDuration = '0s';
+		this.setSpinDuration(0);
 		// Set reel in default position
 		this.reelNode.style.transform = '';
 
 		// Set spin animation time back
 		setTimeout(() => {
-			this.reelNode.style.transitionDuration = `${settings.spinAnimationTimeInSec}s`;
+			// Reset spin duration
+			this.setSpinDuration(settings.spinAnimationTimeInMs);
 		}, 0);
+	}
+
+	setSpinDuration(seconds) {
+		this.reelNode.style.transitionDuration = `${seconds}ms`;
 	}
 }
 

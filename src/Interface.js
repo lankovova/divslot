@@ -4,7 +4,8 @@ class Interface {
 	constructor(game) {
 		this.game = game;
 		this.state = {
-			spin: true
+			spin: true,
+			stop: false
 		};
 
 		this.initKeyboardListeners();
@@ -19,6 +20,8 @@ class Interface {
 					if (this.state.spin) {
 						console.log('Spin called');
 						this.game.spin();
+					} else if (this.state.stop) {
+						console.log('Stop reels');
 					}
 
 					break;
