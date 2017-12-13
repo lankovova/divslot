@@ -32,9 +32,14 @@ class Reel {
 		});
 	}
 
-	spin() {
+	/**
+	 * Spins the reel to final symbols
+	 * @param {Array<Number>} finalSymbolsArr Final symbols
+	 * @returns Resolved promise after some delay
+	 */
+	spin(finalSymbolsArr) {
 		this.addSpinningSymbols();
-		this.addFinalSymbols();
+		this.addFinalSymbols(finalSymbolsArr);
 		// Animate spin
 		this.reelNode.style.transform = `translate(0, ${(settings.numOfSpinsBeforeStop * settings.numOfRows + settings.numOfRows)* settings.symbolSize}px)`;
 
@@ -53,10 +58,10 @@ class Reel {
 		}
 	}
 
-	addFinalSymbols() {
-		for (let i = 0; i < settings.numOfRows; i++) {
+	addFinalSymbols(finalSymbols) {
+		for (let i = 0; i < finalSymbols.length; i++) {
 			// const symbol = new Symbol(9);
-			const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
+			const symbol = new Symbol(finalSymbols[i]);
 			this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
 		}
 	}

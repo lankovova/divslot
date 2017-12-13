@@ -1,9 +1,9 @@
 import Game from './Game';
 
 (function() {
-	document.body.onload = () => {
-		console.log('All images loaded');
-	};
+	// document.body.onload = () => {
+	// 	console.log('Resources loaded');
+	// };
 
 	const game = new Game('babyOnFire');
 

@@ -2,7 +2,7 @@ const path = require('path');
 
 /*global __dirname:true*/
 const config = {
-	// entry: './src/index.js',
+	devtool: 'source-map',
 	entry: ['babel-polyfill', './src/index.js'],
 	output: {
 		path: path.resolve(__dirname, 'dist'),
