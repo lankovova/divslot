@@ -31,6 +31,7 @@ class Game {
 
         this.gameNode.appendChild(reelsWrapper);
 
+        // TODO: Create ReelController class
         // FIXME: Move to Reel
         for (let i = 0; i < settings.numOfReels; i++) {
             let reelSymbols = [];
@@ -38,7 +39,7 @@ class Game {
                 reelSymbols.push(new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1));
             }
             // Fill created reel with random symbols
-            this.reels.push(new Reel(i, reelSymbols, this.onStop.bind(this)));
+            this.reels.push(new Reel(i, reelSymbols, this.onReelStop.bind(this)));
         }
     }
 
@@ -46,7 +47,7 @@ class Game {
      * Enable interface spin if last reel has stopped
      * @param {Number} reelIndex Index of reel that has stopped
      */
-    onStop(reelIndex) {
+    onReelStop(reelIndex) {
         // Check if last reel has stopped
         if (reelIndex === this.reels.length - 1) {
             this.interface.state.spin = true;
@@ -65,6 +66,7 @@ class Game {
         // Getting spin data
         const response = await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win');
         this.spinResponse = response.data[0];
+
         console.log(this.spinResponse);
 
         const symbolsMap = this.spinResponse.game.symbols_map;
