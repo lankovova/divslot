@@ -3,6 +3,11 @@ import Symbol from './Symbol';
 import settings from './settings.json';
 
 class ReelsContorller {
+    /**
+     * Creates reel controller in specific node
+     * @param {HTMLElement} gameNode Node to place reels at
+     * @param {Function} onReelsHasStopped Function to call when all reels has stopped
+     */
     constructor(gameNode, onReelsHasStopped) {
         this.reels = [];
 
