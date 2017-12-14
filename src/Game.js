@@ -26,8 +26,8 @@ class Game {
         console.log('All reels has stopped ' + this.gameName);
         this.interface.state.spin = true;
 
-        let lineController = new LinesController(Object.assign({}, this.spinResponse.game.game_result));
-        lineController.createWinningLines(Object.assign({}, this.reelsController.reels));
+        // let lineController = new LinesController(Object.assign({}, this.spinResponse.game.game_result));
+        // lineController.createWinningLines(Object.assign({}, this.reelsController.reels));
     }
 
     async spinReels() {

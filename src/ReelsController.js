@@ -3,17 +3,22 @@ import Symbol from './Symbol';
 import settings from './settings.json';
 
 class ReelsContorller {
-    constructor(gameNode, reelsHasStopped) {
+    /**
+     * Creates reel controller in specific node
+     * @param {HTMLElement} gameNode Node to place reels at
+     * @param {Function} onReelsHasStopped Function to call when all reels has stopped
+     */
+    constructor(gameNode, onReelsHasStopped) {
         this.reels = [];
 
         this.props = {
-            onReelsHasStopped: reelsHasStopped
+            onReelsHasStopped: onReelsHasStopped
         };
 
-        this.initReels(gameNode);
+        this._initReels(gameNode);
     }
 
-    initReels(gameNode) {
+    _initReels(gameNode) {
         const reelsWrapper = document.createElement('div');
         reelsWrapper.id = 'reels_wrapper';
 
@@ -23,6 +28,9 @@ class ReelsContorller {
             // Fill created reel with random symbols
             this.reels.push(new Reel(i, this.onReelStop));
         }
+        // Set delay between spins to 0 in last reel
+        // to not to block thread in @spinReels for useless time
+        this.reels[settings.numOfReels - 1].delayBetweenReelsSpin = 0;
     }
 
     async spinReels(finalSymbolsMap) {
