@@ -8,7 +8,7 @@
 
 	"numOfSpinsBeforeStop": 3,
 
-	"delayBeforeSpinNextReel": 300,
+	"delayBetweenReelsSpin": 300,
 	"spinAnimationTimeInMs": 2000,
 	"spinAnimTimingFunc": "ease-in-out",
 

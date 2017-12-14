@@ -3,6 +3,7 @@ import settings from './settings.json';
 class Interface {
 	constructor(gameInstance) {
 		this.game = gameInstance;
+
 		this.state = {
 			spin: true,
 			stop: false
@@ -18,10 +19,8 @@ class Interface {
 				// Space
 				case 32: {
 					if (this.state.spin) {
-						console.log('Spin called');
-						this.game.spin();
+						this.game.spinReels();
 					} else if (this.state.stop) {
-						console.log('Stop reels');
 						this.game.stopReels();
 					}
 
