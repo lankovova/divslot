@@ -23,6 +23,9 @@ class ReelsContorller {
             // Fill created reel with random symbols
             this.reels.push(new Reel(i, this.onReelStop));
         }
+        // Set delay between spins to 0 in last reel
+        // to not to block thread in @spinReels for useless time
+        this.reels[settings.numOfReels - 1].delayBetweenReelsSpin = 0;
     }
 
     async spinReels(finalSymbolsMap) {
