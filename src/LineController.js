@@ -2,18 +2,21 @@ import settings from './settings.json';
 import Line from './Line';
 
 class LineController {
-    constructor() {
+    constructor(gameResult = {}) {
         this.winningLines = [];
+        this.gameResult = gameResult;
     }
 
-    showWinningLines(reels, gameResult) {
+    createWinningLines(reels) {
         let line = new Line('game', 'green');
-        for (const res of gameResult) {
-            const line = new Line('game_wrapper', 'green');
 
-            for (const sCoor of res.list) {
+        for (const [key, res] of Object.entries(this.gameResult)) {
+            const line = new Line('game_wrapper', 'green');
+        
+            for (const [key, sCoor] of Object.entries(res.list)) {
+                console.log(sCoor)
                 // Get reel
-                const reel = this.reels[sCoor.col];
+                const reel = reels[sCoor.col];
                 // Get winning symbol
                 const symbol = reel.finalSymbols[sCoor.row];
                 // Get symbol coordinates
@@ -23,8 +26,10 @@ class LineController {
                 line.addSymbolHighlite(symbolCoord.x, symbolCoord.y);
             }
             line.connectHighlites();
-            line.show()
+            this.winningLines.push(line);
         }
+
+        return this.winningLines;
     }
  }
 
