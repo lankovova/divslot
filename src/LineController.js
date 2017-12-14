@@ -14,7 +14,6 @@ class LineController {
             const line = new Line('game_wrapper', 'green');
         
             for (const [key, sCoor] of Object.entries(res.list)) {
-                console.log(sCoor)
                 // Get reel
                 const reel = reels[sCoor.col];
                 // Get winning symbol
@@ -31,6 +30,6 @@ class LineController {
 
         return this.winningLines;
     }
- }
+}
 
 export default LineController;
