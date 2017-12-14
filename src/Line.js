@@ -6,12 +6,14 @@ class Line {
      * @param {String} containerId 
      * @param {String} strokeColor 
      */
-    constructor(containerId, strokeColor) {
+    constructor(containerId, strokeColor, lineTypeNumber) {
         this.namespaceURI = "http://www.w3.org/2000/svg";
         this.strokeWidth = 5;
         this.strokeColor = strokeColor;
         this.rectNodes = [];
         this.container = document.getElementById(containerId);
+        this.lineTypeNumber = lineTypeNumber;
+        this.lineTypes = s.lineTypes;
 
         this.svgNode = document.createElementNS(this.namespaceURI, 'svg');
         this.container.appendChild(this.svgNode);
@@ -51,10 +53,39 @@ class Line {
 
     connectHighlites() {
         let lineNode;
-        let correction = 5;
-        let lastRectI = this.rectNodes.length - 1;
-        let rWidth = s.symbolSize;
+        let coord = {};
+
+        for(let i = 0; i <= s.numOfReels; i++) {
+
+            lineNode = document.createElementNS(this.namespaceURI, 'line');
+            this.svgNode.appendChild(lineNode);
+
+            if (this.rectNodes[i]) {
+                coord = this._createConnectionToSymbol(i);
+            } else {
+                coord = this._createConnectionToSymbolCenter(i);
+            }
+        }
         
+        lineNode.setAttributeNS(null, "x1", coord.start.x);
+        lineNode.setAttributeNS(null, "y1", coord.start.y);
+        lineNode.setAttributeNS(null, "x2", coord.end.x);
+        lineNode.setAttributeNS(null, "y2", coord.end.y);
+        lineNode.setAttributeNS(null, "stroke", this.strokeColor);
+        lineNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
+    }
+
+    _createConnectionToSymbolCenter(i) {
+        const lineType = this.lineTypes[this.lineTypeNumber];
+        console.log('lineType', lineType)
+    }
+
+    _createConnectionToSymbol(i) {
+        if (i === (this.rectNodes.length - 1)) return;
+
+        let rectNode = this.rectNodes[i];
+        let correction = 5;
+        let rWidth = s.symbolSize;
             // current highlite coordinates
         let rCoord = {x: 0, y: 0},
             // next highlite coordinates
@@ -63,51 +94,39 @@ class Line {
             start = {x: 0, y: 0},
             // End coordinates of line
             end = {x: 0, y: 0};
+        // Get x, y of current element
+        rCoord.x = parseFloat(rectNode.getAttribute('x'));
+        rCoord.y = parseFloat(rectNode.getAttribute('y'));
+        // Get x, y of next element
+        rNextCoord.x = parseFloat(this.rectNodes[i + 1].getAttribute('x'));
+        rNextCoord.y = parseFloat(this.rectNodes[i + 1].getAttribute('y'));
 
-        for (const [i, rectNode] of this.rectNodes.entries()) {
-            lineNode = document.createElementNS(this.namespaceURI, 'line');
-            this.svgNode.appendChild(lineNode);
-            // If its` last element
-            if (i === lastRectI) break;
-            // Get x, y of current element
-            rCoord.x = parseFloat(rectNode.getAttribute('x'));
-            rCoord.y = parseFloat(rectNode.getAttribute('y'));
-            // Get x, y of next element
-            rNextCoord.x = parseFloat(this.rectNodes[i + 1].getAttribute('x'));
-            rNextCoord.y = parseFloat(this.rectNodes[i + 1].getAttribute('y'));
+        if (rCoord.y === rNextCoord.y) { // If element in a line with next element
 
-            if (rCoord.y === rNextCoord.y) { // If element in a line with next element
+            start.x = rCoord.x + rWidth - correction;
+            start.y = rCoord.y + rWidth / 2;
+            end.x = rNextCoord.x + 1;
+            end.y = rNextCoord.y + rWidth / 2;
 
-                start.x = rCoord.x + rWidth - correction;
-                start.y = rCoord.y + rWidth / 2;
-                end.x = rNextCoord.x + 1;
-                end.y = rNextCoord.y + rWidth / 2;
+        } else if (rCoord.y > rNextCoord.y) { // If element below next element
 
-            } else if (rCoord.y > rNextCoord.y) { // If element below next element
+            start.x = rCoord.x + rWidth - correction;
+            start.y = rCoord.y;
+            end.x = rNextCoord.x ;
+            end.y = rNextCoord.y + rWidth - correction;
 
-                start.x = rCoord.x + rWidth - correction;
-                start.y = rCoord.y;
-                end.x = rNextCoord.x ;
-                end.y = rNextCoord.y + rWidth - correction;
+        } else if (rCoord.y < rNextCoord.y) { // If element higher next element
 
-            } else if (rCoord.y < rNextCoord.y) { // If element higher next element
+            start.x = rCoord.x + rWidth - correction;
+            start.y = rCoord.y + rWidth - correction;
+            end.x = rNextCoord.x;
+            end.y = rNextCoord.y;
 
-                start.x = rCoord.x + rWidth - correction;
-                start.y = rCoord.y + rWidth - correction;
-                end.x = rNextCoord.x;
-                end.y = rNextCoord.y;
+        }
 
-            }
-
-            lineNode.setAttributeNS(null, "x1", start.x);
-            lineNode.setAttributeNS(null, "y1", start.y);
-            lineNode.setAttributeNS(null, "x2", end.x);
-            lineNode.setAttributeNS(null, "y2", end.y);
-            lineNode.setAttributeNS(null, "stroke", this.strokeColor);
-            lineNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
-        } 
+        return {start, end};
     }
-
+    
     _lineWidth() {
         return this.container.offsetWidth;
     }

@@ -8,10 +8,11 @@ class LinesController {
     }
 
     createWinningLines(reels) {
-        let line = new Line('game', 'green');
+        // position of very first symbol
+        const start = reels[0].finalSymbols[0].getPosition();
 
         for (const [key, res] of Object.entries(this.gameResult)) {
-            const line = new Line('game_wrapper', 'green');
+            const line = new Line('game_wrapper', 'green', res.line);
 
             for (const [key, sCoor] of Object.entries(res.list)) {
                 // Get reel
