@@ -17,6 +17,9 @@ class Game {
         this.reels = [];
         this.gameNode = document.querySelector('#game');
 
+        // Store for spin response data
+        this.spinResponse = {};
+
         this.interface = new Interface(this);
 
         this.initReels();
@@ -50,7 +53,7 @@ class Game {
 
             this.setDelayBeforeReelSpins(settings.delayBeforeSpinNextReel);
 
-            let lineController = new LineController();
+            let lineController = new LineController(this.spinResponse.game.game_result);
             lineController.showWinningLines();
         }
     }
@@ -61,10 +64,10 @@ class Game {
 
         // Getting spin data
         const response = await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win');
-        const spinData = response.data[0];
-        console.log(spinData);
+        this.spinResponse = response.data[0];
+        console.log(this.spinResponse);
 
-        const symbolsMap = spinData.game.symbols_map;
+        const symbolsMap = this.spinResponse.game.symbols_map;
 
         // For each reel
         for (let i = 0; i < this.reels.length; i++) {
