@@ -1,7 +1,7 @@
 import settings from './settings.json';
 import Line from './Line';
 
-class LineController {
+class LinesController {
     constructor(gameResult = {}) {
         this.winningLines = [];
         this.gameResult = gameResult;
@@ -12,7 +12,7 @@ class LineController {
 
         for (const [key, res] of Object.entries(this.gameResult)) {
             const line = new Line('game_wrapper', 'green');
-        
+
             for (const [key, sCoor] of Object.entries(res.list)) {
                 // Get reel
                 const reel = reels[sCoor.col];
@@ -32,4 +32,4 @@ class LineController {
     }
 }
 
-export default LineController;
+export default LinesController;

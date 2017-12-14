@@ -1,7 +1,7 @@
 import Reel from './Reel';
 import Symbol from './Symbol';
 import Interface from './Interface';
-import LineController from './LineController';
+import LinesController from './LinesController';
 import Line from './Line'
 import settings from './settings.json';
 
@@ -56,7 +56,7 @@ class Game {
 
             this.setDelayBeforeReelSpins(settings.delayBeforeSpinNextReel);
 
-            let lineController = new LineController(Object.assign({}, this.spinResponse.game.game_result));
+            let lineController = new LinesController(Object.assign({}, this.spinResponse.game.game_result));
             lineController.showWinningLines(Object.assign({}, this.reels));
         }
     }
