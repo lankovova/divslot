@@ -1,6 +1,8 @@
 import Reel from './Reel';
 import Symbol from './Symbol';
 import Interface from './Interface';
+import LineController from './LineController';
+import Line from './Line'
 import settings from './settings.json';
 
 import axios from 'axios';
@@ -47,6 +49,9 @@ class Game {
             this.interface.state.spin = true;
 
             this.setDelayBeforeReelSpins(settings.delayBeforeSpinNextReel);
+
+            let lineController = new LineController();
+            lineController.showWinningLines();
         }
     }
 
@@ -55,7 +60,7 @@ class Game {
         this.interface.state.stop = true;
 
         // Getting spin data
-        const response = await axios.get('https://5a3118e8e1dbbf00127011f8.mockapi.io/api/spin');
+        const response = await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win');
         const spinData = response.data[0];
         console.log(spinData);
 

@@ -11,9 +11,10 @@ class Line {
         this.strokeWidth = 5;
         this.strokeColor = strokeColor;
         this.rectNodes = [];
+        this.container = document.getElementById(containerId);
 
         this.svgNode = document.createElementNS(this.namespaceURI, 'svg');
-        document.getElementById(containerId).appendChild(this.svgNode);
+        this.container.appendChild(this.svgNode);
 
         this.svgNode.style.width = this._lineWidth() + 'px';
         this.svgNode.style.height = this._lineHeight() + 'px';
@@ -22,11 +23,11 @@ class Line {
         this.svgNode.style.zIndex = "1";
     }
 
-    showLine() {
+    show() {
         this.svgNode.style.display = "block";
     }
 
-    hideLine() {
+    hide() {
         this.svgNode.style.display = "none";
     }
     /**
@@ -49,19 +50,19 @@ class Line {
     }
 
     connectHighlites() {
-        let linNode;
+        let lineNode;
         let correction = 5;
         let lastRectI = this.rectNodes.length - 1;
         let rWidth = s.symbolSize;
         
             // current highlite coordinates
-        let rCoord = {x, y},
+        let rCoord = {x: 0, y: 0},
             // next highlite coordinates
-            rNextCoord = {x, y},
+            rNextCoord = {x: 0, y: 0},
             // Start coordinates of line
-            start = {x, y}
+            start = {x: 0, y: 0},
             // End coordinates of line
-            end = {x, y}
+            end = {x: 0, y: 0};
 
         for (const [i, rectNode] of this.rectNodes.entries()) {
             lineNode = document.createElementNS(this.namespaceURI, 'line');
@@ -75,26 +76,26 @@ class Line {
             rNextCoord.x = parseFloat(this.rectNodes[i + 1].getAttribute('x'));
             rNextCoord.y = parseFloat(this.rectNodes[i + 1].getAttribute('y'));
 
-            if (ry === ry2) { // If element in a line with next element
+            if (rCoord.y === rNextCoord.y) { // If element in a line with next element
 
                 start.x = rCoord.x + rWidth - correction;
                 start.y = rCoord.y + rWidth / 2;
                 end.x = rNextCoord.x + 1;
                 end.y = rNextCoord.y + rWidth / 2;
 
-            } else if (ry > ry2) { // If element below next element
+            } else if (rCoord.y > rNextCoord.y) { // If element below next element
 
                 start.x = rCoord.x + rWidth - correction;
                 start.y = rCoord.y;
                 end.x = rNextCoord.x ;
                 end.y = rNextCoord.y + rWidth - correction;
 
-            } else if (ry < ry2) { // If element higher next element
+            } else if (rCoord.y < rNextCoord.y) { // If element higher next element
 
-                start.x = rx + rWidth - correction;
-                start.y = ry + rWidth - correction;
-                end.x = rx2;
-                end.y = ry2;
+                start.x = rCoord.x + rWidth - correction;
+                start.y = rCoord.y + rWidth - correction;
+                end.x = rNextCoord.x;
+                end.y = rNextCoord.y;
 
             }
 
@@ -108,12 +109,11 @@ class Line {
     }
 
     _lineWidth() {
-        return s.symbolSize * s.numOfReels + 
-            s.spaceBetweenReels * (s.numOfReels - 1);
+        return this.container.offsetWidth;
     }
 
     _lineHeight() {
-        return s.numOfRows * s.symbolSize;
+        return this.container.offsetHeight;
     }
 }
 
