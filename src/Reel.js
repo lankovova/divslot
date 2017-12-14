@@ -11,8 +11,9 @@ class Reel {
 	 * @param {Function} onStop Function to call when reel has stopped
 	 */
 	constructor(reelIndex, symbolsArray, onStop) {
-		this.reelIndex = reelIndex;
+		this.finalSymbols = [];
 
+		this.reelIndex = reelIndex;
 		this.delayBeforeSpinNextReel = settings.delayBeforeSpinNextReel;
 
 		this.reelNode = document.createElement('div');
@@ -75,6 +76,8 @@ class Reel {
 	 * @param {Array<Symbol>} finalSymbols Array of Symbols
 	 */
 	addFinalSymbols(finalSymbols) {
+		this.finalSymbols.push(...finalSymbols);
+
 		for (let i = finalSymbols.length - 1; i >= 0; i--) {
 			const symbol = finalSymbols[i];
 			this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
