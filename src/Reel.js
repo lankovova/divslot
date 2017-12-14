@@ -1,8 +1,7 @@
 import Symbol from './Symbol';
-import {transitionEnd} from './events';
 import settings from './settings.json';
+import {transitionEnd} from './events';
 
-// FIXME: Free logic from constructor
 class Reel {
     /**
      * Create reel with starting symbols in it
@@ -12,9 +11,18 @@ class Reel {
     constructor(reelIndex, onStop) {
         this.finalSymbols = [];
 
+        this.reelNode;
         this.reelIndex = reelIndex;
         this._delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
 
+        this.props = {
+            onStop: onStop
+        };
+
+        this._initReel();
+    }
+
+    _initReel() {
         this.reelNode = document.createElement('div');
         this.reelNode.className = 'reel';
         this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInMs}ms ${settings.spinAnimTimingFunc}`;
@@ -35,11 +43,15 @@ class Reel {
 
         document.querySelector('#reels_wrapper').appendChild(reelWrapperNode);
 
+        this.initListeners();
+    }
+
+    initListeners() {
         // End spin animation event
         this.reelNode.addEventListener(transitionEnd, () => {
             this.resetReel();
             // Call passed function in constuctor
-            onStop(this.reelIndex);
+            this.props.onStop(this.reelIndex);
         });
     }
 

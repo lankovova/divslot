@@ -3,17 +3,17 @@ import Symbol from './Symbol';
 import settings from './settings.json';
 
 class ReelsContorller {
-    constructor(gameNode, reelsHasStopped) {
+    constructor(gameNode, onReelsHasStopped) {
         this.reels = [];
 
         this.props = {
-            onReelsHasStopped: reelsHasStopped
+            onReelsHasStopped: onReelsHasStopped
         };
 
-        this.initReels(gameNode);
+        this._initReels(gameNode);
     }
 
-    initReels(gameNode) {
+    _initReels(gameNode) {
         const reelsWrapper = document.createElement('div');
         reelsWrapper.id = 'reels_wrapper';
 
