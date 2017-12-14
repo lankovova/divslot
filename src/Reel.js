@@ -19,10 +19,10 @@ class Reel {
             onStop: onStop
         };
 
-        this._initReel();
+        this._init();
     }
 
-    _initReel() {
+    _init() {
         this.reelNode = document.createElement('div');
         this.reelNode.className = 'reel';
         this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInMs}ms ${settings.spinAnimTimingFunc}`;
@@ -43,10 +43,10 @@ class Reel {
 
         document.querySelector('#reels_wrapper').appendChild(reelWrapperNode);
 
-        this.initListeners();
+        this._initListeners();
     }
 
-    initListeners() {
+    _initListeners() {
         // End spin animation event
         this.reelNode.addEventListener(transitionEnd, () => {
             this.resetReel();
