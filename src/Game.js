@@ -14,6 +14,7 @@ class Game {
      */
     constructor(gameName) {
         this.gameName = gameName;
+        // FIXME: Move to ReelsController
         this.reels = [];
         this.gameNode = document.querySelector('#game');
 
@@ -31,7 +32,7 @@ class Game {
 
         this.gameNode.appendChild(reelsWrapper);
 
-        // TODO: Create ReelController class
+        // TODO: Create ReelsController class
         // FIXME: Move to Reel
         for (let i = 0; i < settings.numOfReels; i++) {
             let reelSymbols = [];
@@ -48,6 +49,7 @@ class Game {
      * @param {Number} reelIndex Index of reel that has stopped
      */
     onReelStop(reelIndex) {
+        // FIXME: Move this check to ReelsController
         // Check if last reel has stopped
         if (reelIndex === this.reels.length - 1) {
             this.interface.state.spin = true;
