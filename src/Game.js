@@ -54,7 +54,7 @@ class Game {
             this.setDelayBeforeReelSpins(settings.delayBeforeSpinNextReel);
 
             let lineController = new LineController(Object.assign({}, this.spinResponse.game.game_result));
-            lineController.showWinningLines();
+            lineController.showWinningLines(Object.assign({}, this.reels));
         }
     }
 
