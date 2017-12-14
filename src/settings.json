@@ -9,8 +9,8 @@
     "numOfSpinsBeforeStop": 3,
 
     "delayBetweenReelsSpin": 300,
-    "spinAnimationTimeInMs": 2000,
-    "spinAnimTimingFunc": "ease-in-out",
+    "spinAnimationTimeInMs": 1500,
+    "spinAnimTimingFunc": "cubic-bezier(1,.99,.86,.42)",
 
     "symbolsPath": "./assets/images/symbols/",
     "symbolsImages": [
