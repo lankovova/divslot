@@ -2,27 +2,26 @@ import Symbol from './Symbol';
 import {transitionEnd} from './events';
 import settings from './settings.json';
 
-// TODO: Think about storing reel symbols in reelParts
+// FIXME: Free logic from constructor
 class Reel {
 	/**
 	 * Create reel with starting symbols in it
 	 * @param {Number} reelIndex Index of reel in Game
-	 * @param {Array<Symbol>} symbolsArray Array of init symbols
 	 * @param {Function} onStop Function to call when reel has stopped
 	 */
-	constructor(reelIndex, symbolsArray, onStop) {
+	constructor(reelIndex, onStop) {
 		this.finalSymbols = [];
 
 		this.reelIndex = reelIndex;
-		this.delayBeforeSpinNextReel = settings.delayBeforeSpinNextReel;
+		this._delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
 
 		this.reelNode = document.createElement('div');
 		this.reelNode.className = 'reel';
 		this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInMs}ms ${settings.spinAnimTimingFunc}`;
 
 		// Init starting symbols
-		for (let i = 0; i < symbolsArray.length; i++) {
-			const symbol = symbolsArray[i];
+		for (let i = 0; i < settings.numOfRows; i++) {
+			const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
 			// Add symbol into reel node
 			this.reelNode.appendChild(symbol.node);
 		}
@@ -59,7 +58,7 @@ class Reel {
 		return new Promise(resolve => {
 			setTimeout(() => {
 				resolve();
-			}, this.delayBeforeSpinNextReel);
+			}, this._delayBetweenReelsSpin);
 		});
 	}
 
@@ -104,10 +103,17 @@ class Reel {
 
 	/**
 	 * Set new delay between reels spin
-	 * @param {Number} milliseconds Delay between spinning reels in milliseconds
+	 * @param {Number} ms Delay between spinning reels in milliseconds
 	 */
-	setDelayBetweenReelsSpin(milliseconds) {
-		this.delayBeforeSpinNextReel = milliseconds;
+	set delayBetweenReelsSpin(ms) {
+		ms = parseInt(ms);
+
+		if (ms < 0) {
+			console.warn(`Ms is <0. ms = ${ms}`);
+			return;
+		}
+
+		this._delayBetweenReelsSpin = ms;
 	}
 }
 

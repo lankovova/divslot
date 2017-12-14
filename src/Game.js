@@ -1,6 +1,5 @@
-import Reel from './Reel';
-import Symbol from './Symbol';
 import Interface from './Interface';
+import ReelsController from './ReelsController';
 import LinesController from './LinesController';
 import Line from './Line'
 import settings from './settings.json';
@@ -14,98 +13,45 @@ class Game {
      */
     constructor(gameName) {
         this.gameName = gameName;
-        // FIXME: Move to ReelsController
-        this.reels = [];
-        this.gameNode = document.querySelector('#game');
 
+        this.gameNode = document.querySelector('#game');
         // Store for spin response data
         this.spinResponse = {};
 
         this.interface = new Interface(this);
-
-        this.initReels();
+        this.reelsController = new ReelsController(this.gameNode, this.reelsHasStopped);
     }
 
-    initReels() {
-        const reelsWrapper = document.createElement('div');
-        reelsWrapper.id = 'reels_wrapper';
+    reelsHasStopped = () => {
+        console.log('All reels has stopped ' + this.gameName);
+        this.interface.state.spin = true;
 
-        this.gameNode.appendChild(reelsWrapper);
-
-        // TODO: Create ReelsController class
-        // FIXME: Move to Reel
-        for (let i = 0; i < settings.numOfReels; i++) {
-            let reelSymbols = [];
-            for (let j = settings.numOfRows - 1; j >= 0; j--) {
-                reelSymbols.push(new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1));
-            }
-            // Fill created reel with random symbols
-            this.reels.push(new Reel(i, reelSymbols, this.onReelStop.bind(this)));
-        }
+        let lineController = new LinesController(Object.assign({}, this.spinResponse.game.game_result));
+        lineController.createWinningLines(Object.assign({}, this.reelsController.reels));
     }
 
-    /**
-     * Enable interface spin if last reel has stopped
-     * @param {Number} reelIndex Index of reel that has stopped
-     */
-    onReelStop(reelIndex) {
-        // FIXME: Move this check to ReelsController
-        // Check if last reel has stopped
-        if (reelIndex === this.reels.length - 1) {
-            this.interface.state.spin = true;
+    async spinReels() {
+        console.log('Spin reels');
 
-            this.setDelayBeforeReelSpins(settings.delayBeforeSpinNextReel);
-
-            let lineController = new LinesController(Object.assign({}, this.spinResponse.game.game_result));
-            lineController.showWinningLines(Object.assign({}, this.reels));
-        }
-    }
-
-    async spin() {
         this.interface.state.spin = false;
         this.interface.state.stop = true;
 
         // Getting spin data
         const response = await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win');
         this.spinResponse = response.data[0];
-
         console.log(this.spinResponse);
 
         const symbolsMap = this.spinResponse.game.symbols_map;
 
-        // For each reel
-        for (let i = 0; i < this.reels.length; i++) {
-            let finalSymbols = this.getSymbolsInSpecificReel(symbolsMap, i);
-
-            // Wait previous reel to resolve before spinning next
-            await this.reels[i].spin(finalSymbols);
-        }
-    }
-
-    getSymbolsInSpecificReel(symbolsMap, reelIndex) {
-        let resultArray = [];
-
-        for (let i = 0; i < symbolsMap.length; i++) {
-            resultArray.push(new Symbol(symbolsMap[i][reelIndex]));
-        }
-
-        return resultArray;
+        this.reelsController.spinReels(symbolsMap);
     }
 
     stopReels() {
+        console.log('Stop reels');
+
         this.interface.state.stop = false;
 
-        this.setDelayBeforeReelSpins(0);
-    }
-
-    /**
-     * Set new delay for all reels between each reel spin
-     * @param {Number} ms Delay between reels in milliseconds
-     */
-    setDelayBeforeReelSpins(ms) {
-        for (const reel of this.reels) {
-            reel.setDelayBetweenReelsSpin(ms);
-        }
+        this.reelsController.stopReels();
     }
 }
 
