@@ -6,11 +6,11 @@
     "numOfReels": 5,
     "symbolsAmount": 10,
 
-    "numOfSpinsBeforeStop": 3,
+    "numOfSpinsBeforeStop": 5,
 
     "delayBetweenReelsSpin": 300,
     "spinAnimationTimeInMs": 1500,
-    "spinAnimTimingFunc": "cubic-bezier(1,.99,.86,.42)",
+    "spinAnimTimingFunc": "cubic-bezier(.9,.61,.9,.61)",
 
     "symbolsPath": "./assets/images/symbols/",
     "symbolsImages": [
