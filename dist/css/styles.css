@@ -17,13 +17,13 @@ body {
 #game {
 	background: cadetblue;
 	width: 100%;
+
+	display: flex;
+	justify-content: center;
 }
 
 #game #reels_wrapper {
 	display: flex;
-	justify-content: center;
-
-	width: 100%;
 }
 
 #game #reels_wrapper .reel_wrapper {
@@ -41,25 +41,14 @@ body {
 }
 
 #preloader {
-	background: url('./../assets/images/symbols/1.png') no-repeat -9999px -9999px,
-				url('./../assets/images/symbols/2.png') no-repeat -9999px -9999px,
-				url('./../assets/images/symbols/3.jpg') no-repeat -9999px -9999px,
-				url('./../assets/images/symbols/4.jpg') no-repeat -9999px -9999px,
-				url('./../assets/images/symbols/5.png') no-repeat -9999px -9999px,
-				url('./../assets/images/symbols/6.png') no-repeat -9999px -9999px,
-				url('./../assets/images/symbols/7.jpg') no-repeat -9999px -9999px,
-				url('./../assets/images/symbols/8.png') no-repeat -9999px -9999px,
-				url('./../assets/images/symbols/9.png') no-repeat -9999px -9999px,
-				url('./../assets/images/symbols/10.png') no-repeat -9999px -9999px;
+	background: url('./../assets/images/symbols/1.png'),
+				url('./../assets/images/symbols/2.png'),
+				url('./../assets/images/symbols/3.jpg'),
+				url('./../assets/images/symbols/4.jpg'),
+				url('./../assets/images/symbols/5.png'),
+				url('./../assets/images/symbols/6.png'),
+				url('./../assets/images/symbols/7.jpg'),
+				url('./../assets/images/symbols/8.png'),
+				url('./../assets/images/symbols/9.png'),
+				url('./../assets/images/symbols/10.png');
 }
-
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol1 { background: url('./../assets/images/symbols/1.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol2 { background: url('./../assets/images/symbols/2.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol3 { background: url('./../assets/images/symbols/3.jpg'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol4 { background: url('./../assets/images/symbols/4.jpg'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol5 { background: url('./../assets/images/symbols/5.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol6 { background: url('./../assets/images/symbols/6.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol7 { background: url('./../assets/images/symbols/7.jpg'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol8 { background: url('./../assets/images/symbols/8.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol9 { background: url('./../assets/images/symbols/9.png'); }
-#game #reels_wrapper .reel_wrapper .reel .symbol.symbol10 { background: url('./../assets/images/symbols/10.png'); }

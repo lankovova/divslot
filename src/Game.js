@@ -1,48 +1,58 @@
-import Reel from './Reel';
+import Interface from './Interface';
+import ReelsController from './ReelsController';
+import LinesController from './LinesController';
+import Line from './Line'
 import settings from './settings.json';
 
+import axios from 'axios';
+
 class Game {
-	constructor(name) {
-		this.name = name;
-		this.reels = [];
+    /**
+     * Create game object
+     * @param {String} gameName Game name
+     */
+    constructor(gameName) {
+        this.gameName = gameName;
 
-		this.gameNode = document.querySelector('#game');
+        this.gameNode = document.querySelector('#game');
+        // Store for spin response data
+        this.spinResponse = {};
 
-		this.initReels();
-	}
+        this.interface = new Interface(this);
+        this.reelsController = new ReelsController(this.gameNode, this.reelsHasStopped);
+    }
 
-	initReels() {
-		const reelsWrapper = document.createElement('div');
-		reelsWrapper.id = 'reels_wrapper';
+    reelsHasStopped = () => {
+        console.log('All reels has stopped ' + this.gameName);
+        this.interface.state.spin = true;
 
-		this.gameNode.appendChild(reelsWrapper);
+        // let lineController = new LinesController(Object.assign({}, this.spinResponse.game.game_result));
+        // lineController.createWinningLines(Object.assign({}, this.reelsController.reels));
+    }
 
-		for (let i = 0; i < settings.numOfReels; i++) {
-			let reelSymbols = [];
-			for (let j = 0; j < settings.numOfRows; j++) {
-				reelSymbols.push(9);
-				// reelSymbols.push(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
-			}
-			this.reels.push(new Reel(reelSymbols));
-		}
-	}
+    async spinReels() {
+        console.log('Spin reels');
 
-	async spin() {
-		console.log('Spinning');
+        this.interface.state.spin = false;
+        this.interface.state.stop = true;
 
-		// Spin all reels
-		for (let i = 0; i < this.reels.length; i++) {
+        // Getting spin data
+        const response = await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win');
+        this.spinResponse = response.data[0];
+        console.log(this.spinResponse);
 
-			let finalSymbols = [];
-			for (let i = 0; i < settings.numOfRows; i++) {
-				// TODO: Rethink. Maybe pass array of Symbol instead array of numbers
-				finalSymbols.push(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
-			}
+        const symbolsMap = this.spinResponse.game.symbols_map;
 
-			// Wait previous reel to resolve before startinf next
-			await this.reels[i].spin(finalSymbols);
-		}
-	}
+        this.reelsController.spinReels(symbolsMap);
+    }
+
+    stopReels() {
+        console.log('Stop reels');
+
+        this.interface.state.stop = false;
+
+        this.reelsController.stopReels();
+    }
 }
 
 export default Game;

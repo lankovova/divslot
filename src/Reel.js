@@ -1,87 +1,143 @@
 import Symbol from './Symbol';
-import {transitionEnd} from './events';
 import settings from './settings.json';
+import {transitionEnd} from './events';
 
-// TODO: Think about storing reel symbols in reelParts
 class Reel {
-	constructor(symbolsArray) {
-		this.reelNode = document.createElement('div');
-		this.reelNode.className = 'reel';
-		this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInSec}s ${settings.spinAnimTimingFunc}`;
+    /**
+     * Create reel with starting symbols in it
+     * @param {Number} reelIndex Index of reel in Game
+     * @param {Function} onStop Function to call when reel has stopped
+     */
+    constructor(reelIndex, onStop) {
+        this.finalSymbols = [];
 
-		// Init starting symbols
-		for (let i = 0; i < symbolsArray.length; i++) {
-			const symbol = new Symbol(symbolsArray[i]);
-			// Add symbol into reel node
-			this.reelNode.appendChild(symbol.node);
-		}
+        this.reelNode;
+        this.reelIndex = reelIndex;
+        this._delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
 
-		const reelWrapperNode = document.createElement('div');
-		reelWrapperNode.className = 'reel_wrapper';
-		reelWrapperNode.style.width = `${settings.symbolSize}px`;
-		reelWrapperNode.style.height = `${settings.symbolSize * settings.numOfRows}px`;
-		reelWrapperNode.style.margin = `0 ${settings.spaceBetweenReels / 2}px`;
-		reelWrapperNode.appendChild(this.reelNode);
+        this.props = {
+            onStop: onStop
+        };
 
-		document.querySelector('#reels_wrapper').appendChild(reelWrapperNode);
+        this._init();
+    }
 
-		// End spin animation event
-		this.reelNode.addEventListener(transitionEnd, () => {
-			console.log('End spin');
-			this.resetReel();
-		});
-	}
+    _init() {
+        this.reelNode = document.createElement('div');
+        this.reelNode.className = 'reel';
+        this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInMs}ms ${settings.spinAnimTimingFunc}`;
 
-	/**
-	 * Spins the reel to final symbols
-	 * @param {Array<Number>} finalSymbolsArr Final symbols
-	 * @returns Resolved promise after some delay
-	 */
-	spin(finalSymbolsArr) {
-		this.addSpinningSymbols();
-		this.addFinalSymbols(finalSymbolsArr);
-		// Animate spin
-		this.reelNode.style.transform = `translate(0, ${(settings.numOfSpinsBeforeStop * settings.numOfRows + settings.numOfRows)* settings.symbolSize}px)`;
+        // Init starting symbols
+        for (let i = 0; i < settings.numOfRows; i++) {
+            const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
+            // Add symbol into reel node
+            this.reelNode.appendChild(symbol.node);
+        }
 
-		// Resolve promise after delay between starting reels spin
-		return new Promise(resolve => {
-			setTimeout(() => {
-				resolve();
-			}, settings.delayBeforeSpinNextReel);
-		});
-	}
+        const reelWrapperNode = document.createElement('div');
+        reelWrapperNode.className = 'reel_wrapper';
+        reelWrapperNode.style.width = `${settings.symbolSize}px`;
+        reelWrapperNode.style.height = `${settings.symbolSize * settings.numOfRows}px`;
+        reelWrapperNode.style.margin = `0 ${settings.spaceBetweenReels / 2}px`;
+        reelWrapperNode.appendChild(this.reelNode);
 
-	addSpinningSymbols() {
-		for (let i = 0; i < settings.numOfSpinsBeforeStop * settings.numOfRows; i++) {
-			const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
-			this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
-		}
-	}
+        document.querySelector('#reels_wrapper').appendChild(reelWrapperNode);
 
-	addFinalSymbols(finalSymbols) {
-		for (let i = 0; i < finalSymbols.length; i++) {
-			// const symbol = new Symbol(9);
-			const symbol = new Symbol(finalSymbols[i]);
-			this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
-		}
-	}
+        this._initListeners();
+    }
 
-	resetReel() {
-		// Remove useless symbols
-		while (this.reelNode.childNodes.length !== settings.numOfRows) {
-			this.reelNode.removeChild(this.reelNode.childNodes[settings.numOfRows]);
-		}
+    _initListeners() {
+        // End spin animation event
+        this.reelNode.addEventListener(transitionEnd, () => {
+            this.resetReel();
+            // Call passed function in constuctor
+            this.props.onStop(this.reelIndex);
+        });
+    }
 
-		// Remove spin animation time to move reel
-		this.reelNode.style.transitionDuration = '0s';
-		// Set reel in default position
-		this.reelNode.style.transform = '';
+    /**
+     * Spin reel to final symbols
+     * @param {Array<Symbol>} finalSymbols Array of final symbols
+     */
+    spin(finalSymbols) {
+        this.addSpinningSymbols();
+        this.addFinalSymbols(finalSymbols);
 
-		// Set spin animation time back
-		setTimeout(() => {
-			this.reelNode.style.transitionDuration = `${settings.spinAnimationTimeInSec}s`;
-		}, 0);
-	}
+        // Animate spin
+        this.reelNode.style.transform = `translate(0, ${(settings.numOfSpinsBeforeStop * settings.numOfRows + settings.numOfRows)* settings.symbolSize}px)`;
+
+        // Resolve promise after delay between starting reels spin
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, this._delayBetweenReelsSpin);
+        });
+    }
+
+    addSpinningSymbols() {
+        let spinningSymbolsArr = [];
+
+        for (let i = 0; i < settings.numOfSpinsBeforeStop * settings.numOfRows ; i++) {
+            const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
+            spinningSymbolsArr.push(symbol);
+        }
+
+        this.addSymbols(spinningSymbolsArr);
+    }
+
+    /**
+     * Add final symbols to reel
+     * @param {Array<Symbol>} finalSymbols Array of Symbols
+     */
+    addFinalSymbols(finalSymbols) {
+        this.finalSymbols.push(...finalSymbols);
+
+        this.addSymbols(finalSymbols);
+    }
+
+    /**
+     * Add symbols to reel
+     * @param {Array<Symbol>} symbolsArr Array of Symbols to add to reel
+     */
+    addSymbols(symbolsArr) {
+        for (let i = symbolsArr.length - 1; i >= 0; i--) {
+            const symbol = symbolsArr[i];
+            this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
+        }
+    }
+
+    resetReel() {
+        // Remove useless symbols
+        while (this.reelNode.childNodes.length !== settings.numOfRows) {
+            this.reelNode.removeChild(this.reelNode.childNodes[settings.numOfRows]);
+        }
+
+        // Remove spin animation time to move reel
+        this.reelNode.style.transitionDuration = '0ms';
+        // Set reel in default position
+        this.reelNode.style.transform = '';
+
+        // Set spin animation time back
+        setTimeout(() => {
+            // Reset spin duration
+            this.reelNode.style.transitionDuration = `${settings.spinAnimationTimeInMs}ms`;
+        }, 0);
+    }
+
+    /**
+     * Set new delay between reels spin
+     * @param {Number} ms Delay between spinning reels in milliseconds
+     */
+    set delayBetweenReelsSpin(ms) {
+        ms = parseInt(ms);
+
+        if (ms < 0) {
+            console.warn(`Ms is <0. ms = ${ms}`);
+            return;
+        }
+
+        this._delayBetweenReelsSpin = ms;
+    }
 }
 
 export default Reel;
