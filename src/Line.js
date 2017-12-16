@@ -160,7 +160,7 @@ class Line {
             end.y = rNextCoord.y + rWidth / 2;
 
         } else if (rCoord.y > rNextCoord.y) { // If element below next element
-
+            // not worling
             start.x = rCoord.x + rWidth;
             start.y = rCoord.y;
             end.x = rNextCoord.x ;
