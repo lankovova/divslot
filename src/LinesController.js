@@ -19,6 +19,7 @@ class LinesController {
                 const reel = reels[sCoor.col];
                 // Get winning symbol
                 const symbol = reel.finalSymbols[sCoor.row];
+                symbol.highlighted = true;
                 // Get symbol coordinates
                 const symbolCoord = symbol.getPosition();
                 // Add symbol highlite to line

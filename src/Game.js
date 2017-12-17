@@ -26,8 +26,8 @@ class Game {
         console.log('All reels has stopped ' + this.gameName);
         this.interface.state.spin = true;
 
-        // let lineController = new LinesController(Object.assign({}, this.spinResponse.game.game_result));
-        // lineController.createWinningLines(Object.assign({}, this.reelsController.reels));
+        let lineController = new LinesController(Object.assign({}, this.spinResponse.game.game_result));
+        lineController.createWinningLines(Object.assign({}, this.reelsController.reels));
     }
 
     async spinReels() {
@@ -37,7 +37,7 @@ class Game {
         this.interface.state.stop = true;
 
         // Getting spin data
-        const response = await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win');
+        const response = await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win_down');
         this.spinResponse = response.data[0];
         console.log(this.spinResponse);
 

@@ -9,6 +9,7 @@ class Line {
     constructor(containerId, strokeColor, lineTypeNumber, reels) {
         this.namespaceURI = "http://www.w3.org/2000/svg";
         this.strokeWidth = 5;
+        // this.
         this.strokeColor = strokeColor;
         this.rectNodes = [];
         this.container = document.getElementById(containerId);
@@ -61,15 +62,14 @@ class Line {
 
             lineNode = document.createElementNS(this.namespaceURI, 'line');
             this.svgNode.appendChild(lineNode);
-
+            // skip last highlighted symbol
             if (i === (this.rectNodes.length - 1)) continue;
+            // if highlight exist
             if (this.rectNodes[i]) {
                 coord = this._createConnectionToSymbol(i);
             } else {
                 coord = this._createConnectionToSymbolCenter(i);
             }
-            console.log('i', i)
-            console.log(coord)
 
             lineNode.setAttributeNS(null, "x1", coord.start.x);
             lineNode.setAttributeNS(null, "y1", coord.start.y);
@@ -81,7 +81,6 @@ class Line {
     }
 
     _createConnectionToSymbolCenter(i) {
-        console.log(this.lineType[i])
         let [sMap, rMap] = this.lineType[i];
         let [sMapPrev, rMapPrev] = this.lineType[i - 1];
         let correction = 5;
@@ -100,34 +99,45 @@ class Line {
         rCoord = symbol.getPosition();
         // x, y of prev element
         symbolPrev = this.reels[rMapPrev].finalSymbols[sMapPrev];
-        console.log('symbolPrev', symbolPrev)
         rPrevCoord = symbolPrev.getPosition();
+        // console.log('symbolPrev', symbolPrev)
 
         if (rCoord.y === rPrevCoord.y) { // If element in a line with prev element
-            
             start.x = rPrevCoord.x + rWidth;
             start.y = rPrevCoord.y + rWidth / 2;
             end.x = rCoord.x + rWidth / 2;
             end.y = rCoord.y + rWidth / 2;
-            //
-            // if (!) {
-
-            // }
-
         } else if (rCoord.y > rPrevCoord.y) { // If element below prev element
-
-            start.x = rCoord.x + rWidth - correction;
-            start.y = rCoord.y;
-            end.x = rPrevCoord.x ;
-            end.y = rPrevCoord.y + rWidth - correction;
-
+            start.x = rPrevCoord.x + rWidth;
+            start.y = rPrevCoord.y + rWidth;
+            end.x = rCoord.x;
+            end.y = rCoord.y;
         } else if (rCoord.y < rPrevCoord.y) { // If element higher prev element
-
             start.x = rCoord.x + rWidth - correction;
             start.y = rCoord.y + rWidth - correction;
             end.x = rPrevCoord.x;
             end.y = rPrevCoord.y;
+        }
 
+        if (!symbolPrev.highlighted) {
+            start.x = rPrevCoord.x + rWidth / 2;
+            start.y = rPrevCoord.y + rWidth / 2;
+            end.x = rCoord.x + rWidth / 2;
+            end.y = rCoord.y + rWidth / 2;
+
+            if ( i === (s.numOfReels - 1)) {
+                start.x = rPrevCoord.x + rWidth / 2;
+                start.y = rPrevCoord.y + rWidth / 2;
+                end.x = rCoord.x + rWidth;
+                end.y = rCoord.y + rWidth / 2;
+            }
+        }
+
+        if (symbolPrev.highlighted && !symbol.highlighted) {
+            start.x = rPrevCoord.x + rWidth;
+            start.y = rPrevCoord.y + rWidth;
+            end.x = rCoord.x + rWidth / 2;
+            end.y = rCoord.y + rWidth / 2;
         }
         
         return {start, end};
@@ -151,13 +161,15 @@ class Line {
         // Get x, y of next element
         rNextCoord.x = parseFloat(this.rectNodes[i + 1].getAttribute('x'));
         rNextCoord.y = parseFloat(this.rectNodes[i + 1].getAttribute('y'));
-
+        console.log('rectNode',rectNode)
         if (rCoord.y === rNextCoord.y) { // If element in a line with next element
 
             start.x = rCoord.x + rWidth;
             start.y = rCoord.y + rWidth / 2;
             end.x = rNextCoord.x;
             end.y = rNextCoord.y + rWidth / 2;
+
+            // if () {}
 
         } else if (rCoord.y > rNextCoord.y) { // If element below next element
             // not worling
