@@ -62,10 +62,10 @@ class Line {
 
             lineNode = document.createElementNS(this.namespaceURI, 'line');
             this.svgNode.appendChild(lineNode);
-            // skip last highlighted symbol
-            if (i === (this.rectNodes.length - 1)) continue;
-            // if highlight exist
-            if (this.rectNodes[i]) {
+
+            if (i === (s.numOfReels - 1)) {
+                coord = this._createLastConnection(i);
+            } else if (this.rectNodes[i] && this.rectNodes[i + 1]) {
                 coord = this._createConnectionToSymbol(i);
             } else {
                 coord = this._createConnectionToSymbolCenter(i);
@@ -80,16 +80,38 @@ class Line {
         }
     }
 
+    _createLastConnection(i) {
+        let [sMap, rMap] = this.lineType[i];
+            // current highlite coordinates
+        let symbol;
+        let rWidth = s.symbolSize;
+        let rCoord = {x: 0, y: 0},
+            // Start coordinates of line
+            start = {x: 0, y: 0},
+            // End coordinates of line
+            end = {x: 0, y: 0};
+
+        symbol = this.reels[rMap].finalSymbols[sMap];
+        rCoord = symbol.getPosition();
+
+        start.x = rCoord.x + rWidth / 2;
+        start.y = rCoord.y + rWidth / 2;
+        end.x = rCoord.x + rWidth;
+        end.y = rCoord.y + rWidth / 2;
+
+        return {start, end};
+    }
+
     _createConnectionToSymbolCenter(i) {
         let [sMap, rMap] = this.lineType[i];
-        let [sMapPrev, rMapPrev] = this.lineType[i - 1];
+        let [sMapNext, rMapNext] = this.lineType[i + 1];
         let correction = 5;
         let rWidth = s.symbolSize;
-        let symbol, symbolPrev;
+        let symbol, symbolNext;
             // current highlite coordinates
         let rCoord = {x: 0, y: 0},
             // next highlite coordinates
-            rPrevCoord = {x: 0, y: 0},
+            rNextCoord = {x: 0, y: 0},
             // Start coordinates of line
             start = {x: 0, y: 0},
             // End coordinates of line
@@ -98,47 +120,44 @@ class Line {
         symbol = this.reels[rMap].finalSymbols[sMap];
         rCoord = symbol.getPosition();
         // x, y of prev element
-        symbolPrev = this.reels[rMapPrev].finalSymbols[sMapPrev];
-        rPrevCoord = symbolPrev.getPosition();
-        // console.log('symbolPrev', symbolPrev)
+        symbolNext = this.reels[rMapNext].finalSymbols[sMapNext];
+        rNextCoord = symbolNext.getPosition();
 
-        if (rCoord.y === rPrevCoord.y) { // If element in a line with prev element
-            start.x = rPrevCoord.x + rWidth;
-            start.y = rPrevCoord.y + rWidth / 2;
-            end.x = rCoord.x + rWidth / 2;
-            end.y = rCoord.y + rWidth / 2;
-        } else if (rCoord.y > rPrevCoord.y) { // If element below prev element
-            start.x = rPrevCoord.x + rWidth;
-            start.y = rPrevCoord.y + rWidth;
-            end.x = rCoord.x;
-            end.y = rCoord.y;
-        } else if (rCoord.y < rPrevCoord.y) { // If element higher prev element
-            start.x = rCoord.x + rWidth - correction;
-            start.y = rCoord.y + rWidth - correction;
-            end.x = rPrevCoord.x;
-            end.y = rPrevCoord.y;
+        if (rCoord.y === rNextCoord.y) { // If element in a line with next element
+            start.x = rCoord.x + rWidth;
+            start.y = rCoord.y + rWidth / 2;
+            end.x = rNextCoord.x + rWidth / 2;
+            end.y = rNextCoord.y + rWidth / 2;
+        } else if (rCoord.y > rNextCoord.y) { // If element below next element
+            start.x = rCoord.x + rWidth;
+            start.y = rCoord.y + rWidth;
+            end.x = rNextCoord.x;
+            end.y = rNextCoord.y + rWidth;
+        } else if (rCoord.y < rNextCoord.y) { // If element higher next element
+            start.x = rCoord.x + rWidth;
+            start.y = rCoord.y + rWidth;
+            end.x = rNextCoord.x;
+            end.y = rNextCoord.y;
         }
 
-        if (!symbolPrev.highlighted) {
-            start.x = rPrevCoord.x + rWidth / 2;
-            start.y = rPrevCoord.y + rWidth / 2;
-            end.x = rCoord.x + rWidth / 2;
-            end.y = rCoord.y + rWidth / 2;
-
-            if ( i === (s.numOfReels - 1)) {
-                start.x = rPrevCoord.x + rWidth / 2;
-                start.y = rPrevCoord.y + rWidth / 2;
-                end.x = rCoord.x + rWidth;
-                end.y = rCoord.y + rWidth / 2;
-            }
+        if (!rNextCoord.highlighted) {
+            end.x = rNextCoord.x + rWidth / 2;
+            end.y = rNextCoord.y + rWidth / 2;
         }
 
-        if (symbolPrev.highlighted && !symbol.highlighted) {
-            start.x = rPrevCoord.x + rWidth;
-            start.y = rPrevCoord.y + rWidth;
-            end.x = rCoord.x + rWidth / 2;
-            end.y = rCoord.y + rWidth / 2;
+        if (!symbol.highlighted) {
+            start.x = rCoord.x + rWidth / 2;
+            start.y = rCoord.y + rWidth / 2;
+            end.x = rNextCoord.x + rWidth / 2;
+            end.y = rNextCoord.y + rWidth / 2;
         }
+
+        // if (symbolPrev.highlighted && !symbol.highlighted) {
+        //     start.x = rPrevCoord.x + rWidth;
+        //     start.y = rPrevCoord.y + rWidth;
+        //     end.x = rCoord.x + rWidth / 2;
+        //     end.y = rCoord.y + rWidth / 2;
+        // }
         
         return {start, end};
     }
@@ -161,30 +180,22 @@ class Line {
         // Get x, y of next element
         rNextCoord.x = parseFloat(this.rectNodes[i + 1].getAttribute('x'));
         rNextCoord.y = parseFloat(this.rectNodes[i + 1].getAttribute('y'));
-        console.log('rectNode',rectNode)
-        if (rCoord.y === rNextCoord.y) { // If element in a line with next element
 
+        if (rCoord.y === rNextCoord.y) { // If element in a line with next element
             start.x = rCoord.x + rWidth;
             start.y = rCoord.y + rWidth / 2;
             end.x = rNextCoord.x;
             end.y = rNextCoord.y + rWidth / 2;
-
-            // if () {}
-
         } else if (rCoord.y > rNextCoord.y) { // If element below next element
-            // not worling
             start.x = rCoord.x + rWidth;
             start.y = rCoord.y;
             end.x = rNextCoord.x ;
             end.y = rNextCoord.y + rWidth;
-
         } else if (rCoord.y < rNextCoord.y) { // If element higher next element
-
             start.x = rCoord.x + rWidth;
             start.y = rCoord.y + rWidth;
             end.x = rNextCoord.x;
             end.y = rNextCoord.y;
-
         }
 
         return {start, end};
