@@ -52,8 +52,6 @@ class Line {
         rectNode.setAttributeNS(null, "stroke", this.strokeColor);
         rectNode.setAttributeNS(null, "fill", 'transparent');
         rectNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
-        rectNode.setAttributeNS(null, "rx", "5");
-        rectNode.setAttributeNS(null, "ry", "5");
     }
 
     connectHighlites() {
@@ -134,8 +132,8 @@ class Line {
     _createConnection(lineNode, sPrev, symbol, sNext) {
         let start = {};
         let end = {};
-        console.log(symbol)
-        if (sPrev === null) { // symbol is first
+
+        if (!sPrev) { // symbol is first
             start.x = (symbol.highlighted) ? (symbol.x + s.symbolSize) : (symbol.x + s.symbolSize / 2);
             end.x = (sNext.highlighted) ? (sNext.x) : (sNext.x + s.symbolSize / 2);
             if (symbol.y === sNext.y) { // symbols in line
