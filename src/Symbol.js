@@ -19,10 +19,19 @@ class Symbol {
 		return this.symbolNode;
 	}
 
+	get x() {
+		let x = this.symbolNode.getBoundingClientRect();
+		return x.x;
+	}
+
+	get y() {
+		let y = this.symbolNode.getBoundingClientRect();
+		return y.y;
+	}
+
 	getPosition() {
 		let x = this.symbolNode.getBoundingClientRect();
 		let y = this.symbolNode.getBoundingClientRect();
-		// console.log(x.x, y.y)
 
 		return {
 			'x': x.x,

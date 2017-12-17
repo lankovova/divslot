@@ -51,156 +51,131 @@ class Line {
         rectNode.setAttributeNS(null, "y", y);
         rectNode.setAttributeNS(null, "stroke", this.strokeColor);
         rectNode.setAttributeNS(null, "fill", 'transparent');
-        rectNode.setAttributeNS(null, "stroke-width", this.strokeWidth);  
+        rectNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
+        rectNode.setAttributeNS(null, "rx", "5");
+        rectNode.setAttributeNS(null, "ry", "5");
     }
 
     connectHighlites() {
         let lineNode;
         let coord = {};
+        let sPrev, symbol, sNext, sMap, rMap;
 
         for(let i = 0; i < s.numOfReels; i++) {
-
+            // Create DOM element
             lineNode = document.createElementNS(this.namespaceURI, 'line');
             this.svgNode.appendChild(lineNode);
-
-            if (i === (s.numOfReels - 1)) {
-                coord = this._createLastConnection(i);
-            } else if (this.rectNodes[i] && this.rectNodes[i + 1]) {
-                coord = this._createConnectionToSymbol(i);
-            } else {
-                coord = this._createConnectionToSymbolCenter(i);
+            // Get previous symbol
+            if (i !== 0) {
+                [sMap, rMap] = this.lineType[i - 1];
+                sPrev = this.reels[rMap].finalSymbols[sMap];
+            } else { 
+                sPrev = null; 
+            }
+            // Get symbol
+            [sMap, rMap] = this.lineType[i];
+            symbol = this.reels[rMap].finalSymbols[sMap];
+            // Get next symbol
+            if (i !== (s.numOfReels - 1)) {
+                [sMap, rMap] = this.lineType[i + 1];
+                sNext = this.reels[rMap].finalSymbols[sMap];
+            } else { 
+                sNext = null; 
             }
 
-            lineNode.setAttributeNS(null, "x1", coord.start.x);
-            lineNode.setAttributeNS(null, "y1", coord.start.y);
-            lineNode.setAttributeNS(null, "x2", coord.end.x);
-            lineNode.setAttributeNS(null, "y2", coord.end.y);
-            lineNode.setAttributeNS(null, "stroke", this.strokeColor);
-            lineNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
+            this._createConnection(lineNode, sPrev, symbol, sNext);
+            
+            if (!symbol.highlighted && i === (s.numOfReels - 1)) {
+                this._createLastConnection(symbol);
+            }
+            if (!symbol.highlighted && i === 0) {
+                this._createFirstConnection(symbol);
+            }
+
         }
     }
 
-    _createLastConnection(i) {
-        let [sMap, rMap] = this.lineType[i];
-            // current highlite coordinates
-        let symbol;
-        let rWidth = s.symbolSize;
-        let rCoord = {x: 0, y: 0},
-            // Start coordinates of line
-            start = {x: 0, y: 0},
-            // End coordinates of line
-            end = {x: 0, y: 0};
+    _createFirstConnection(symbol) {
+        let lineNode = document.createElementNS(this.namespaceURI, 'line');
+        this.svgNode.appendChild(lineNode);
 
-        symbol = this.reels[rMap].finalSymbols[sMap];
-        rCoord = symbol.getPosition();
+        let sCoord = symbol.getPosition();
 
-        start.x = rCoord.x + rWidth / 2;
-        start.y = rCoord.y + rWidth / 2;
-        end.x = rCoord.x + rWidth;
-        end.y = rCoord.y + rWidth / 2;
+        let start = {
+            x: sCoord.x,
+            y: sCoord.y + s.symbolSize / 2
+        }
+        let end = {
+            x: sCoord.x + s.symbolSize / 2,
+            y: sCoord.y + s.symbolSize / 2
+        }
 
-        return {start, end};
+        this._setLineAttrs(lineNode, start, end); 
     }
 
-    _createConnectionToSymbolCenter(i) {
-        let [sMap, rMap] = this.lineType[i];
-        let [sMapNext, rMapNext] = this.lineType[i + 1];
-        let correction = 5;
-        let rWidth = s.symbolSize;
-        let symbol, symbolNext;
-            // current highlite coordinates
-        let rCoord = {x: 0, y: 0},
-            // next highlite coordinates
-            rNextCoord = {x: 0, y: 0},
-            // Start coordinates of line
-            start = {x: 0, y: 0},
-            // End coordinates of line
-            end = {x: 0, y: 0};
-        // x, y of curr element
-        symbol = this.reels[rMap].finalSymbols[sMap];
-        rCoord = symbol.getPosition();
-        // x, y of prev element
-        symbolNext = this.reels[rMapNext].finalSymbols[sMapNext];
-        rNextCoord = symbolNext.getPosition();
+    _createLastConnection(symbol) {
+        let lineNode = document.createElementNS(this.namespaceURI, 'line');
+        this.svgNode.appendChild(lineNode);
 
-        if (rCoord.y === rNextCoord.y) { // If element in a line with next element
-            start.x = rCoord.x + rWidth;
-            start.y = rCoord.y + rWidth / 2;
-            end.x = rNextCoord.x + rWidth / 2;
-            end.y = rNextCoord.y + rWidth / 2;
-        } else if (rCoord.y > rNextCoord.y) { // If element below next element
-            start.x = rCoord.x + rWidth;
-            start.y = rCoord.y + rWidth;
-            end.x = rNextCoord.x;
-            end.y = rNextCoord.y + rWidth;
-        } else if (rCoord.y < rNextCoord.y) { // If element higher next element
-            start.x = rCoord.x + rWidth;
-            start.y = rCoord.y + rWidth;
-            end.x = rNextCoord.x;
-            end.y = rNextCoord.y;
+        let sCoord = symbol.getPosition();
+
+        let start = {
+            x: sCoord.x + s.symbolSize / 2,
+            y: sCoord.y + s.symbolSize / 2
+        }
+        let end = {
+            x: sCoord.x + s.symbolSize,
+            y: sCoord.y + s.symbolSize / 2
         }
 
-        if (!rNextCoord.highlighted) {
-            end.x = rNextCoord.x + rWidth / 2;
-            end.y = rNextCoord.y + rWidth / 2;
-        }
-
-        if (!symbol.highlighted) {
-            start.x = rCoord.x + rWidth / 2;
-            start.y = rCoord.y + rWidth / 2;
-            end.x = rNextCoord.x + rWidth / 2;
-            end.y = rNextCoord.y + rWidth / 2;
-        }
-
-        // if (symbolPrev.highlighted && !symbol.highlighted) {
-        //     start.x = rPrevCoord.x + rWidth;
-        //     start.y = rPrevCoord.y + rWidth;
-        //     end.x = rCoord.x + rWidth / 2;
-        //     end.y = rCoord.y + rWidth / 2;
-        // }
-        
-        return {start, end};
+        this._setLineAttrs(lineNode, start, end);
     }
 
-    _createConnectionToSymbol(i) {
-        let rectNode = this.rectNodes[i];
-        let correction = 5;
-        let rWidth = s.symbolSize;
-            // current highlite coordinates
-        let rCoord = {x: 0, y: 0},
-            // next highlite coordinates
-            rNextCoord = {x: 0, y: 0},
-            // Start coordinates of line
-            start = {x: 0, y: 0},
-            // End coordinates of line
-            end = {x: 0, y: 0};
-        // Get x, y of current element
-        rCoord.x = parseFloat(rectNode.getAttribute('x'));
-        rCoord.y = parseFloat(rectNode.getAttribute('y'));
-        // Get x, y of next element
-        rNextCoord.x = parseFloat(this.rectNodes[i + 1].getAttribute('x'));
-        rNextCoord.y = parseFloat(this.rectNodes[i + 1].getAttribute('y'));
-
-        if (rCoord.y === rNextCoord.y) { // If element in a line with next element
-            start.x = rCoord.x + rWidth;
-            start.y = rCoord.y + rWidth / 2;
-            end.x = rNextCoord.x;
-            end.y = rNextCoord.y + rWidth / 2;
-        } else if (rCoord.y > rNextCoord.y) { // If element below next element
-            start.x = rCoord.x + rWidth;
-            start.y = rCoord.y;
-            end.x = rNextCoord.x ;
-            end.y = rNextCoord.y + rWidth;
-        } else if (rCoord.y < rNextCoord.y) { // If element higher next element
-            start.x = rCoord.x + rWidth;
-            start.y = rCoord.y + rWidth;
-            end.x = rNextCoord.x;
-            end.y = rNextCoord.y;
+    _createConnection(lineNode, sPrev, symbol, sNext) {
+        let start = {};
+        let end = {};
+        console.log(symbol)
+        if (sPrev === null) { // symbol is first
+            start.x = (symbol.highlighted) ? (symbol.x + s.symbolSize) : (symbol.x + s.symbolSize / 2);
+            end.x = (sNext.highlighted) ? (sNext.x) : (sNext.x + s.symbolSize / 2);
+            if (symbol.y === sNext.y) { // symbols in line
+                start.y = symbol.y + s.symbolSize / 2;
+                end.y = sNext.y + s.symbolSize / 2;
+            } else if (symbol.y > sNext.y) { // symbol below next
+                start.y = (symbol.highlighted) ? (symbol.y) : (symbol.y + s.symbolSize / 2);
+                end.y = (sNext.highlighted) ? (sNext.y + s.symbolSize) : (sNext.y + s.symbolSize / 2);
+            } else if (symbol.y < sNext.y) { // symbol under next
+                start.y = (symbol.highlighted) ? (symbol.y + s.symbolSize) : (symbol.y + s.symbolSize / 2);
+                end.y = (sNext.highlighted) ? (sNext.y) : (sNext.y + s.symbolSize / 2);
+            }
+        } else { // symbol is last
+            start.x = (sPrev.highlighted) ? (sPrev.x + s.symbolSize) : (sPrev.x + s.symbolSize / 2);
+            end.x = (symbol.highlighted) ? (symbol.x) : (symbol.x + s.symbolSize / 2);
+            if (symbol.y === sPrev.y) { // symbols in line
+                start.y = symbol.y + s.symbolSize / 2;
+                end.y = symbol.y + s.symbolSize / 2;
+            } else if (symbol.y > sPrev.y) { // symbol below prev
+                start.y = (sPrev.highlighted) ? (sPrev.y + s.symbolSize) : (sPrev.y + s.symbolSize / 2);
+                end.y = (symbol.highlighted) ? (symbol.y) : (symbol.y + s.symbolSize / 2);
+            } else if (symbol.y < sPrev.y) { // symbol under prev
+                start.y = (sPrev.highlighted) ? (sPrev.y) : (sPrev.y + s.symbolSize / 2);
+                end.y = (symbol.highlighted) ? (symbol.y + s.symbolSize) : (symbol.y + s.symbolSize / 2);
+            }
         }
 
-        return {start, end};
+        this._setLineAttrs(lineNode, start, end);
     }
-    
+
+    _setLineAttrs(lineNode, start, end) {
+        lineNode.setAttributeNS(null, "x1", start.x);
+        lineNode.setAttributeNS(null, "y1", start.y);
+        lineNode.setAttributeNS(null, "x2", end.x);
+        lineNode.setAttributeNS(null, "y2", end.y);
+        lineNode.setAttributeNS(null, "stroke", this.strokeColor);
+        lineNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
+        lineNode.setAttributeNS(null, "stroke-linecap", 'round');  
+    }
+
     _lineWidth() {
         return this.container.offsetWidth;
     }
