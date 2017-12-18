@@ -2,14 +2,14 @@ import s from './settings.json'
 
 class Line {
     /**
-     * 
-     * @param {String} containerId 
-     * @param {String} strokeColor 
+     * @param {String} containerId id of element where svg will be appended
+     * @param {String} strokeColor color of the line
+     * @param {Number} lineTypeNumber index of the settings.lineTypes
+     * @param {Object} reels reel objects
      */
     constructor(containerId, strokeColor, lineTypeNumber, reels) {
         this.namespaceURI = "http://www.w3.org/2000/svg";
         this.strokeWidth = 5;
-        // this.
         this.strokeColor = strokeColor;
         this.rectNodes = [];
         this.container = document.getElementById(containerId);
@@ -36,9 +36,9 @@ class Line {
         this.svgNode.style.display = "none";
     }
     /**
-     * 
-     * @param {Number} x 
-     * @param {Number} y 
+     * Create highlite around symbol
+     * @param {Number} x symbols` position x
+     * @param {Number} y symbols` position y
      */
     addSymbolHighlite(x, y) {
         let rectNode = document.createElementNS(this.namespaceURI, 'rect');
@@ -53,7 +53,9 @@ class Line {
         rectNode.setAttributeNS(null, "fill", 'transparent');
         rectNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
     }
-
+    /**
+     * Connect highlited symbols
+     */
     connectHighlites() {
         let lineNode;
         let coord = {};
