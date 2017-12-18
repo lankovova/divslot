@@ -1,5 +1,4 @@
 function getTransitionEndEventName(){
-    let t;
     const el = document.createElement("fakeelement");
 
     const transitions = {
@@ -9,7 +8,7 @@ function getTransitionEndEventName(){
         "WebkitTransition": "webkitTransitionEnd"
     }
 
-    for (t in transitions) {
+    for (let t in transitions) {
         if (el.style[t] !== undefined) {
             return transitions[t];
         }

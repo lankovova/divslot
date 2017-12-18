@@ -15,6 +15,10 @@ class Symbol {
 		this.highlighted = false;
 	}
 
+	animate() {
+		
+	}
+
 	get node() {
 		return this.symbolNode;
 	}
