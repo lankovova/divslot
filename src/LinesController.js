@@ -5,15 +5,14 @@ class LinesController {
     constructor(reels) {
         this.winningLines = [];
         this.lines = [];
-        this.gameResult;
         this.linesContainerId = 'game_wrapper';
         this.reels = reels;
 
         this._createLines();
     }
 
-    createWinningLines() {
-        for (const [key, res] of Object.entries(this.gameResult)) {
+    getWinningLines(gameResult) {
+        for (const [key, res] of Object.entries(gameResult)) {
             const line = new Line(this.linesContainerId, 'green', (res.line - 1), this.reels);
 
             for (const [key, sCoor] of Object.entries(res.list)) {
@@ -39,10 +38,6 @@ class LinesController {
             line.hide();
         }
         this.lines[number].show()
-    }
-
-    setGameResult(gameResult) {
-        this.gameResult = gameResult;
     }
 
     _createLines() {
