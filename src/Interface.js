@@ -1,8 +1,8 @@
 import settings from './settings.json';
 
 class Interface {
-	constructor(gameInstance) {
-		this.game = gameInstance;
+	constructor(props) {
+		this.props = props;
 
 		this.state = {
 			spin: true,
@@ -19,9 +19,9 @@ class Interface {
 				// Space
 				case 32: {
 					if (this.state.spin) {
-						this.game.spinReels();
+						this.props.spinReels();
 					} else if (this.state.stop) {
-						this.game.stopReels();
+						this.props.stopReels();
 					}
 
 					break;

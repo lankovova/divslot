@@ -2,6 +2,9 @@ import s from './settings.json';
 import Line from './Line';
 
 class LinesController {
+    /**
+     * @param {Array<Reel>} reels Reels array
+     */
     constructor(reels) {
         this.winningLines = [];
         this.lines = [];
@@ -11,6 +14,10 @@ class LinesController {
         this._createLines();
     }
 
+    /**
+     * Create winning lines array of game result
+     * @param {Number[][]} gameResult Game result
+     */
     createWinningLines(gameResult) {
         for (const [key, res] of Object.entries(gameResult)) {
             const line = new Line(this.linesContainerId, 'green', (res.line - 1), this.reels);
@@ -58,11 +65,15 @@ class LinesController {
         });
     }
 
-    showLineByNumber(number) {
-        for (let line of this.lines) {
+    /**
+     * Show line by index
+     * @param {Number} lineIndex lineIndex
+     */
+    showLineByNumber(lineIndex) {
+        for (const line of this.lines) {
             line.hide();
         }
-        this.lines[number].show()
+        this.lines[lineIndex].show();
     }
 
     _createLines() {
