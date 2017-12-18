@@ -33,6 +33,10 @@ class Line {
     hide() {
         this.svgNode.style.display = "none";
     }
+
+    remove() {
+        this.svgNode.remove();
+    }
     /**
      * Create highlite around symbol
      * @param {Number} x symbols` position x
