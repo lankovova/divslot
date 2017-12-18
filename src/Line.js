@@ -71,8 +71,8 @@ class Line {
             if (i !== 0) {
                 [sMap, rMap] = this.lineType[i - 1];
                 sPrev = this.reels[rMap].finalSymbols[sMap];
-            } else { 
-                sPrev = null; 
+            } else {
+                sPrev = null;
             }
             // Get symbol
             [sMap, rMap] = this.lineType[i];
@@ -81,12 +81,12 @@ class Line {
             if (i !== (s.numOfReels - 1)) {
                 [sMap, rMap] = this.lineType[i + 1];
                 sNext = this.reels[rMap].finalSymbols[sMap];
-            } else { 
-                sNext = null; 
+            } else {
+                sNext = null;
             }
 
             this._createConnection(lineNode, sPrev, symbol, sNext);
-            
+
             if (!symbol.highlighted && i === (s.numOfReels - 1)) {
                 this._createLastConnection(symbol);
             }
@@ -112,7 +112,7 @@ class Line {
             y: sCoord.y + s.symbolSize / 2
         }
 
-        this._setLineAttrs(lineNode, start, end); 
+        this._setLineAttrs(lineNode, start, end);
     }
 
     _createLastConnection(symbol) {
@@ -165,7 +165,7 @@ class Line {
                 end.y = (symbol.highlighted) ? (symbol.y + s.symbolSize) : (symbol.y + s.symbolSize / 2);
             }
         }
-        
+
         this._setLineAttrs(lineNode, start, end);
     }
 
@@ -176,7 +176,7 @@ class Line {
         lineNode.setAttributeNS(null, "y2", end.y);
         lineNode.setAttributeNS(null, "stroke", this.strokeColor);
         lineNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
-        lineNode.setAttributeNS(null, "stroke-linecap", 'round');  
+        lineNode.setAttributeNS(null, "stroke-linecap", 'round');
     }
 
     _lineWidth() {
