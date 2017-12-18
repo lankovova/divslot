@@ -2,8 +2,10 @@ import s from './settings.json';
 import Line from './Line';
 
 class LinesController {
+    /**
+     * @param {Array<Reel>} reels Reels array
+     */
     constructor(reels) {
-        this.winningLines = [];
         this.lines = [];
         this.linesContainerId = 'game_wrapper';
         this.reels = reels;
@@ -11,7 +13,13 @@ class LinesController {
         this._createLines();
     }
 
+    /**
+     * Create winning lines array of game result
+     * @param {Number[][]} gameResult Game result
+     */
     createWinningLines(gameResult) {
+        let winningLines = [];
+
         for (const [key, res] of Object.entries(gameResult)) {
             const line = new Line(this.linesContainerId, 'green', (res.line - 1), this.reels);
 
@@ -27,8 +35,10 @@ class LinesController {
                 line.addSymbolHighlite(symbolCoord.x, symbolCoord.y);
             }
             line.connectHighlites();
-            this.winningLines.push(line);
+            winningLines.push(line);
         }
+
+        return winningLines;
     }
 
     /**
@@ -36,9 +46,11 @@ class LinesController {
      * @param {Number[][]} gameResult Game result
      */
     async showWinningLines(gameResult, delay) {
-        this.createWinningLines(gameResult);
+        const winningLines = this.createWinningLines(gameResult);
 
-        for (const line of this.winningLines) {
+        console.log(winningLines);
+
+        for (const line of winningLines) {
             await this.showWinningLine(line, delay);
         }
     }
@@ -52,17 +64,22 @@ class LinesController {
 
         return new Promise(resolve => {
             setTimeout(() => {
-                line.hide();
+                // line.hide();
+                line.remove();
                 resolve();
             }, delay);
         });
     }
 
-    showLineByNumber(number) {
-        for (let line of this.lines) {
+    /**
+     * Show line by index
+     * @param {Number} lineIndex lineIndex
+     */
+    showLineByNumber(lineIndex) {
+        for (const line of this.lines) {
             line.hide();
         }
-        this.lines[number].show()
+        this.lines[lineIndex].show();
     }
 
     _createLines() {

@@ -17,19 +17,19 @@ class Game {
         // Store for spin response data
         this.spinResponse = {};
 
-        this.interface = new Interface(this);
+        this.interface = new Interface({spinReels: this.spinReels, stopReels: this.stopReels});
         this.reelsController = new ReelsController(this.gameNode, this.reelsHasStopped);
-        this.linesController = new LinesController(Object.assign({}, this.reelsController.reels));
+        this.linesController = new LinesController(this.reelsController.reels);
     }
 
     reelsHasStopped = () => {
         console.log('All reels has stopped ' + this.gameName);
         this.interface.state.spin = true;
 
-        this.linesController.showWinningLines(Object.assign({}, this.spinResponse.game.game_result), settings.delayBetweenShowingWinningLines);
+        this.linesController.showWinningLines(this.spinResponse.game.game_result, settings.delayBetweenShowingWinningLines);
     }
 
-    async spinReels() {
+    spinReels = async () => {
         console.log('Spin reels');
 
         this.interface.state.spin = false;
@@ -45,7 +45,7 @@ class Game {
         this.reelsController.spinReels(symbolsMap);
     }
 
-    stopReels() {
+    stopReels = () => {
         console.log('Stop reels');
 
         this.interface.state.stop = false;
