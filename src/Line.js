@@ -2,17 +2,17 @@ import s from './settings.json'
 
 class Line {
     /**
-     * @param {String} containerId id of element where svg will be appended
+     * @param {HTMLElement} containerNode node of element where svg will be appended
      * @param {String} strokeColor color of the line
      * @param {Number} lineTypeNumber index of the settings.lineTypes
      * @param {Object} reels reel objects
      */
-    constructor(containerId, strokeColor, lineTypeNumber, reels) {
+    constructor(containerNode, strokeColor, lineTypeNumber, reels) {
         this.namespaceURI = "http://www.w3.org/2000/svg";
         this.strokeWidth = 5;
         this.strokeColor = strokeColor;
         this.rectNodes = [];
-        this.container = document.getElementById(containerId);
+        this.container = containerNode;
         this.lineType = s.lineTypes[lineTypeNumber];
         this.reels = reels;
 
