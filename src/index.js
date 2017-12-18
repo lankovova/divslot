@@ -1,5 +1,5 @@
 import Game from './Game';
 
 (function() {
-	const game = new Game('babyOnFire');
+    const game = new Game('babyOnFire');
 })();

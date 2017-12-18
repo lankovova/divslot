@@ -11,7 +11,7 @@
     "delayBetweenShowingWinningLines": 1000,
     "delayBetweenReelsSpin": 300,
     "spinAnimationTimeInMs": 1500,
-    "spinAnimTimingFunc": "ease-out",
+    "spinAnimTimingFunc": "ease-in-out",
 
     "symbolsPath": "./assets/images/symbols/",
     "symbolsImages": [
