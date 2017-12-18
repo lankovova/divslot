@@ -15,7 +15,7 @@ class Line {
         this.container = document.getElementById(containerId);
         this.lineTypeNumber = lineTypeNumber;
         this.lineTypes = s.lineTypes;
-        this.lineType = this.lineTypes[this.lineTypeNumber - 1];
+        this.lineType = this.lineTypes[this.lineTypeNumber];
         this.reels = reels;
 
         this.svgNode = document.createElementNS(this.namespaceURI, 'svg');
@@ -56,7 +56,7 @@ class Line {
     /**
      * Connect highlited symbols
      */
-    connectHighlites() {
+    connectHighlites(symbolType) {
         let lineNode;
         let coord = {};
         let sPrev, symbol, sNext, sMap, rMap;
@@ -68,17 +68,17 @@ class Line {
             // Get previous symbol
             if (i !== 0) {
                 [sMap, rMap] = this.lineType[i - 1];
-                sPrev = this.reels[rMap].finalSymbols[sMap];
+                sPrev = this.reels[rMap][symbolType][sMap];
             } else { 
                 sPrev = null; 
             }
             // Get symbol
             [sMap, rMap] = this.lineType[i];
-            symbol = this.reels[rMap].finalSymbols[sMap];
+            symbol = this.reels[rMap][symbolType][sMap];
             // Get next symbol
             if (i !== (s.numOfReels - 1)) {
                 [sMap, rMap] = this.lineType[i + 1];
-                sNext = this.reels[rMap].finalSymbols[sMap];
+                sNext = this.reels[rMap][symbolType][sMap];
             } else { 
                 sNext = null; 
             }
@@ -132,6 +132,7 @@ class Line {
     }
 
     _createConnection(lineNode, sPrev, symbol, sNext) {
+
         let start = {};
         let end = {};
 
@@ -162,7 +163,7 @@ class Line {
                 end.y = (symbol.highlighted) ? (symbol.y + s.symbolSize) : (symbol.y + s.symbolSize / 2);
             }
         }
-
+        
         this._setLineAttrs(lineNode, start, end);
     }
 

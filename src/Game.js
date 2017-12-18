@@ -20,14 +20,17 @@ class Game {
 
         this.interface = new Interface(this);
         this.reelsController = new ReelsController(this.gameNode, this.reelsHasStopped);
+
+        this.lineController = new LinesController(Object.assign({}, this.reelsController.reels));
+        this.lineController.showLineByNumber(19)
     }
 
     reelsHasStopped = () => {
         console.log('All reels has stopped ' + this.gameName);
         this.interface.state.spin = true;
 
-        let lineController = new LinesController(Object.assign({}, this.spinResponse.game.game_result));
-        lineController.createWinningLines(Object.assign({}, this.reelsController.reels));
+        this.lineController.setGameResult(Object.assign({}, this.spinResponse.game.game_result))
+        lineController.createWinningLines();
     }
 
     async spinReels() {
