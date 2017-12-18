@@ -13,9 +13,7 @@ class Line {
         this.strokeColor = strokeColor;
         this.rectNodes = [];
         this.container = document.getElementById(containerId);
-        this.lineTypeNumber = lineTypeNumber;
-        this.lineTypes = s.lineTypes;
-        this.lineType = this.lineTypes[this.lineTypeNumber];
+        this.lineType = s.lineTypes[lineTypeNumber];
         this.reels = reels;
 
         this.svgNode = document.createElementNS(this.namespaceURI, 'svg');
