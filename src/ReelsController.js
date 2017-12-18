@@ -31,20 +31,23 @@ class ReelsContorller {
         }
     }
 
+    /**
+     * Spin all reels to final symbols
+     * @param {Number[][]} finalSymbolsMap Map of final symbols
+     */
     async spinReels(finalSymbolsMap) {
         // For each reel
         for (let i = 0; i < this.reels.length; i++) {
             let finalSymbols = this.getReelSymbolsFromSymbolsMap(finalSymbolsMap, i);
 
             // Wait previous reel to resolve before spinning next
-            // await this.reels[i].spin(finalSymbols);
             await this.spinReel(this.reels[i], finalSymbols);
         }
     }
 
     /**
      * Spins the given reel
-     * @param {Reel} reel Reelo to spin
+     * @param {Reel} reel Reel to spin
      */
     spinReel(reel, finalSymbols) {
         reel.spin(finalSymbols);
@@ -62,6 +65,7 @@ class ReelsContorller {
         if (reelIndex === this.reels.length - 1) {
             // Set previous delay betwwen reels spin start
             this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
+
             this.props.onReelsHasStopped();
         }
     }
