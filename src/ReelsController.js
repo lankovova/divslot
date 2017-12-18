@@ -10,9 +10,10 @@ class ReelsContorller {
      */
     constructor(gameNode, onReelsHasStopped) {
         this.reels = [];
+        this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
 
         this.props = {
-            onReelsHasStopped: onReelsHasStopped
+            onReelsHasStopped
         };
 
         this._initReels(gameNode);
@@ -28,9 +29,6 @@ class ReelsContorller {
             // Fill created reel with random symbols
             this.reels.push(new Reel(i, this.onReelStop));
         }
-        // Set delay between spins to 0 in last reel
-        // to not to block thread in @spinReels for useless time
-        this.reels[settings.numOfReels - 1].delayBetweenReelsSpin = 0;
     }
 
     async spinReels(finalSymbolsMap) {
@@ -39,21 +37,37 @@ class ReelsContorller {
             let finalSymbols = this.getReelSymbolsFromSymbolsMap(finalSymbolsMap, i);
 
             // Wait previous reel to resolve before spinning next
-            await this.reels[i].spin(finalSymbols);
+            // await this.reels[i].spin(finalSymbols);
+            await this.spinReel(this.reels[i], finalSymbols);
         }
+    }
+
+    /**
+     * Spins the given reel
+     * @param {Reel} reel Reelo to spin
+     */
+    spinReel(reel, finalSymbols) {
+        reel.spin(finalSymbols);
+
+        // Resolve promise after delay between reels spin
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, this.delayBetweenReelsSpin);
+        });
     }
 
     onReelStop = reelIndex => {
         // Check if last reel has stopped
         if (reelIndex === this.reels.length - 1) {
             // Set previous delay betwwen reels spin start
-            this.setDelayBeforeReelSpins(settings.delayBetweenReelsSpin);
+            this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
             this.props.onReelsHasStopped();
         }
     }
 
     stopReels() {
-        this.setDelayBeforeReelSpins(0);
+        this.delayBetweenReelsSpin = 0;
     }
 
     /**
@@ -70,16 +84,6 @@ class ReelsContorller {
         }
 
         return resultArray;
-    }
-
-    /**
-     * Set new delay for all reels between each reel spin
-     * @param {Number} ms Delay between reels in milliseconds
-     */
-    setDelayBeforeReelSpins(ms) {
-        for (const reel of this.reels) {
-            reel.delayBetweenReelsSpin = ms;
-        }
     }
 }
 
