@@ -29,6 +29,7 @@ class LinesController {
                 // Get winning symbol
                 const symbol = reel.finalSymbols[sCoor.row];
                 symbol.highlighted = true;
+                symbol.animate()
                 // Add symbol highlite to line
                 line.addSymbolHighlite(symbol.x, symbol.y);
             }

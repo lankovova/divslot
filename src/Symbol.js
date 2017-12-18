@@ -16,7 +16,7 @@ class Symbol {
 	}
 
 	animate() {
-		
+		this.symbolNode.style.animation = 'symbolAnimation 1s steps(15) infinite';
 	}
 
 	get node() {
