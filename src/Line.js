@@ -101,15 +101,13 @@ class Line {
         let lineNode = document.createElementNS(this.namespaceURI, 'line');
         this.svgNode.appendChild(lineNode);
 
-        let sCoord = symbol.getPosition();
-
         let start = {
-            x: sCoord.x,
-            y: sCoord.y + s.symbolSize / 2
+            x: symbol.x,
+            y: symbol.y + s.symbolSize / 2
         }
         let end = {
-            x: sCoord.x + s.symbolSize / 2,
-            y: sCoord.y + s.symbolSize / 2
+            x: symbol.x + s.symbolSize / 2,
+            y: symbol.y + s.symbolSize / 2
         }
 
         this._setLineAttrs(lineNode, start, end);
@@ -119,15 +117,13 @@ class Line {
         let lineNode = document.createElementNS(this.namespaceURI, 'line');
         this.svgNode.appendChild(lineNode);
 
-        let sCoord = symbol.getPosition();
-
         let start = {
-            x: sCoord.x + s.symbolSize / 2,
-            y: sCoord.y + s.symbolSize / 2
+            x: symbol.x + s.symbolSize / 2,
+            y: symbol.y + s.symbolSize / 2
         }
         let end = {
-            x: sCoord.x + s.symbolSize,
-            y: sCoord.y + s.symbolSize / 2
+            x: symbol.x + s.symbolSize,
+            y: symbol.y + s.symbolSize / 2
         }
 
         this._setLineAttrs(lineNode, start, end);

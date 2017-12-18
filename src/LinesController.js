@@ -29,10 +29,8 @@ class LinesController {
                 // Get winning symbol
                 const symbol = reel.finalSymbols[sCoor.row];
                 symbol.highlighted = true;
-                // Get symbol coordinates
-                const symbolCoord = symbol.getPosition();
                 // Add symbol highlite to line
-                line.addSymbolHighlite(symbolCoord.x, symbolCoord.y);
+                line.addSymbolHighlite(symbol.x, symbol.y);
             }
             line.connectHighlites();
             winningLines.push(line);

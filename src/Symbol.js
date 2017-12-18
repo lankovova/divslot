@@ -28,16 +28,6 @@ class Symbol {
 		let y = this.symbolNode.getBoundingClientRect();
 		return y.y;
 	}
-
-	getPosition() {
-		let x = this.symbolNode.getBoundingClientRect();
-		let y = this.symbolNode.getBoundingClientRect();
-
-		return {
-			'x': x.x,
-			'y': y.y,
-		}
-	}
 }
 
 export default Symbol;
