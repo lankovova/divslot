@@ -22,7 +22,7 @@ class Game {
         this.reelsController = new ReelsController(this.gameNode, this.reelsHasStopped);
 
         this.lineController = new LinesController(Object.assign({}, this.reelsController.reels));
-        this.lineController.showLineByNumber(19)
+        //this.lineController.showLineByNumber(19)
     }
 
     reelsHasStopped = () => {
@@ -30,7 +30,7 @@ class Game {
         this.interface.state.spin = true;
 
         this.lineController.setGameResult(Object.assign({}, this.spinResponse.game.game_result))
-        lineController.createWinningLines();
+        this.lineController.createWinningLines();
     }
 
     async spinReels() {

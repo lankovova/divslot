@@ -27,7 +27,7 @@ class LinesController {
                 // Add symbol highlite to line
                 line.addSymbolHighlite(symbolCoord.x, symbolCoord.y);
             }
-            line.connectHighlites('finalSymbols');
+            line.connectHighlites();
             this.winningLines.push(line);
         }
 
@@ -48,7 +48,7 @@ class LinesController {
     _createLines() {
         for(let i = 0; i < s.lineTypes.length; i++) {
             const line = new Line(this.linesContainerId, 'green', i, this.reels);
-            line.connectHighlites('startSymbols');
+            line.connectHighlites();
             this.lines.push(line);
         }
     }

@@ -10,7 +10,6 @@ class Reel {
      */
     constructor(reelIndex, onStop) {
         this.finalSymbols = [];
-        this.startSymbols = [];
 
         this.reelNode;
         this.reelIndex = reelIndex;
@@ -31,7 +30,7 @@ class Reel {
         // Init starting symbols
         for (let i = 0; i < settings.numOfRows; i++) {
             const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
-            this.startSymbols.push(symbol);
+            this.finalSymbols.push(symbol);
             // Add symbol into reel node
             this.reelNode.appendChild(symbol.node);
         }

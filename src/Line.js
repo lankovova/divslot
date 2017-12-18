@@ -56,7 +56,7 @@ class Line {
     /**
      * Connect highlited symbols
      */
-    connectHighlites(symbolType) {
+    connectHighlites() {
         let lineNode;
         let coord = {};
         let sPrev, symbol, sNext, sMap, rMap;
@@ -68,17 +68,17 @@ class Line {
             // Get previous symbol
             if (i !== 0) {
                 [sMap, rMap] = this.lineType[i - 1];
-                sPrev = this.reels[rMap][symbolType][sMap];
+                sPrev = this.reels[rMap].finalSymbols[sMap];
             } else { 
                 sPrev = null; 
             }
             // Get symbol
             [sMap, rMap] = this.lineType[i];
-            symbol = this.reels[rMap][symbolType][sMap];
+            symbol = this.reels[rMap].finalSymbols[sMap];
             // Get next symbol
             if (i !== (s.numOfReels - 1)) {
                 [sMap, rMap] = this.lineType[i + 1];
-                sNext = this.reels[rMap][symbolType][sMap];
+                sNext = this.reels[rMap].finalSymbols[sMap];
             } else { 
                 sNext = null; 
             }
