@@ -5,9 +5,9 @@ class LinesController {
     /**
      * @param {Array<Reel>} reels Reels array
      */
-    constructor(reels) {
+    constructor(gameWrapperNode, reels) {
         this.lines = [];
-        this.linesContainerId = 'game_wrapper';
+        this.gameWrapperNode = gameWrapperNode;
         this.reels = reels;
 
         this._createLines();
@@ -21,7 +21,7 @@ class LinesController {
         let winningLines = [];
 
         for (const [key, res] of Object.entries(gameResult)) {
-            const line = new Line(this.linesContainerId, 'green', (res.line - 1), this.reels);
+            const line = new Line(this.gameWrapperNode, 'green', (res.line - 1), this.reels);
 
             for (const [key, sCoor] of Object.entries(res.list)) {
                 // Get reel
@@ -84,7 +84,7 @@ class LinesController {
 
     _createLines() {
         for(let i = 0; i < s.lineTypes.length; i++) {
-            const line = new Line(this.linesContainerId, 'green', i, this.reels);
+            const line = new Line(this.gameWrapperNode, 'green', i, this.reels);
             line.connectHighlites();
             this.lines.push(line);
         }

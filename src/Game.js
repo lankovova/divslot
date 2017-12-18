@@ -19,7 +19,7 @@ class Game {
 
         this.interface = new Interface({spinReels: this.spinReels, stopReels: this.stopReels});
         this.reelsController = new ReelsController(this.gameNode, this.reelsHasStopped);
-        this.linesController = new LinesController(this.reelsController.reels);
+        this.linesController = new LinesController(document.querySelector('#game_wrapper'), this.reelsController.reels);
     }
 
     reelsHasStopped = () => {
