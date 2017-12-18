@@ -11,7 +11,7 @@ class LinesController {
         this._createLines();
     }
 
-    getWinningLines(gameResult) {
+    createWinningLines(gameResult) {
         for (const [key, res] of Object.entries(gameResult)) {
             const line = new Line(this.linesContainerId, 'green', (res.line - 1), this.reels);
 
@@ -27,15 +27,39 @@ class LinesController {
                 line.addSymbolHighlite(symbolCoord.x, symbolCoord.y);
             }
             line.connectHighlites();
-            line.show()
             this.winningLines.push(line);
         }
+    }
 
-        return this.winningLines;
+    /**
+     * Show all winning lines with delay between them
+     * @param {Number[][]} gameResult Game result
+     */
+    async showWinningLines(gameResult, delay) {
+        this.createWinningLines(gameResult);
+
+        for (const line of this.winningLines) {
+            await this.showWinningLine(line, delay);
+        }
+    }
+
+    /**
+     * Show specific line and hide after delay
+     * @param {Line} line Line to show
+     */
+    showWinningLine(line, delay) {
+        line.show();
+
+        return new Promise(resolve => {
+            setTimeout(() => {
+                line.hide();
+                resolve();
+            }, delay);
+        });
     }
 
     showLineByNumber(number) {
-        for( let line of this.lines) {
+        for (let line of this.lines) {
             line.hide();
         }
         this.lines[number].show()

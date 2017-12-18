@@ -8,6 +8,7 @@
 
     "numOfSpinsBeforeStop": 5,
 
+    "delayBetweenShowingWinningLines": 1000,
     "delayBetweenReelsSpin": 300,
     "spinAnimationTimeInMs": 1500,
     "spinAnimTimingFunc": "cubic-bezier(.9,.61,.9,.61)",
