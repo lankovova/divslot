@@ -27,6 +27,7 @@ class LinesController {
                 line.addSymbolHighlite(symbolCoord.x, symbolCoord.y);
             }
             line.connectHighlites();
+            line.show()
             this.winningLines.push(line);
         }
 

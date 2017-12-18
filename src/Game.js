@@ -40,7 +40,7 @@ class Game {
         this.interface.state.stop = true;
 
         // Getting spin data
-        const response = await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win_right');
+        const response = await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win');
         this.spinResponse = response.data[0];
         console.log(this.spinResponse);
 
