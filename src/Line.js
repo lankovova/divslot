@@ -5,7 +5,7 @@ class Line {
      * @param {HTMLElement} containerNode node of element where svg will be appended
      * @param {String} strokeColor color of the line
      * @param {Number} lineTypeNumber index of the settings.lineTypes
-     * @param {Object} reels reel objects
+     * @param {Array} reels reel objects
      */
     constructor(containerNode, strokeColor, lineTypeNumber, reels) {
         this.namespaceURI = "http://www.w3.org/2000/svg";
