@@ -13,10 +13,9 @@ class Reel {
 
         this.reelNode;
         this.reelIndex = reelIndex;
-        this._delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
 
         this.props = {
-            onStop: onStop
+            onStop
         };
 
         this._init();
@@ -50,8 +49,9 @@ class Reel {
     _initListeners() {
         // End spin animation event
         this.reelNode.addEventListener(transitionEnd, () => {
+            // Reset reel symbols
             this.resetReel();
-            // Call passed function in constuctor
+
             this.props.onStop(this.reelIndex);
         });
     }
@@ -65,20 +65,13 @@ class Reel {
         this.addFinalSymbols(finalSymbols);
 
         // Animate spin
-        this.reelNode.style.transform = `translate(0, ${(settings.numOfSpinsBeforeStop * settings.numOfRows + settings.numOfRows)* settings.symbolSize}px)`;
-
-        // Resolve promise after delay between starting reels spin
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve();
-            }, this._delayBetweenReelsSpin);
-        });
+        this.reelNode.style.transform = `translate(0, ${((settings.numOfSpinsBeforeStop + 1) * settings.numOfRows) * settings.symbolSize}px)`;
     }
 
     addSpinningSymbols() {
         let spinningSymbolsArr = [];
 
-        for (let i = 0; i < settings.numOfSpinsBeforeStop * settings.numOfRows ; i++) {
+        for (let i = 0; i < settings.numOfSpinsBeforeStop * settings.numOfRows; i++) {
             const symbol = new Symbol(Math.floor(Math.random() * (settings.symbolsAmount - 1)) + 1);
             spinningSymbolsArr.push(symbol);
         }
@@ -123,21 +116,6 @@ class Reel {
             // Reset spin duration
             this.reelNode.style.transitionDuration = `${settings.spinAnimationTimeInMs}ms`;
         }, 0);
-    }
-
-    /**
-     * Set new delay between reels spin
-     * @param {Number} ms Delay between spinning reels in milliseconds
-     */
-    set delayBetweenReelsSpin(ms) {
-        ms = parseInt(ms);
-
-        if (ms < 0) {
-            console.warn(`Ms is <0. ms = ${ms}`);
-            return;
-        }
-
-        this._delayBetweenReelsSpin = ms;
     }
 }
 
