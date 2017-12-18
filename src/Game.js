@@ -21,16 +21,16 @@ class Game {
         this.interface = new Interface(this);
         this.reelsController = new ReelsController(this.gameNode, this.reelsHasStopped);
 
-        this.lineController = new LinesController(Object.assign({}, this.reelsController.reels));
-        //this.lineController.showLineByNumber(19)
+        this.linesController = new LinesController(Object.assign({}, this.reelsController.reels));
     }
 
     reelsHasStopped = () => {
         console.log('All reels has stopped ' + this.gameName);
         this.interface.state.spin = true;
 
-        this.lineController.setGameResult(Object.assign({}, this.spinResponse.game.game_result))
-        this.lineController.createWinningLines();
+        const winningLines = this.linesController.getWinningLines(Object.assign({}, this.spinResponse.game.game_result));
+
+        console.log( winningLines );
     }
 
     async spinReels() {
