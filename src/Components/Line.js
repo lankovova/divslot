@@ -13,6 +13,7 @@ class Line {
         this.strokeColor = strokeColor;
         this.rectNodes = [];
         this.container = containerNode;
+        this.lineTypeNumber = lineTypeNumber;
         this.lineType = s.lineTypes[lineTypeNumber];
         this.reels = reels;
 

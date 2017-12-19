@@ -1,37 +1,40 @@
-import settings from '../settings.json';
+import s from '../settings.json';
+import LinePresenter from './LinePresenter'
 
 class Interface {
-    constructor(props) {
-        this.props = props;
 
-        this.state = {
-            spin: true,
-            stop: false
-        };
+    constructor({lines, containerId}) {
+        this.linePresenters = [];
 
-        this.initKeyboardListeners();
+        this.lines = lines;
+        this.container = document.getElementById(containerId);
+        
+        this._initLinePresenters();
     }
 
-    initKeyboardListeners() {
-        window.onkeyup = e => {
-            var keyCode = event.which || event.keyCode;
+    _initLinePresenters() {
+        const pLeft = document.createElement('div');
+        this.container.prepend(pLeft);
+        pLeft.className += 'line_presenters_container left';
 
-            switch (keyCode) {
-                // Space
-                case 32: {
-                    if (this.state.spin) {
-                        this.props.spinReels();
-                    } else if (this.state.stop) {
-                        this.props.stopReels();
-                    }
+        const pRight = document.createElement('div');
+        this.container.appendChild(pRight);
+        pRight.className += 'line_presenters_container right';
 
-                    break;
-                }
-                default: {
-                    // console.log(`Key ${keyCode} pressed`);
-                }
-            }
+        for (const lineIndex of s.linePresenterLeftLines) {
+            const presenter = new LinePresenter(this.lines[lineIndex]);
+            console.log(lineIndex, this.lines[lineIndex].lineTypeNumber)
+            pLeft.appendChild(presenter.node);
+            this.linePresenters.push(presenter);
         }
+
+        for (const lineIndex of s.linePresenterRightLines) {
+            const presenter = new LinePresenter(this.lines[lineIndex]);
+            pRight.appendChild(presenter.node);
+            this.linePresenters.push(presenter);
+        }
+
+        
     }
 
 }

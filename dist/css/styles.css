@@ -22,11 +22,39 @@ body {
 	justify-content: center;
 }
 
-#game #reels_wrapper {
+.reels_wrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.line_presenters_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.line_presenters_container.left {
+	
+}
+
+.line_presenters_container.right {
+	
+}
+
+.line_presenter {
+	width: 30px;
+	height: 30px;
+	border-radius: 5px;
+	z-index: 2;
+	cursor: pointer;
+}
+
+#reels_container {
 	display: flex;
 }
 
-#game #reels_wrapper .reel_wrapper {
+.reel_wrapper {
 	background: lightcyan;
 
 	position: relative;
@@ -34,7 +62,7 @@ body {
 	overflow: hidden;
 }
 
-#game #reels_wrapper .reel_wrapper .reel {
+.reel {
 	position: absolute;
 	bottom: 0;
 	left: 0;

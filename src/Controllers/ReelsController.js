@@ -5,25 +5,26 @@ import settings from '../settings.json';
 class ReelsContorller {
     /**
      * Creates reel controller in specific node
-     * @param {HTMLElement} gameNode Node to place reels at
+     * @param {String} containerId Id of node to place reels at
      * @param {Function} onReelsHasStopped Function to call when all reels has stopped
      */
-    constructor(gameNode, onReelsHasStopped) {
+    constructor(containerId, onReelsHasStopped) {
         this.reels = [];
         this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
 
         this.props = {
             onReelsHasStopped
         };
+        this.container = document.getElementById(containerId);
 
-        this._initReels(gameNode);
+        this._initReels(this.container);
     }
 
-    _initReels(gameNode) {
+    _initReels() {
         const reelsWrapper = document.createElement('div');
-        reelsWrapper.id = 'reels_wrapper';
+        reelsWrapper.id = 'reels_container';
 
-        gameNode.appendChild(reelsWrapper);
+        this.container.appendChild(reelsWrapper);
 
         for (let i = 0; i < settings.numOfReels; i++) {
             // Fill created reel with random symbols

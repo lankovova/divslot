@@ -41,7 +41,7 @@ class Reel {
         reelWrapperNode.style.margin = `0 ${settings.spaceBetweenReels / 2}px`;
         reelWrapperNode.appendChild(this.reelNode);
 
-        document.querySelector('#reels_wrapper').appendChild(reelWrapperNode);
+        document.querySelector('#reels_container').appendChild(reelWrapperNode);
 
         this._initListeners();
     }
