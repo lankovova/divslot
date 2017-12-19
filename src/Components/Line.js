@@ -1,4 +1,4 @@
-import s from './settings.json'
+import s from '../settings.json'
 
 class Line {
     /**

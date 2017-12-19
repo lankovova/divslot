@@ -1,5 +1,5 @@
-import s from './settings.json';
-import Line from './Line';
+import s from '../settings.json';
+import Line from '../Components/Line';
 
 class LinesController {
     /**

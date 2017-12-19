@@ -1,6 +1,6 @@
-import Reel from './Reel';
-import Symbol from './Symbol';
-import settings from './settings.json';
+import Reel from '../Components/Reel';
+import Symbol from '../Components/Symbol';
+import settings from '../settings.json';
 
 class ReelsContorller {
     /**

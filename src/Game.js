@@ -1,6 +1,6 @@
-import Interface from './Interface';
-import ReelsController from './ReelsController';
-import LinesController from './LinesController';
+import Interface from './Components/Interface';
+import ReelsController from './Controllers/ReelsController';
+import LinesController from './Controllers/LinesController';
 import settings from './settings.json';
 
 import axios from 'axios';
