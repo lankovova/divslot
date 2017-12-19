@@ -13,6 +13,7 @@ class LinePresenter {
         // Init listners
         this.node.onmousedown = () => this.line.show();
         this.node.onmouseup = () => this.line.hide();
+        this.node.onmouseleave = () => this.line.hide();
     }
 
     set text(text) {
