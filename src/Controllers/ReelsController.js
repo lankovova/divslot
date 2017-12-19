@@ -5,7 +5,7 @@ import settings from '../settings.json';
 class ReelsContorller {
     /**
      * Creates reel controller in specific node
-     * @param {containerNode} containerNode HTMLNode to place reel in
+     * @param {HTMLElement} containerNode HTMLNode to place reel in
      * @param {Function} onReelsHasStopped Function to call when all reels has stopped
      */
     constructor(containerNode, onReelsHasStopped) {
