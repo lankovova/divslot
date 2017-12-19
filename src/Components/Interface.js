@@ -3,12 +3,12 @@ import LinePresenter from './LinePresenter'
 
 class Interface {
 
-    constructor({lines, containerId}) {
+    constructor({lines, containerNode}) {
         this.linePresenters = [];
 
         this.lines = lines;
-        this.container = document.getElementById(containerId);
-        
+        this.container = containerNode;
+
         this._initLinePresenters();
     }
 
@@ -34,7 +34,7 @@ class Interface {
             this.linePresenters.push(presenter);
         }
 
-        
+
     }
 
 }

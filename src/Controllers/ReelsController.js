@@ -5,17 +5,16 @@ import settings from '../settings.json';
 class ReelsContorller {
     /**
      * Creates reel controller in specific node
-     * @param {String} containerId Id of node to place reels at
      * @param {Function} onReelsHasStopped Function to call when all reels has stopped
      */
-    constructor(containerId, onReelsHasStopped) {
+    constructor(containerNode, onReelsHasStopped) {
         this.reels = [];
         this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
 
         this.props = {
             onReelsHasStopped
         };
-        this.container = document.getElementById(containerId);
+        this.container = containerNode;
 
         this._initReels(this.container);
     }

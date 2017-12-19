@@ -17,13 +17,13 @@ class Game {
         // Store for spin response data
         this.spinResponse = {};
 
-        this.reelsController = new ReelsController('reels_wrapper', this.reelsHasStopped);
+        this.reelsController = new ReelsController(document.querySelector('#reels_wrapper'), this.reelsHasStopped);
         this.linesController = new LinesController(document.querySelector('#game_wrapper'), this.reelsController.reels);
         this.interfaceController = new InterfaceController({
             spinReels: this.spinReels,
             stopReels: this.stopReels,
             lines: this.linesController.lines,
-            containerId: 'reels_wrapper'
+            containerNode: document.querySelector('#reels_wrapper')
         });
     }
 
