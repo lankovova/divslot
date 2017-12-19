@@ -1,10 +1,6 @@
 import Interface from '../Components/Interface'
 
 class InterfaceController {
-    /**
-     *
-     * @param {Object{Array<Line>}} props
-     */
     constructor(props) {
         this.props = props;
 
