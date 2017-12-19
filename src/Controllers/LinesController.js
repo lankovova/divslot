@@ -3,6 +3,7 @@ import Line from '../Components/Line';
 
 class LinesController {
     /**
+     * @param {HTMLElement} gameWrapperNode
      * @param {Array<Reel>} reels Reels array
      */
     constructor(gameWrapperNode, reels) {
@@ -21,7 +22,7 @@ class LinesController {
         let winningLines = [];
 
         for (const [key, res] of Object.entries(gameResult)) {
-            const line = new Line(this.gameWrapperNode, 'green', (res.line - 1), this.reels);
+            const line = new Line(this.gameWrapperNode, 'red', (res.line - 1), this.reels);
 
             for (const [key, sCoor] of Object.entries(res.list)) {
                 // Get reel
@@ -52,6 +53,8 @@ class LinesController {
         for (const line of winningLines) {
             await this.showWinningLine(line, delay);
         }
+
+        console.log('All lines hyi');
     }
 
     /**
@@ -63,7 +66,6 @@ class LinesController {
 
         return new Promise(resolve => {
             setTimeout(() => {
-                // line.hide();
                 line.remove();
                 resolve();
             }, delay);
@@ -83,7 +85,7 @@ class LinesController {
 
     _createLines() {
         for(let i = 0; i < s.lineTypes.length; i++) {
-            const line = new Line(this.gameWrapperNode, 'green', i, this.reels);
+            const line = new Line(this.gameWrapperNode, 'red', i, this.reels);
             line.connectHighlites();
             this.lines.push(line);
         }
