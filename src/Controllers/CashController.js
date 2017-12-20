@@ -1,7 +1,9 @@
 class CashController {
-    constructor() {
+    constructor(props) {
         this._userCash = 0;
         this._userWin = 0;
+
+        this.props = props;
     }
 
     /**
@@ -10,6 +12,7 @@ class CashController {
      */
     set userCash(cash) {
         this._userCash = parseFloat(cash);
+        this.props.panel.setUserCash(this._userCash);
     }
     get userCash() {
         return this._userCash;
@@ -21,6 +24,7 @@ class CashController {
      */
     set userWin(win) {
         this._userWin = parseFloat(win);
+        this.props.panel.setUserWin(this._userWin);
     }
     get userWin() {
         return this._userWin;

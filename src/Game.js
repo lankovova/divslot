@@ -14,7 +14,6 @@ class Game {
         // Store for spin response data
         this.spinResponse = {};
 
-        this.cashController = new CashController();
         this.reelsController = new ReelsController(
             document.querySelector('#reels_wrapper'),
             {
@@ -37,6 +36,10 @@ class Game {
             lines: this.linesController.lines,
             containerNode: document.querySelector('#reels_wrapper')
         });
+
+        this.cashController = new CashController({
+            panel: this.interfaceController.panel
+        });
     }
 
     // All winning lines has shown event
@@ -44,17 +47,14 @@ class Game {
         this.interfaceController.state.takeWin = true;
     }
 
+    // TODO: Make this func async for iterative win transfering
     takeWin = () => {
         this.interfaceController.state.takeWin = false;
 
-        // FIXME:
         // Update user cash
         this.cashController.userCash = this.spinResponse.game.user_cash;
-        this.interfaceController.panel.setUserCash(this.spinResponse.game.user_cash);
-        // FIXME:
         // Reset user win
         this.cashController.userWin = 0;
-        this.interfaceController.panel.setUserWin(0);
 
         // TODO: Enable after taking win
         this.interfaceController.state.spin = true;
@@ -67,8 +67,7 @@ class Game {
         this.interfaceController.state.stop = true;
 
         // Getting spin data
-        const response = await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win2');
-        this.spinResponse = response.data[0];
+        this.spinResponse = (await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win2')).data[0];
         console.log(this.spinResponse);
 
         const symbolsMap = this.spinResponse.game.symbols_map;
@@ -89,11 +88,7 @@ class Game {
         if (this.spinResponse.game.user_win) {
             // Show all winning lines
             // and update user win line by line
-            this.linesController.showWinningLines(this.spinResponse.game.game_result, intermidiateWin => {
-                // FIXME:
-                this.cashController.userWin += intermidiateWin;
-                this.interfaceController.panel.setUserWin(this.cashController.userWin);
-            });
+            this.linesController.showWinningLines(this.spinResponse.game.game_result, intermidiateWin => this.cashController.userWin += intermidiateWin);
         } else {
             // In no win then allow spin
             this.interfaceController.state.spin = true;

@@ -45,12 +45,15 @@ class LinesController {
     /**
      * Show all winning lines
      * @param {Number[][]} gameResult Game result
+     * @param {Function} addUserWin Function
      */
     async showWinningLines(gameResult, addUserWin) {
         const winningLines = this.createWinningLines(gameResult);
 
         for (const line of winningLines) {
+            // Add new win cash for each line
             addUserWin(line.cash);
+
             await this.showWinningLine(line);
         }
 
