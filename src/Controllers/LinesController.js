@@ -54,7 +54,7 @@ class LinesController {
             await this.showWinningLine(line, delay);
         }
 
-        console.log('All lines hyi');
+        // All lines has shown here
     }
 
     /**

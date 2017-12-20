@@ -4,6 +4,7 @@ class InterfaceController {
     constructor(props) {
         this.props = props;
 
+        // FIXME: Maybe remove unnecessary Interface class
         this.interface = new Interface({
             lines: this.props.lines,
             containerNode: this.props.containerNode

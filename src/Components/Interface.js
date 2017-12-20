@@ -2,7 +2,6 @@ import s from '../settings.json';
 import LinePresenter from './LinePresenter'
 
 class Interface {
-
     constructor({lines, containerNode}) {
         this.linePresenters = [];
 
@@ -33,8 +32,6 @@ class Interface {
             pRight.appendChild(presenter.node);
             this.linePresenters.push(presenter);
         }
-
-
     }
 
 }

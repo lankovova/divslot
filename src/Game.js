@@ -1,3 +1,4 @@
+import CashController from './Controllers/CashController';
 import ReelsController from './Controllers/ReelsController';
 import LinesController from './Controllers/LinesController';
 import InterfaceController from './Controllers/InterfaceController';
@@ -17,6 +18,7 @@ class Game {
         // Store for spin response data
         this.spinResponse = {};
 
+        this.cashController = new CashController();
         this.reelsController = new ReelsController(document.querySelector('#reels_wrapper'), this.reelsHasStopped);
         this.linesController = new LinesController(document.querySelector('#game_wrapper'), this.reelsController.reels);
         this.interfaceController = new InterfaceController({
@@ -27,8 +29,8 @@ class Game {
         });
     }
 
+    // Method called when all reels has stopped
     reelsHasStopped = () => {
-        console.log('All reels has stopped ' + this.gameName);
         this.interfaceController.state.spin = true;
 
         this.linesController.showWinningLines(this.spinResponse.game.game_result, settings.delayBetweenShowingWinningLines);
