@@ -7,10 +7,6 @@ import settings from './settings.json';
 import axios from 'axios';
 
 class Game {
-    /**
-     * Create game object
-     * @param {String} gameName Game name
-     */
     constructor(gameName) {
         this.gameName = gameName;
 
@@ -43,17 +39,28 @@ class Game {
         });
     }
 
-    takeWin = () => {
-        console.log('Take win');
+    // All winning lines has shown event
+    linesHasShowed = () => {
+        this.interfaceController.state.takeWin = true;
     }
 
-    linesHasShowed = () => {
-        console.log('All lines has showed');
+    takeWin = () => {
+        this.interfaceController.state.takeWin = false;
+
+        // FIXME:
+        // Update user cash
+        this.cashController.userCash = this.spinResponse.game.user_cash;
+        this.interfaceController.panel.setUserCash(this.spinResponse.game.user_cash);
+        // FIXME:
+        // Reset user win
+        this.cashController.userWin = 0;
+        this.interfaceController.panel.setUserWin(0);
+
+        // TODO: Enable after taking win
+        this.interfaceController.state.spin = true;
     }
 
     spinReels = async () => {
-        console.log('Spin reels');
-
         // Disable spin
         this.interfaceController.state.spin = false;
         // Enable stop
@@ -70,19 +77,36 @@ class Game {
     }
 
     stopReels = () => {
-        console.log('Stop reels');
-
         this.interfaceController.state.stop = false;
 
         this.reelsController.stopReels();
     }
 
-    // Method called when all reels has stopped
+    // All reels has stopped event
     reelsHasStopped = () => {
-        // FIXME: Enable spin only after all lines has showed and user has took his win
-        this.interfaceController.state.spin = true;
+        this.interfaceController.state.stop = false;
 
-        this.linesController.showWinningLines(this.spinResponse.game.game_result, settings.delayBetweenShowingWinningLines);
+        if (this.spinResponse.game.user_win) {
+            // Show all winning lines
+            // and update user win line by line
+            this.linesController.showWinningLines(this.spinResponse.game.game_result, intermidiateWin => {
+                // FIXME:
+                this.cashController.userWin += intermidiateWin;
+                this.interfaceController.panel.setUserWin(this.cashController.userWin);
+            });
+        } else {
+            // In no win then allow spin
+            this.interfaceController.state.spin = true;
+        }
+
+        // Checking for free spins
+        // if (this.spinResponse.free_games) {
+        //     // Free spins here
+        //     if (this.spinResponse.free_games.length !== 0) {
+        //         this.spinReels();
+        //     }
+        // }
+
     }
 
 }

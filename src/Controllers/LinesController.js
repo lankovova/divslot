@@ -22,7 +22,7 @@ class LinesController {
         let winningLines = [];
 
         for (const [key, res] of Object.entries(gameResult)) {
-            const line = new Line(this.gameWrapperNode, 'red', (res.line - 1), this.props.reels);
+            const line = new Line(this.gameWrapperNode, 'red', res.line - 1, res.cash, this.props.reels);
 
             for (const [key, sCoor] of Object.entries(res.list)) {
                 // Get reel
@@ -30,10 +30,11 @@ class LinesController {
                 // Get winning symbol
                 const symbol = reel.finalSymbols[sCoor.row];
                 symbol.highlighted = true;
-                symbol.animate()
+                symbol.animate();
                 // Add symbol highlite to line
                 line.addSymbolHighlite(symbol.x, symbol.y);
             }
+
             line.connectHighlites();
             winningLines.push(line);
         }
@@ -42,16 +43,15 @@ class LinesController {
     }
 
     /**
-     * Show all winning lines with delay between them
+     * Show all winning lines
      * @param {Number[][]} gameResult Game result
      */
-    async showWinningLines(gameResult, delay) {
+    async showWinningLines(gameResult, addUserWin) {
         const winningLines = this.createWinningLines(gameResult);
 
-        console.log(winningLines);
-
         for (const line of winningLines) {
-            await this.showWinningLine(line, delay);
+            addUserWin(line.cash);
+            await this.showWinningLine(line);
         }
 
         // All lines has shown here
@@ -64,14 +64,14 @@ class LinesController {
      * Show specific line and hide after delay
      * @param {Line} line Line to show
      */
-    showWinningLine(line, delay) {
+    showWinningLine(line) {
         line.show();
 
         return new Promise(resolve => {
             setTimeout(() => {
                 line.remove();
                 resolve();
-            }, delay);
+            }, s.delayBetweenShowingWinningLines);
         });
     }
 
@@ -87,8 +87,8 @@ class LinesController {
     }
 
     _createLines() {
-        for(let i = 0; i < s.lineTypes.length; i++) {
-            const line = new Line(this.gameWrapperNode, 'red', i, this.props.reels);
+        for (let i = 0; i < s.lineTypes.length; i++) {
+            const line = new Line(this.gameWrapperNode, 'red', i, 0, this.props.reels);
             line.connectHighlites();
             this.lines.push(line);
         }

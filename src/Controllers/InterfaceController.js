@@ -1,4 +1,5 @@
-import Interface from '../Components/Interface'
+import Interface from '../Components/Interface';
+import Panel from '../Components/Panel';
 
 class InterfaceController {
     constructor(props) {
@@ -13,8 +14,10 @@ class InterfaceController {
         this.state = {
             spin: true,
             stop: false,
-            take: false
+            takeWin: false
         };
+
+        this.panel = new Panel(document.querySelector('#panel'));
 
         this._initKeyboardListeners();
     }
@@ -30,7 +33,7 @@ class InterfaceController {
                         this.props.spinReels();
                     } else if (this.state.stop) {
                         this.props.stopReels();
-                    } else if (this.state.take) {
+                    } else if (this.state.takeWin) {
                         this.props.takeWin();
                     }
 

@@ -22,7 +22,6 @@ class Interface {
 
         for (const lineIndex of s.linePresenterLeftLines) {
             const presenter = new LinePresenter(this.lines[lineIndex]);
-            console.log(lineIndex, this.lines[lineIndex].lineTypeNumber)
             pLeft.appendChild(presenter.node);
             this.linePresenters.push(presenter);
         }
