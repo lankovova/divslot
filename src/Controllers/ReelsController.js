@@ -6,15 +6,13 @@ class ReelsContorller {
     /**
      * Creates reel controller in specific node
      * @param {HTMLElement} containerNode HTMLNode to place reel in
-     * @param {Function} onReelsHasStopped Function to call when all reels has stopped
+     * @param {Object} props Props from parent
      */
-    constructor(containerNode, onReelsHasStopped) {
+    constructor(containerNode, props) {
         this.reels = [];
         this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
 
-        this.props = {
-            onReelsHasStopped
-        };
+        this.props = props;
         this.container = containerNode;
 
         this._initReels(this.container);
@@ -68,7 +66,7 @@ class ReelsContorller {
             // Set previous delay betwwen reels spin start
             this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
 
-            this.props.onReelsHasStopped();
+            this.props.reelsHasStopped();
         }
     }
 

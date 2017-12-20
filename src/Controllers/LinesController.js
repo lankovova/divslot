@@ -6,10 +6,10 @@ class LinesController {
      * @param {HTMLElement} gameWrapperNode
      * @param {Array<Reel>} reels Reels array
      */
-    constructor(gameWrapperNode, reels) {
+    constructor(gameWrapperNode, props) {
         this.lines = [];
         this.gameWrapperNode = gameWrapperNode;
-        this.reels = reels;
+        this.props = props;
 
         this._createLines();
     }
@@ -22,11 +22,11 @@ class LinesController {
         let winningLines = [];
 
         for (const [key, res] of Object.entries(gameResult)) {
-            const line = new Line(this.gameWrapperNode, 'red', (res.line - 1), this.reels);
+            const line = new Line(this.gameWrapperNode, 'red', (res.line - 1), this.props.reels);
 
             for (const [key, sCoor] of Object.entries(res.list)) {
                 // Get reel
-                const reel = this.reels[sCoor.col];
+                const reel = this.props.reels[sCoor.col];
                 // Get winning symbol
                 const symbol = reel.finalSymbols[sCoor.row];
                 symbol.highlighted = true;
@@ -55,6 +55,9 @@ class LinesController {
         }
 
         // All lines has shown here
+        this.props.linesHasShowed();
+
+        // TODO: Cycle showing lines
     }
 
     /**
@@ -85,7 +88,7 @@ class LinesController {
 
     _createLines() {
         for(let i = 0; i < s.lineTypes.length; i++) {
-            const line = new Line(this.gameWrapperNode, 'red', i, this.reels);
+            const line = new Line(this.gameWrapperNode, 'red', i, this.props.reels);
             line.connectHighlites();
             this.lines.push(line);
         }

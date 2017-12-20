@@ -1,18 +1,18 @@
 class CashController {
     constructor() {
-        this._cash;
+        this._userCash;
     }
 
     /**
      * Sets new cash
      * @param {Number} newCash New cash to set
      */
-    set cash(newCash) {
-        this._cash = newCash;
+    set userCash(newCash) {
+        this._userCash = newCash;
     }
 
-    get cash() {
-        return this._cash;
+    get userCash() {
+        return this._userCash;
     }
 }
 

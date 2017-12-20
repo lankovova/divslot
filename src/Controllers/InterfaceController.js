@@ -12,7 +12,8 @@ class InterfaceController {
 
         this.state = {
             spin: true,
-            stop: false
+            stop: false,
+            take: false
         };
 
         this._initKeyboardListeners();
@@ -29,6 +30,8 @@ class InterfaceController {
                         this.props.spinReels();
                     } else if (this.state.stop) {
                         this.props.stopReels();
+                    } else if (this.state.take) {
+                        this.props.takeWin();
                     }
 
                     break;

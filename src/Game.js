@@ -19,27 +19,44 @@ class Game {
         this.spinResponse = {};
 
         this.cashController = new CashController();
-        this.reelsController = new ReelsController(document.querySelector('#reels_wrapper'), this.reelsHasStopped);
-        this.linesController = new LinesController(document.querySelector('#game_wrapper'), this.reelsController.reels);
+        this.reelsController = new ReelsController(
+            document.querySelector('#reels_wrapper'),
+            {
+                reelsHasStopped: this.reelsHasStopped
+            }
+        );
+
+        this.linesController = new LinesController(
+            document.querySelector('#game_wrapper'),
+            {
+                reels: this.reelsController.reels,
+                linesHasShowed: this.linesHasShowed
+            }
+        );
+
         this.interfaceController = new InterfaceController({
             spinReels: this.spinReels,
             stopReels: this.stopReels,
+            takeWin: this.takeWin,
             lines: this.linesController.lines,
             containerNode: document.querySelector('#reels_wrapper')
         });
     }
 
-    // Method called when all reels has stopped
-    reelsHasStopped = () => {
-        this.interfaceController.state.spin = true;
+    takeWin = () => {
+        console.log('Take win');
+    }
 
-        this.linesController.showWinningLines(this.spinResponse.game.game_result, settings.delayBetweenShowingWinningLines);
+    linesHasShowed = () => {
+        console.log('All lines has showed');
     }
 
     spinReels = async () => {
         console.log('Spin reels');
 
+        // Disable spin
         this.interfaceController.state.spin = false;
+        // Enable stop
         this.interfaceController.state.stop = true;
 
         // Getting spin data
@@ -59,6 +76,15 @@ class Game {
 
         this.reelsController.stopReels();
     }
+
+    // Method called when all reels has stopped
+    reelsHasStopped = () => {
+        // FIXME: Enable spin only after all lines has showed and user has took his win
+        this.interfaceController.state.spin = true;
+
+        this.linesController.showWinningLines(this.spinResponse.game.game_result, settings.delayBetweenShowingWinningLines);
+    }
+
 }
 
 export default Game;
