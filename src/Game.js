@@ -1,4 +1,4 @@
-import CashController from './Controllers/CashController';
+import PointsController from './Controllers/PointsController';
 import ReelsController from './Controllers/ReelsController';
 import LinesController from './Controllers/LinesController';
 import InterfaceController from './Controllers/InterfaceController';
@@ -33,14 +33,15 @@ class Game {
             spinReels: this.spinReels,
             stopReels: this.stopReels,
             takeWin: this.takeWin,
+            setMaxBet: this.setMaxBet,
             increaseLinesAmount: this.increaseLinesAmount,
             increaseBetPerLine: this.increaseBetPerLine,
             lines: this.linesController.lines,
             containerNode: document.querySelector('#reels_wrapper')
         });
 
-        this.cashController = new CashController({
-                userCash: 0,
+        this.pointsController = new PointsController({
+                userCash: 100,
                 userWin: 0,
                 lines: 1,
                 betPerLine: 1
@@ -53,17 +54,21 @@ class Game {
 
     // FIXME: Move this func pattern into Helper class
     increaseLinesAmount = () => {
-        const currentLineIndex = settings.lines.indexOf(this.cashController.lines);
+        const currentLineIndex = settings.lines.indexOf(this.pointsController.lines);
         const newLineIndex = (currentLineIndex === settings.lines.length - 1) ? 0 : currentLineIndex + 1;
 
-        this.cashController.lines = settings.lines[newLineIndex];
+        this.pointsController.lines = settings.lines[newLineIndex];
     }
     // FIXME: Move this func pattern into Helper class
     increaseBetPerLine = () => {
-        const currentBetPerLineIndex = settings.betPerLine.indexOf(this.cashController.betPerLine);
+        const currentBetPerLineIndex = settings.betPerLine.indexOf(this.pointsController.betPerLine);
         const newBetPerLineIndex = (currentBetPerLineIndex === settings.betPerLine.length - 1) ? 0 : currentBetPerLineIndex + 1;
 
-        this.cashController.betPerLine = settings.betPerLine[newBetPerLineIndex];
+        this.pointsController.betPerLine = settings.betPerLine[newBetPerLineIndex];
+    }
+    setMaxBet = () => {
+        this.pointsController.lines = settings.lines[settings.lines.length - 1];
+        this.pointsController.betPerLine = settings.betPerLine[settings.betPerLine.length - 1];
     }
 
     // All winning lines has shown event
@@ -76,9 +81,9 @@ class Game {
         this.interfaceController.state.takeWin = false;
 
         // Update user cash
-        this.cashController.userCash = this.spinResponse.game.user_cash;
+        this.pointsController.userCash = this.spinResponse.user_cash;
         // Reset user win
-        this.cashController.userWin = 0;
+        this.pointsController.userWin = 0;
 
         // TODO: Enable after taking win
         this.interfaceController.state.spin = true;
@@ -91,10 +96,17 @@ class Game {
         this.interfaceController.state.stop = true;
 
         // Getting spin data
-        this.spinResponse = (await axios.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win2')).data[0];
+        this.spinResponse = (await axios.post('http://admin.chcgreen.org/spin', {
+            lines_amount: this.pointsController.lines,
+            bet_per_line: this.pointsController.betPerLine
+        })).data;
         console.log(this.spinResponse);
 
-        const symbolsMap = this.spinResponse.game.symbols_map;
+        const symbolsMap = this.spinResponse.final_symbols;
+
+        // FIXME:
+        // Decrease user cash
+        this.pointsController.userCash = 100 - this.pointsController.totalBet;
 
         this.reelsController.spinReels(symbolsMap);
     }
@@ -109,11 +121,11 @@ class Game {
     reelsHasStopped = () => {
         this.interfaceController.state.stop = false;
 
-        if (this.spinResponse.game.user_win) {
+        if (this.spinResponse.won) { // Win case
             // Show all winning lines
             // and update user win line by line
-            this.linesController.showWinningLines(this.spinResponse.game.game_result, intermidiateWin => this.cashController.userWin += intermidiateWin);
-        } else {
+            this.linesController.showWinningLines(this.spinResponse.spin_result, intermidiateWin => this.pointsController.userWin += intermidiateWin);
+        } else { // Lose case
             // In no win then allow spin
             this.interfaceController.state.spin = true;
         }

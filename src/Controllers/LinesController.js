@@ -22,7 +22,12 @@ class LinesController {
         let winningLines = [];
 
         for (const [key, res] of Object.entries(gameResult)) {
-            const line = new Line(this.gameWrapperNode, 'red', res.line - 1, res.cash, this.props.reels);
+            // if (!res.line_index)
+            //     const line = new Line(this.gameWrapperNode, 'red', res.cash, this.props.reels);
+            // else
+            const line = new Line(this.gameWrapperNode, 'red', res.line_index, res.cash, this.props.reels);
+
+            let highlightedSymbols = [];
 
             for (const [key, sCoor] of Object.entries(res.list)) {
                 // Get reel
@@ -31,12 +36,17 @@ class LinesController {
                 const symbol = reel.finalSymbols[sCoor.row];
                 symbol.highlighted = true;
                 symbol.animate();
+                highlightedSymbols.push(symbol);
                 // Add symbol highlite to line
                 line.addSymbolHighlite(symbol.x, symbol.y);
             }
 
             line.connectHighlites();
             winningLines.push(line);
+
+            for (const symbol of highlightedSymbols) {
+                symbol.highlighted = false;
+            }
         }
 
         return winningLines;

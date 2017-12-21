@@ -1,4 +1,4 @@
-class CashController {
+class PointsController {
     constructor(startCash, props) {
         this._userCash;
         this._userWin;
@@ -15,7 +15,14 @@ class CashController {
         this.lines = lines;
         this.betPerLine = betPerLine;
         this.userCash = userCash;
-        this.userWin = userWin;
+        this.userWin = 0;
+    }
+
+    static toKups(points) {
+        return +(points / 100).toFixed(2);
+    }
+    static toPoints(kups) {
+        return Math.floor(kups * 100);
     }
 
     get lines() { return this._linesAmount };
@@ -26,40 +33,40 @@ class CashController {
         this._updateTotalBet();
     }
 
-    get betPerLine() { return this._betPerLine };
+    get betPerLine() { return PointsController.toPoints(this._betPerLine) };
     set betPerLine(betPerLine) {
-        this._betPerLine = betPerLine;
+        this._betPerLine = PointsController.toKups(betPerLine);
         this.props.panel.setBetPerLine(this._betPerLine);
 
         this._updateTotalBet();
     }
 
-    get totalBet() { return this._linesAmount * this._betPerLine };
+    get totalBet() { return +(this._linesAmount * this._betPerLine).toFixed(2) };
 
     _updateTotalBet() {
-        this.props.panel.setTotalBet(this._linesAmount * this._betPerLine);
+        this.props.panel.setTotalBet(+(this._linesAmount * this._betPerLine).toFixed(2));
     }
 
     /**
      * Get/Set user cash
-     * @param {Number} cash New cash to set
+     * @param {String|Number} cash New cash to set
      */
     get userCash() { return this._userCash; }
     set userCash(cash) {
-        this._userCash = parseFloat(cash);
+        this._userCash = +cash.toFixed(2);
         this.props.panel.setUserCash(this._userCash);
     }
 
 
     /**
      * Get/Set user win
-     * @param {Number} win New win to set
+     * @param {String|Number} win New win to set
      */
     get userWin() { return this._userWin; }
     set userWin(win) {
-        this._userWin = parseFloat(win);
+        this._userWin = +win.toFixed(2);
         this.props.panel.setUserWin(this._userWin);
     }
 }
 
-export default CashController;
+export default PointsController;

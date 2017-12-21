@@ -51,6 +51,10 @@ class InterfaceController {
                     this.props.increaseBetPerLine();
                     break;
                 }
+                case 77: {
+                    this.props.setMaxBet();
+                    break;
+                }
                 default: {
                     // console.log(`Key ${keyCode} pressed`);
                 }
