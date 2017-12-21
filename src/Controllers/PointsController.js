@@ -28,6 +28,7 @@ class PointsController {
     get lines() { return this._linesAmount };
     set lines(linesAmount) {
         this._linesAmount = linesAmount;
+        // FIXME: Think about calling this functions in Game instead of PointsContorller
         this.props.updateLinePresenters(this._linesAmount, this._betPerLine);
         this.props.panel.setLinesAmount(this._linesAmount);
 
@@ -37,6 +38,7 @@ class PointsController {
     get betPerLine() { return PointsController.toPoints(this._betPerLine) };
     set betPerLine(betPerLine) {
         this._betPerLine = PointsController.toKups(betPerLine);
+        // FIXME: Think about calling this functions in Game instead of PointsContorller
         this.props.updateLinePresenters(this._linesAmount, this._betPerLine);
         this.props.panel.setBetPerLine(this._betPerLine);
 
@@ -46,6 +48,7 @@ class PointsController {
     get totalBet() { return +(this._linesAmount * this._betPerLine).toFixed(2) };
 
     _updateTotalBet() {
+        // FIXME: Think about calling this function in Game instead of PointsContorller
         this.props.panel.setTotalBet(+(this._linesAmount * this._betPerLine).toFixed(2));
     }
 
@@ -56,6 +59,7 @@ class PointsController {
     get userCash() { return this._userCash; }
     set userCash(cash) {
         this._userCash = +cash.toFixed(2);
+        // FIXME: Think about calling this functions in Game instead of PointsContorller
         this.props.panel.setUserCash(this._userCash);
     }
 
@@ -67,6 +71,7 @@ class PointsController {
     get userWin() { return this._userWin; }
     set userWin(win) {
         this._userWin = +win.toFixed(2);
+        // FIXME: Think about calling this functions in Game instead of PointsContorller
         this.props.panel.setUserWin(this._userWin);
     }
 }

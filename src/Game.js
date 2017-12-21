@@ -10,6 +10,12 @@ class Game {
     constructor(gameName) {
         this.gameName = gameName;
 
+        console.log(`Controls:
+        space - Spin
+        < - Increase lines
+        > - Increase bet per line
+        m - Set max bet`);
+
         this.gameNode = document.querySelector('#game');
         // Store for spin response data
         this.spinResponse = {};
@@ -33,9 +39,9 @@ class Game {
             spinReels: this.spinReels,
             stopReels: this.stopReels,
             takeWin: this.takeWin,
+            setLines: this.setLines,
+            setBerPerLine: this.setBerPerLine,
             setMaxBet: this.setMaxBet,
-            increaseLinesAmount: this.increaseLinesAmount,
-            increaseBetPerLine: this.increaseBetPerLine,
             lines: this.linesController.lines,
             containerNode: document.querySelector('#reels_wrapper')
         });
@@ -47,29 +53,46 @@ class Game {
                 betPerLine: 1
             },
             {
+                // FIXME: Think about not passing this props into PointsController
                 panel: this.interfaceController.panel,
                 updateLinePresenters: this.interfaceController.interface.setLinePresentersText
             }
         );
     }
 
-    // FIXME: Move this func pattern into Helper class
-    increaseLinesAmount = () => {
-        const currentLineIndex = settings.lines.indexOf(this.pointsController.lines);
-        const newLineIndex = (currentLineIndex === settings.lines.length - 1) ? 0 : currentLineIndex + 1;
-
-        this.pointsController.lines = settings.lines[newLineIndex];
-    }
-    // FIXME: Move this func pattern into Helper class
-    increaseBetPerLine = () => {
-        const currentBetPerLineIndex = settings.betPerLine.indexOf(this.pointsController.betPerLine);
-        const newBetPerLineIndex = (currentBetPerLineIndex === settings.betPerLine.length - 1) ? 0 : currentBetPerLineIndex + 1;
-
-        this.pointsController.betPerLine = settings.betPerLine[newBetPerLineIndex];
-    }
     setMaxBet = () => {
-        this.pointsController.lines = settings.lines[settings.lines.length - 1];
-        this.pointsController.betPerLine = settings.betPerLine[settings.betPerLine.length - 1];
+        this.setLines(settings.lines[settings.lines.length - 1]);
+        this.setBerPerLine(settings.betPerLine[settings.betPerLine.length - 1]);
+    }
+    setLines = lines => {
+        if (lines) {
+            this.pointsController.lines = lines;
+        } else {
+            const newLines = this.getNextArrayItem(settings.lines, this.pointsController.lines);
+            this.pointsController.lines = newLines;
+        }
+    }
+    setBerPerLine = betPerLine => {
+        if (betPerLine) {
+            this.pointsController.betPerLine = betPerLine;
+        } else {
+            const newBetPerLine = this.getNextArrayItem(settings.betPerLine, this.pointsController.betPerLine);
+            this.pointsController.betPerLine = newBetPerLine;
+        }
+    }
+
+    // TODO: Move to Helper class
+    /**
+     * Get next number from given array
+     * @param {Array} array Array to get an item from
+     * @param {Number} item Current item
+     * @returns {Number} Next item
+     */
+    getNextArrayItem(array, item) {
+        const currentIndex = array.indexOf(item);
+        const newIndex = (currentIndex === array.length - 1) ? 0 : currentIndex + 1;
+
+        return array[newIndex];
     }
 
     // All winning lines has shown event

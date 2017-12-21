@@ -42,13 +42,13 @@ class InterfaceController {
                 // <
                 case 188: {
                     // Increase lines amount
-                    this.props.increaseLinesAmount();
+                    this.props.setLines();
                     break;
                 }
                 // >
                 case 190: {
                     // Increase bet per line
-                    this.props.increaseBetPerLine();
+                    this.props.setBerPerLine();
                     break;
                 }
                 case 77: {
