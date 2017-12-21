@@ -23,7 +23,7 @@ class InterfaceController {
     }
 
     _initKeyboardListeners() {
-        window.onkeyup = e => {
+        window.onkeyup = event => {
             var keyCode = event.which || event.keyCode;
 
             switch (keyCode) {
@@ -37,6 +37,18 @@ class InterfaceController {
                         this.props.takeWin();
                     }
 
+                    break;
+                }
+                // <
+                case 188: {
+                    // Increase lines amount
+                    this.props.increaseLinesAmount();
+                    break;
+                }
+                // >
+                case 190: {
+                    // Increase bet per line
+                    this.props.increaseBetPerLine();
                     break;
                 }
                 default: {

@@ -32,13 +32,23 @@ body {
 
 .panel {
     display: flex;
-    justify-content: center;
-    padding: 10px 0;
+    flex-direction: column;
     background: lightgreen;
 }
 
-.panel div {
+.panel-row {
+    display: flex;
+    justify-content: center;
+}
+
+.panel-row-item {
+    padding: 10px 0;
     margin: 0 5px;
+}
+
+.panel .notifier {
+    background: lightseagreen;
+    padding: 10px;
 }
 
 .reels_wrapper {
@@ -75,9 +85,7 @@ body {
 
 .reel_wrapper {
     background: lightcyan;
-
     position: relative;
-
     overflow: hidden;
 }
 

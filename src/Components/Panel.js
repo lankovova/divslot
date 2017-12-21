@@ -2,28 +2,36 @@ class Panel {
     constructor(node) {
         this.node = node;
 
-        this.userCashNode = this._initUserCashElement();
-        this.node.appendChild(this.userCashNode);
+        this.notifier = this._initNotifier();
+        this.node.appendChild(this.notifier);
 
-        this.userWinNode = this._initUserWinElement();
-        this.node.appendChild(this.userWinNode);
+        this.userCashNode = this._createPanelRowItem();
+        this.userWinNode = this._createPanelRowItem();
+        this.linesAmountNode = this._createPanelRowItem();
+        this.betPerLineNode = this._createPanelRowItem();
+        this.totalBetNode = this._createPanelRowItem();
+
+        const rowWrapper = document.createElement('div');
+        rowWrapper.classList = 'panel-row';
+        rowWrapper.appendChild(this.userCashNode);
+        rowWrapper.appendChild(this.userWinNode);
+        rowWrapper.appendChild(this.linesAmountNode);
+        rowWrapper.appendChild(this.betPerLineNode);
+        rowWrapper.appendChild(this.totalBetNode);
+        this.node.appendChild(rowWrapper);
     }
 
-    _initUserCashElement() {
+    _createPanelRowItem() {
         const element = document.createElement('div');
-
-        element.id = 'userCash';
-        // TODO: Set starting user cash later
-        element.innerText = `Cash: ${0}`;
+        element.classList = 'panel-row-item';
 
         return element;
     }
 
-    _initUserWinElement() {
+    _initNotifier() {
         const element = document.createElement('div');
-
-        element.id = 'userWin';
-        element.innerText = `Win: 0`;
+        element.classList = 'notifier panel-row';
+        element.innerText = 'Press start to spin';
 
         return element;
     }
@@ -35,6 +43,19 @@ class Panel {
     setUserWin(win) {
         this.userWinNode.innerText = `Win: ${win}`;
     }
+
+    setLinesAmount(lines) {
+        this.linesAmountNode.innerText = `Lines: ${lines}`;
+    }
+
+    setBetPerLine(betPerLine) {
+        this.betPerLineNode.innerText = `Bet/Line: ${betPerLine}`;
+    }
+
+    setTotalBet(bet) {
+        this.totalBetNode.innerText = `Bet: ${bet}`;
+    }
+
 }
 
 export default Panel;

@@ -33,13 +33,35 @@ class Game {
             spinReels: this.spinReels,
             stopReels: this.stopReels,
             takeWin: this.takeWin,
+            increaseLinesAmount: this.increaseLinesAmount,
+            increaseBetPerLine: this.increaseBetPerLine,
             lines: this.linesController.lines,
             containerNode: document.querySelector('#reels_wrapper')
         });
 
         this.cashController = new CashController({
-            panel: this.interfaceController.panel
-        });
+                userCash: 0,
+                userWin: 0,
+                lines: 1,
+                betPerLine: 1
+            },
+            {
+                panel: this.interfaceController.panel
+            }
+        );
+    }
+
+    increaseLinesAmount = () => {
+        const currentLineIndex = settings.lines.indexOf(this.cashController.lines);
+        const newLineIndex = (currentLineIndex === settings.lines.length - 1) ? 0 : currentLineIndex + 1;
+
+        this.cashController.lines = settings.lines[newLineIndex];
+    }
+    increaseBetPerLine = () => {
+        const currentBetPerLineIndex = settings.betPerLine.indexOf(this.cashController.betPerLine);
+        const newBetPerLineIndex = (currentBetPerLineIndex === settings.betPerLine.length - 1) ? 0 : currentBetPerLineIndex + 1;
+
+        this.cashController.betPerLine = settings.betPerLine[newBetPerLineIndex];
     }
 
     // All winning lines has shown event
