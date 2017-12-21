@@ -1,6 +1,6 @@
 class LinePresenter {
     /**
-     * Show/hide line 
+     * Show/hide line
      * @param {Line} line Line that will be show/hide
      */
     constructor(line) {

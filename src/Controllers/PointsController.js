@@ -28,6 +28,7 @@ class PointsController {
     get lines() { return this._linesAmount };
     set lines(linesAmount) {
         this._linesAmount = linesAmount;
+        this.props.updateLinePresenters(this._linesAmount, this._betPerLine);
         this.props.panel.setLinesAmount(this._linesAmount);
 
         this._updateTotalBet();
@@ -36,6 +37,7 @@ class PointsController {
     get betPerLine() { return PointsController.toPoints(this._betPerLine) };
     set betPerLine(betPerLine) {
         this._betPerLine = PointsController.toKups(betPerLine);
+        this.props.updateLinePresenters(this._linesAmount, this._betPerLine);
         this.props.panel.setBetPerLine(this._betPerLine);
 
         this._updateTotalBet();

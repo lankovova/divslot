@@ -74,9 +74,14 @@ body {
 .line_presenter {
     width: 30px;
     height: 30px;
+
     border-radius: 5px;
     z-index: 2;
     cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #reels_container {
