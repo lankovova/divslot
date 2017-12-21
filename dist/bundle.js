@@ -386,7 +386,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 var bind = __webpack_require__(129);
-var isBuffer = __webpack_require__(348);
+var isBuffer = __webpack_require__(352);
 
 /*global toString:true*/
 
@@ -1667,7 +1667,7 @@ module.exports = function (target, src, safe) {
 /* 43 */
 /***/ (function(module, exports) {
 
-module.exports = {"symbolSize":140,"spaceBetweenReels":20,"numOfRows":3,"numOfReels":5,"symbolsAmount":10,"numOfSpinsBeforeStop":5,"delayBetweenShowingWinningLines":1000,"delayBetweenReelsSpin":300,"spinAnimationTimeInMs":1500,"spinAnimTimingFunc":"ease-in-out","symbolsPath":"./assets/images/symbols/","symbolsImages":["1.png","2.png","3.png","4.png","5.png","6.jpg","7.png","8.png","9.png","10.png"],"lineTypes":[[[1,0],[1,1],[1,2],[1,3],[1,4]],[[0,0],[0,1],[0,2],[0,3],[0,4]],[[2,0],[2,1],[2,2],[2,3],[2,4]],[[0,0],[1,1],[2,2],[1,3],[0,4]],[[2,0],[1,1],[0,2],[1,3],[2,4]],[[1,0],[0,1],[0,2],[0,3],[1,4]],[[1,0],[2,1],[2,2],[2,3],[1,4]],[[0,0],[0,1],[1,2],[2,3],[2,4]],[[2,0],[2,1],[1,2],[0,3],[0,4]],[[1,0],[2,1],[1,2],[0,3],[1,4]],[[2,0],[0,1],[1,2],[2,3],[1,4]],[[0,0],[1,1],[1,2],[1,3],[0,4]],[[2,0],[1,1],[1,2],[1,3],[2,4]],[[0,0],[1,1],[0,2],[1,3],[0,4]],[[2,0],[1,1],[2,2],[1,3],[2,4]],[[1,0],[1,1],[0,2],[1,3],[1,4]],[[1,0],[1,1],[2,2],[1,3],[1,4]],[[0,0],[0,1],[2,2],[0,3],[0,4]],[[2,0],[2,1],[0,2],[2,3],[2,4]],[[0,0],[2,1],[2,2],[2,3],[0,4]]]}
+module.exports = {"symbolSize":140,"spaceBetweenReels":20,"numOfRows":3,"numOfReels":5,"symbolsAmount":10,"numOfSpinsBeforeStop":5,"delayBetweenShowingWinningLines":1000,"delayBetweenReelsSpin":300,"spinAnimationTimeInMs":1500,"spinAnimTimingFunc":"ease-in-out","symbolsPath":"./assets/images/symbols/","symbolsImages":["1.png","2.png","3.png","4.png","5.png","6.jpg","7.png","8.png","9.png","10.png"],"lines":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"betPerLine":[1,2,3,4,5,6,7,8,9,10,15,20,25,30,40,50,60,70,80,90,100],"lineTypes":[[[1,0],[1,1],[1,2],[1,3],[1,4]],[[0,0],[0,1],[0,2],[0,3],[0,4]],[[2,0],[2,1],[2,2],[2,3],[2,4]],[[0,0],[1,1],[2,2],[1,3],[0,4]],[[2,0],[1,1],[0,2],[1,3],[2,4]],[[1,0],[0,1],[0,2],[0,3],[1,4]],[[1,0],[2,1],[2,2],[2,3],[1,4]],[[0,0],[0,1],[1,2],[2,3],[2,4]],[[2,0],[2,1],[1,2],[0,3],[0,4]],[[1,0],[0,1],[1,2],[2,3],[2,4]],[[1,0],[0,1],[1,2],[0,3],[1,4]],[[1,0],[2,1],[1,2],[2,3],[1,4]],[[2,0],[1,1],[1,2],[1,3],[2,4]],[[0,0],[1,1],[0,2],[1,3],[0,4]],[[2,0],[1,1],[2,2],[1,3],[2,4]],[[1,0],[1,1],[0,2],[1,3],[1,4]],[[1,0],[1,1],[2,2],[1,3],[1,4]],[[0,0],[0,1],[1,2],[0,3],[0,4]],[[2,0],[2,1],[1,2],[2,3],[2,4]],[[0,0],[1,1],[1,2],[1,3],[0,4]]],"linePresenterLeftLines":[3,1,7,5,9,0,6,8,2,4],"linePresenterRightLines":[17,13,19,15,10,11,16,12,14,18]}
 
 /***/ }),
 /* 44 */
@@ -3068,7 +3068,7 @@ module.exports = navigator && navigator.userAgent || '';
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(18);
-var normalizeHeaderName = __webpack_require__(350);
+var normalizeHeaderName = __webpack_require__(354);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -4406,12 +4406,12 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(18);
-var settle = __webpack_require__(351);
-var buildURL = __webpack_require__(353);
-var parseHeaders = __webpack_require__(354);
-var isURLSameOrigin = __webpack_require__(355);
+var settle = __webpack_require__(355);
+var buildURL = __webpack_require__(357);
+var parseHeaders = __webpack_require__(358);
+var isURLSameOrigin = __webpack_require__(359);
 var createError = __webpack_require__(132);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(356);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(360);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -4508,7 +4508,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(357);
+      var cookies = __webpack_require__(361);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -4593,7 +4593,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(352);
+var enhanceError = __webpack_require__(356);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -9991,9 +9991,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Interface = __webpack_require__(340);
+var _CashController = __webpack_require__(340);
 
-var _Interface2 = _interopRequireDefault(_Interface);
+var _CashController2 = _interopRequireDefault(_CashController);
 
 var _ReelsController = __webpack_require__(341);
 
@@ -10003,11 +10003,15 @@ var _LinesController = __webpack_require__(344);
 
 var _LinesController2 = _interopRequireDefault(_LinesController);
 
+var _InterfaceController = __webpack_require__(346);
+
+var _InterfaceController2 = _interopRequireDefault(_InterfaceController);
+
 var _settings = __webpack_require__(43);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _axios = __webpack_require__(346);
+var _axios = __webpack_require__(350);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -10017,42 +10021,59 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Game =
-/**
- * Create game object
- * @param {String} gameName Game name
- */
-function Game(gameName) {
+var Game = function Game(gameName) {
     var _this = this;
 
     _classCallCheck(this, Game);
 
-    this.reelsHasStopped = function () {
-        console.log('All reels has stopped ' + _this.gameName);
-        _this.interface.state.spin = true;
+    this.increaseLinesAmount = function () {
+        var currentLineIndex = _settings2.default.lines.indexOf(_this.cashController.lines);
+        var newLineIndex = currentLineIndex === _settings2.default.lines.length - 1 ? 0 : currentLineIndex + 1;
 
-        _this.linesController.showWinningLines(_this.spinResponse.game.game_result, _settings2.default.delayBetweenShowingWinningLines);
+        _this.cashController.lines = _settings2.default.lines[newLineIndex];
+    };
+
+    this.increaseBetPerLine = function () {
+        var currentBetPerLineIndex = _settings2.default.betPerLine.indexOf(_this.cashController.betPerLine);
+        var newBetPerLineIndex = currentBetPerLineIndex === _settings2.default.betPerLine.length - 1 ? 0 : currentBetPerLineIndex + 1;
+
+        _this.cashController.betPerLine = _settings2.default.betPerLine[newBetPerLineIndex];
+    };
+
+    this.linesHasShowed = function () {
+        _this.interfaceController.state.takeWin = true;
+    };
+
+    this.takeWin = function () {
+        _this.interfaceController.state.takeWin = false;
+
+        // Update user cash
+        _this.cashController.userCash = _this.spinResponse.game.user_cash;
+        // Reset user win
+        _this.cashController.userWin = 0;
+
+        // TODO: Enable after taking win
+        _this.interfaceController.state.spin = true;
     };
 
     this.spinReels = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var response, symbolsMap;
+        var symbolsMap;
         return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
-                        console.log('Spin reels');
-
-                        _this.interface.state.spin = false;
-                        _this.interface.state.stop = true;
+                        // Disable spin
+                        _this.interfaceController.state.spin = false;
+                        // Enable stop
+                        _this.interfaceController.state.stop = true;
 
                         // Getting spin data
-                        _context.next = 5;
+                        _context.next = 4;
                         return _axios2.default.get('https://5a323abdbd9f1c00120b6570.mockapi.io/win2');
 
-                    case 5:
-                        response = _context.sent;
+                    case 4:
+                        _this.spinResponse = _context.sent.data[0];
 
-                        _this.spinResponse = response.data[0];
                         console.log(_this.spinResponse);
 
                         symbolsMap = _this.spinResponse.game.symbols_map;
@@ -10060,7 +10081,7 @@ function Game(gameName) {
 
                         _this.reelsController.spinReels(symbolsMap);
 
-                    case 10:
+                    case 8:
                     case 'end':
                         return _context.stop();
                 }
@@ -10069,11 +10090,32 @@ function Game(gameName) {
     }));
 
     this.stopReels = function () {
-        console.log('Stop reels');
-
-        _this.interface.state.stop = false;
+        _this.interfaceController.state.stop = false;
 
         _this.reelsController.stopReels();
+    };
+
+    this.reelsHasStopped = function () {
+        _this.interfaceController.state.stop = false;
+
+        if (_this.spinResponse.game.user_win) {
+            // Show all winning lines
+            // and update user win line by line
+            _this.linesController.showWinningLines(_this.spinResponse.game.game_result, function (intermidiateWin) {
+                return _this.cashController.userWin += intermidiateWin;
+            });
+        } else {
+            // In no win then allow spin
+            _this.interfaceController.state.spin = true;
+        }
+
+        // Checking for free spins
+        // if (this.spinResponse.free_games) {
+        //     // Free spins here
+        //     if (this.spinResponse.free_games.length !== 0) {
+        //         this.spinReels();
+        //     }
+        // }
     };
 
     this.gameName = gameName;
@@ -10082,10 +10124,48 @@ function Game(gameName) {
     // Store for spin response data
     this.spinResponse = {};
 
-    this.interface = new _Interface2.default({ spinReels: this.spinReels, stopReels: this.stopReels });
-    this.reelsController = new _ReelsController2.default(this.gameNode, this.reelsHasStopped);
-    this.linesController = new _LinesController2.default(document.querySelector('#game_wrapper'), this.reelsController.reels);
-};
+    this.reelsController = new _ReelsController2.default(document.querySelector('#reels_wrapper'), {
+        reelsHasStopped: this.reelsHasStopped
+    });
+
+    this.linesController = new _LinesController2.default(document.querySelector('#game_wrapper'), {
+        reels: this.reelsController.reels,
+        linesHasShowed: this.linesHasShowed
+    });
+
+    this.interfaceController = new _InterfaceController2.default({
+        spinReels: this.spinReels,
+        stopReels: this.stopReels,
+        takeWin: this.takeWin,
+        increaseLinesAmount: this.increaseLinesAmount,
+        increaseBetPerLine: this.increaseBetPerLine,
+        lines: this.linesController.lines,
+        containerNode: document.querySelector('#reels_wrapper')
+    });
+
+    this.cashController = new _CashController2.default({
+        userCash: 0,
+        userWin: 0,
+        lines: 1,
+        betPerLine: 1
+    }, {
+        panel: this.interfaceController.panel
+    });
+}
+
+// FIXME: Move this func pattern into Helper class
+
+// FIXME: Move this func pattern into Helper class
+
+
+// All winning lines has shown event
+
+
+// TODO: Make this func async for iterative win transfering
+
+
+// All reels has stopped event
+;
 
 exports.default = Game;
 
@@ -10102,61 +10182,104 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _settings = __webpack_require__(43);
-
-var _settings2 = _interopRequireDefault(_settings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Interface = function () {
-    function Interface(props) {
-        _classCallCheck(this, Interface);
+var CashController = function () {
+    function CashController(startCash, props) {
+        _classCallCheck(this, CashController);
+
+        this._userCash;
+        this._userWin;
+
+        this._linesAmount;
+        this._betPerLine;
 
         this.props = props;
 
-        this.state = {
-            spin: true,
-            stop: false
-        };
-
-        this.initKeyboardListeners();
+        this._init(startCash);
     }
 
-    _createClass(Interface, [{
-        key: 'initKeyboardListeners',
-        value: function initKeyboardListeners() {
-            var _this = this;
+    _createClass(CashController, [{
+        key: "_init",
+        value: function _init(_ref) {
+            var lines = _ref.lines,
+                betPerLine = _ref.betPerLine,
+                userCash = _ref.userCash,
+                userWin = _ref.userWin;
 
-            window.onkeyup = function (e) {
-                var keyCode = event.which || event.keyCode;
+            this.lines = lines;
+            this.betPerLine = betPerLine;
+            this.userCash = userCash;
+            this.userWin = userWin;
+        }
+    }, {
+        key: "_updateTotalBet",
+        value: function _updateTotalBet() {
+            this.props.panel.setTotalBet(this._linesAmount * this._betPerLine);
+        }
 
-                switch (keyCode) {
-                    // Space
-                    case 32:
-                        {
-                            if (_this.state.spin) {
-                                _this.props.spinReels();
-                            } else if (_this.state.stop) {
-                                _this.props.stopReels();
-                            }
+        /**
+         * Get/Set user cash
+         * @param {Number} cash New cash to set
+         */
 
-                            break;
-                        }
-                    default:
-                        {
-                            // console.log(`Key ${keyCode} pressed`);
-                        }
-                }
-            };
+    }, {
+        key: "lines",
+        get: function get() {
+            return this._linesAmount;
+        },
+        set: function set(linesAmount) {
+            this._linesAmount = linesAmount;
+            this.props.panel.setLinesAmount(this._linesAmount);
+
+            this._updateTotalBet();
+        }
+    }, {
+        key: "betPerLine",
+        get: function get() {
+            return this._betPerLine;
+        },
+        set: function set(betPerLine) {
+            this._betPerLine = betPerLine;
+            this.props.panel.setBetPerLine(this._betPerLine);
+
+            this._updateTotalBet();
+        }
+    }, {
+        key: "totalBet",
+        get: function get() {
+            return this._linesAmount * this._betPerLine;
+        }
+    }, {
+        key: "userCash",
+        get: function get() {
+            return this._userCash;
+        },
+        set: function set(cash) {
+            this._userCash = parseFloat(cash);
+            this.props.panel.setUserCash(this._userCash);
+        }
+
+        /**
+         * Get/Set user win
+         * @param {Number} win New win to set
+         */
+
+    }, {
+        key: "userWin",
+        get: function get() {
+            return this._userWin;
+        },
+        set: function set(win) {
+            this._userWin = parseFloat(win);
+            this.props.panel.setUserWin(this._userWin);
         }
     }]);
 
-    return Interface;
+    return CashController;
 }();
 
-exports.default = Interface;
+exports.default = CashController;
 
 /***/ }),
 /* 341 */
@@ -10192,10 +10315,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var ReelsContorller = function () {
     /**
      * Creates reel controller in specific node
-     * @param {HTMLElement} gameNode Node to place reels at
-     * @param {Function} onReelsHasStopped Function to call when all reels has stopped
+     * @param {HTMLElement} containerNode HTMLNode to place reel in
+     * @param {Object} props Props from parent
      */
-    function ReelsContorller(gameNode, onReelsHasStopped) {
+    function ReelsContorller(containerNode, props) {
         var _this = this;
 
         _classCallCheck(this, ReelsContorller);
@@ -10206,27 +10329,26 @@ var ReelsContorller = function () {
                 // Set previous delay betwwen reels spin start
                 _this.delayBetweenReelsSpin = _settings2.default.delayBetweenReelsSpin;
 
-                _this.props.onReelsHasStopped();
+                _this.props.reelsHasStopped();
             }
         };
 
         this.reels = [];
         this.delayBetweenReelsSpin = _settings2.default.delayBetweenReelsSpin;
 
-        this.props = {
-            onReelsHasStopped: onReelsHasStopped
-        };
+        this.props = props;
+        this.container = containerNode;
 
-        this._initReels(gameNode);
+        this._initReels(this.container);
     }
 
     _createClass(ReelsContorller, [{
         key: '_initReels',
-        value: function _initReels(gameNode) {
+        value: function _initReels() {
             var reelsWrapper = document.createElement('div');
             reelsWrapper.id = 'reels_container';
 
-            gameNode.appendChild(reelsWrapper);
+            this.container.appendChild(reelsWrapper);
 
             for (var i = 0; i < _settings2.default.numOfReels; i++) {
                 // Fill created reel with random symbols
@@ -10286,6 +10408,7 @@ var ReelsContorller = function () {
         /**
          * Spins the given reel
          * @param {Reel} reel Reel to spin
+         * @param {Symbol[]} finalSymbols Array of final symbols in current reel
          */
 
     }, {
@@ -10564,14 +10687,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var LinesController = function () {
     /**
+     * @param {HTMLElement} gameWrapperNode
      * @param {Array<Reel>} reels Reels array
      */
-    function LinesController(gameWrapperNode, reels) {
+    function LinesController(gameWrapperNode, props) {
         _classCallCheck(this, LinesController);
 
         this.lines = [];
         this.gameWrapperNode = gameWrapperNode;
-        this.reels = reels;
+        this.props = props;
 
         this._createLines();
     }
@@ -10600,7 +10724,7 @@ var LinesController = function () {
                     var key = _ref2[0];
                     var res = _ref2[1];
 
-                    var line = new _Line2.default(this.gameWrapperNode, 'green', res.line - 1, this.reels);
+                    var line = new _Line2.default(this.gameWrapperNode, 'red', res.line - 1, res.cash, this.props.reels);
 
                     var _iteratorNormalCompletion2 = true;
                     var _didIteratorError2 = false;
@@ -10616,7 +10740,7 @@ var LinesController = function () {
                             var sCoor = _ref4[1];
 
                             // Get reel
-                            var reel = this.reels[sCoor.col];
+                            var reel = this.props.reels[sCoor.col];
                             // Get winning symbol
                             var symbol = reel.finalSymbols[sCoor.row];
                             symbol.highlighted = true;
@@ -10661,14 +10785,15 @@ var LinesController = function () {
         }
 
         /**
-         * Show all winning lines with delay between them
+         * Show all winning lines
          * @param {Number[][]} gameResult Game result
+         * @param {Function} addUserWin Function
          */
 
     }, {
         key: 'showWinningLines',
         value: function () {
-            var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(gameResult, delay) {
+            var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(gameResult, addUserWin) {
                 var winningLines, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, line;
 
                 return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -10676,29 +10801,29 @@ var LinesController = function () {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 winningLines = this.createWinningLines(gameResult);
-
-
-                                console.log(winningLines);
-
                                 _iteratorNormalCompletion3 = true;
                                 _didIteratorError3 = false;
                                 _iteratorError3 = undefined;
-                                _context.prev = 5;
+                                _context.prev = 4;
                                 _iterator3 = winningLines[Symbol.iterator]();
 
-                            case 7:
+                            case 6:
                                 if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {
                                     _context.next = 14;
                                     break;
                                 }
 
                                 line = _step3.value;
+
+                                // Add new win cash for each line
+                                addUserWin(line.cash);
+
                                 _context.next = 11;
-                                return this.showWinningLine(line, delay);
+                                return this.showWinningLine(line);
 
                             case 11:
                                 _iteratorNormalCompletion3 = true;
-                                _context.next = 7;
+                                _context.next = 6;
                                 break;
 
                             case 14:
@@ -10707,7 +10832,7 @@ var LinesController = function () {
 
                             case 16:
                                 _context.prev = 16;
-                                _context.t0 = _context['catch'](5);
+                                _context.t0 = _context['catch'](4);
                                 _didIteratorError3 = true;
                                 _iteratorError3 = _context.t0;
 
@@ -10736,11 +10861,18 @@ var LinesController = function () {
                                 return _context.finish(20);
 
                             case 28:
+
+                                // All lines has shown here
+                                this.props.linesHasShowed();
+
+                                // TODO: Cycle showing lines
+
+                            case 29:
                             case 'end':
                                 return _context.stop();
                         }
                     }
-                }, _callee, this, [[5, 16, 20, 28], [21,, 23, 27]]);
+                }, _callee, this, [[4, 16, 20, 28], [21,, 23, 27]]);
             }));
 
             function showWinningLines(_x, _x2) {
@@ -10757,15 +10889,14 @@ var LinesController = function () {
 
     }, {
         key: 'showWinningLine',
-        value: function showWinningLine(line, delay) {
+        value: function showWinningLine(line) {
             line.show();
 
             return new Promise(function (resolve) {
                 setTimeout(function () {
-                    // line.hide();
                     line.remove();
                     resolve();
-                }, delay);
+                }, _settings2.default.delayBetweenShowingWinningLines);
             });
         }
 
@@ -10808,7 +10939,7 @@ var LinesController = function () {
         key: '_createLines',
         value: function _createLines() {
             for (var i = 0; i < _settings2.default.lineTypes.length; i++) {
-                var line = new _Line2.default(this.gameWrapperNode, 'green', i, this.reels);
+                var line = new _Line2.default(this.gameWrapperNode, 'red', i, 0, this.props.reels);
                 line.connectHighlites();
                 this.lines.push(line);
             }
@@ -10850,7 +10981,7 @@ var Line = function () {
      * @param {Number} lineTypeNumber index of the settings.lineTypes
      * @param {Array} reels reel objects
      */
-    function Line(containerNode, strokeColor, lineTypeNumber, reels) {
+    function Line(containerNode, strokeColor, lineTypeNumber, cash, reels) {
         _classCallCheck(this, Line);
 
         this.namespaceURI = "http://www.w3.org/2000/svg";
@@ -10858,8 +10989,11 @@ var Line = function () {
         this.strokeColor = strokeColor;
         this.rectNodes = [];
         this.container = containerNode;
+        this.lineTypeNumber = lineTypeNumber;
         this.lineType = _settings2.default.lineTypes[lineTypeNumber];
         this.reels = reels;
+
+        this.cash = cash;
 
         this.svgNode = document.createElementNS(this.namespaceURI, 'svg');
         this.container.appendChild(this.svgNode);
@@ -11078,7 +11212,99 @@ exports.default = Line;
 /* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(347);
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Interface = __webpack_require__(347);
+
+var _Interface2 = _interopRequireDefault(_Interface);
+
+var _Panel = __webpack_require__(349);
+
+var _Panel2 = _interopRequireDefault(_Panel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var InterfaceController = function () {
+    function InterfaceController(props) {
+        _classCallCheck(this, InterfaceController);
+
+        this.props = props;
+
+        // FIXME: Maybe remove unnecessary Interface class
+        this.interface = new _Interface2.default({
+            lines: this.props.lines,
+            containerNode: this.props.containerNode
+        });
+
+        this.state = {
+            spin: true,
+            stop: false,
+            takeWin: false
+        };
+
+        this.panel = new _Panel2.default(document.querySelector('#panel'));
+
+        this._initKeyboardListeners();
+    }
+
+    _createClass(InterfaceController, [{
+        key: '_initKeyboardListeners',
+        value: function _initKeyboardListeners() {
+            var _this = this;
+
+            window.onkeyup = function (event) {
+                var keyCode = event.which || event.keyCode;
+
+                switch (keyCode) {
+                    // Space
+                    case 32:
+                        {
+                            if (_this.state.spin) {
+                                _this.props.spinReels();
+                            } else if (_this.state.stop) {
+                                _this.props.stopReels();
+                            } else if (_this.state.takeWin) {
+                                _this.props.takeWin();
+                            }
+
+                            break;
+                        }
+                    // <
+                    case 188:
+                        {
+                            // Increase lines amount
+                            _this.props.increaseLinesAmount();
+                            break;
+                        }
+                    // >
+                    case 190:
+                        {
+                            // Increase bet per line
+                            _this.props.increaseBetPerLine();
+                            break;
+                        }
+                    default:
+                        {
+                            // console.log(`Key ${keyCode} pressed`);
+                        }
+                }
+            };
+        }
+    }]);
+
+    return InterfaceController;
+}();
+
+exports.default = InterfaceController;
 
 /***/ }),
 /* 347 */
@@ -11087,9 +11313,271 @@ module.exports = __webpack_require__(347);
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _settings = __webpack_require__(43);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+var _LinePresenter = __webpack_require__(348);
+
+var _LinePresenter2 = _interopRequireDefault(_LinePresenter);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Interface = function () {
+    function Interface(_ref) {
+        var lines = _ref.lines,
+            containerNode = _ref.containerNode;
+
+        _classCallCheck(this, Interface);
+
+        this.linePresenters = [];
+
+        this.lines = lines;
+        this.container = containerNode;
+
+        this._initLinePresenters();
+    }
+
+    _createClass(Interface, [{
+        key: '_initLinePresenters',
+        value: function _initLinePresenters() {
+            var pLeft = document.createElement('div');
+            this.container.prepend(pLeft);
+            pLeft.className += 'line_presenters_container left';
+
+            var pRight = document.createElement('div');
+            this.container.appendChild(pRight);
+            pRight.className += 'line_presenters_container right';
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = _settings2.default.linePresenterLeftLines[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var lineIndex = _step.value;
+
+                    var presenter = new _LinePresenter2.default(this.lines[lineIndex]);
+                    pLeft.appendChild(presenter.node);
+                    this.linePresenters.push(presenter);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = _settings2.default.linePresenterRightLines[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var _lineIndex = _step2.value;
+
+                    var presenter = new _LinePresenter2.default(this.lines[_lineIndex]);
+                    pRight.appendChild(presenter.node);
+                    this.linePresenters.push(presenter);
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+        }
+    }]);
+
+    return Interface;
+}();
+
+exports.default = Interface;
+
+/***/ }),
+/* 348 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var LinePresenter = function () {
+    /**
+     * Show/hide line 
+     * @param {Line} line Line that will be show/hide
+     */
+    function LinePresenter(line) {
+        var _this = this;
+
+        _classCallCheck(this, LinePresenter);
+
+        this.line = line;
+        // Create node
+        this.node = document.createElement('div');
+        this.node.style.background = 'white';
+        this.node.text = '';
+        this.node.className += 'line_presenter';
+        // Init listners
+        this.node.onmousedown = function () {
+            return _this.line.show();
+        };
+        this.node.onmouseup = function () {
+            return _this.line.hide();
+        };
+        this.node.onmouseleave = function () {
+            return _this.line.hide();
+        };
+    }
+
+    _createClass(LinePresenter, [{
+        key: 'text',
+        set: function set(text) {
+            this.node.innerText = text;
+        }
+    }]);
+
+    return LinePresenter;
+}();
+
+exports.default = LinePresenter;
+
+/***/ }),
+/* 349 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Panel = function () {
+    function Panel(node) {
+        _classCallCheck(this, Panel);
+
+        this.node = node;
+
+        this.notifier = this._initNotifier();
+        this.node.appendChild(this.notifier);
+
+        this.userCashNode = this._createPanelRowItem();
+        this.userWinNode = this._createPanelRowItem();
+        this.linesAmountNode = this._createPanelRowItem();
+        this.betPerLineNode = this._createPanelRowItem();
+        this.totalBetNode = this._createPanelRowItem();
+
+        var rowWrapper = document.createElement('div');
+        rowWrapper.classList = 'panel-row';
+        rowWrapper.appendChild(this.userCashNode);
+        rowWrapper.appendChild(this.userWinNode);
+        rowWrapper.appendChild(this.linesAmountNode);
+        rowWrapper.appendChild(this.betPerLineNode);
+        rowWrapper.appendChild(this.totalBetNode);
+        this.node.appendChild(rowWrapper);
+    }
+
+    _createClass(Panel, [{
+        key: '_createPanelRowItem',
+        value: function _createPanelRowItem() {
+            var element = document.createElement('div');
+            element.classList = 'panel-row-item';
+
+            return element;
+        }
+    }, {
+        key: '_initNotifier',
+        value: function _initNotifier() {
+            var element = document.createElement('div');
+            element.classList = 'notifier panel-row';
+            element.innerText = 'Press start to spin';
+
+            return element;
+        }
+    }, {
+        key: 'setUserCash',
+        value: function setUserCash(cash) {
+            this.userCashNode.innerText = 'Cash: ' + cash;
+        }
+    }, {
+        key: 'setUserWin',
+        value: function setUserWin(win) {
+            this.userWinNode.innerText = 'Win: ' + win;
+        }
+    }, {
+        key: 'setLinesAmount',
+        value: function setLinesAmount(lines) {
+            this.linesAmountNode.innerText = 'Lines: ' + lines;
+        }
+    }, {
+        key: 'setBetPerLine',
+        value: function setBetPerLine(betPerLine) {
+            this.betPerLineNode.innerText = 'Bet/Line: ' + betPerLine;
+        }
+    }, {
+        key: 'setTotalBet',
+        value: function setTotalBet(bet) {
+            this.totalBetNode.innerText = 'Bet: ' + bet;
+        }
+    }]);
+
+    return Panel;
+}();
+
+exports.default = Panel;
+
+/***/ }),
+/* 350 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(351);
+
+/***/ }),
+/* 351 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var utils = __webpack_require__(18);
 var bind = __webpack_require__(129);
-var Axios = __webpack_require__(349);
+var Axios = __webpack_require__(353);
 var defaults = __webpack_require__(92);
 
 /**
@@ -11124,14 +11612,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(134);
-axios.CancelToken = __webpack_require__(363);
+axios.CancelToken = __webpack_require__(367);
 axios.isCancel = __webpack_require__(133);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(364);
+axios.spread = __webpack_require__(368);
 
 module.exports = axios;
 
@@ -11140,7 +11628,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 348 */
+/* 352 */
 /***/ (function(module, exports) {
 
 /*!
@@ -11167,7 +11655,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 349 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11175,8 +11663,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(92);
 var utils = __webpack_require__(18);
-var InterceptorManager = __webpack_require__(358);
-var dispatchRequest = __webpack_require__(359);
+var InterceptorManager = __webpack_require__(362);
+var dispatchRequest = __webpack_require__(363);
 
 /**
  * Create a new instance of Axios
@@ -11253,7 +11741,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 350 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11272,7 +11760,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 351 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11305,7 +11793,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 352 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11333,7 +11821,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 353 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11408,7 +11896,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 354 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11468,7 +11956,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 355 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11543,7 +12031,7 @@ module.exports = (
 
 
 /***/ }),
-/* 356 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11586,7 +12074,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 357 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11646,7 +12134,7 @@ module.exports = (
 
 
 /***/ }),
-/* 358 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11705,18 +12193,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 359 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(18);
-var transformData = __webpack_require__(360);
+var transformData = __webpack_require__(364);
 var isCancel = __webpack_require__(133);
 var defaults = __webpack_require__(92);
-var isAbsoluteURL = __webpack_require__(361);
-var combineURLs = __webpack_require__(362);
+var isAbsoluteURL = __webpack_require__(365);
+var combineURLs = __webpack_require__(366);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -11798,7 +12286,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 360 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11825,7 +12313,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 361 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11846,7 +12334,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 362 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11867,7 +12355,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 363 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11931,7 +12419,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 364 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

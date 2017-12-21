@@ -51,12 +51,14 @@ class Game {
         );
     }
 
+    // FIXME: Move this func pattern into Helper class
     increaseLinesAmount = () => {
         const currentLineIndex = settings.lines.indexOf(this.cashController.lines);
         const newLineIndex = (currentLineIndex === settings.lines.length - 1) ? 0 : currentLineIndex + 1;
 
         this.cashController.lines = settings.lines[newLineIndex];
     }
+    // FIXME: Move this func pattern into Helper class
     increaseBetPerLine = () => {
         const currentBetPerLineIndex = settings.betPerLine.indexOf(this.cashController.betPerLine);
         const newBetPerLineIndex = (currentBetPerLineIndex === settings.betPerLine.length - 1) ? 0 : currentBetPerLineIndex + 1;
