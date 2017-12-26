@@ -65,20 +65,12 @@ class Game {
         this.setBerPerLine(settings.betPerLine[settings.betPerLine.length - 1]);
     }
     setLines = lines => {
-        if (lines) {
-            this.pointsController.lines = lines;
-        } else {
-            const newLines = getNextArrayItem(settings.lines, this.pointsController.lines);
-            this.pointsController.lines = newLines;
-        }
+        const newLines = lines ? lines : getNextArrayItem(settings.lines, this.pointsController.lines);
+        this.pointsController.lines = newLines;
     }
     setBerPerLine = betPerLine => {
-        if (betPerLine) {
-            this.pointsController.betPerLine = betPerLine;
-        } else {
-            const newBetPerLine = getNextArrayItem(settings.betPerLine, this.pointsController.betPerLine);
-            this.pointsController.betPerLine = newBetPerLine;
-        }
+        const newBetPerLine = betPerLine ? betPerLine : getNextArrayItem(settings.betPerLine, this.pointsController.betPerLine);
+        this.pointsController.betPerLine = newBetPerLine;
     }
 
     // All winning lines has shown event
