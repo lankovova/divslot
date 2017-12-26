@@ -1,9 +1,11 @@
+import Notifier from '../Components/Notifier';
+
 class Panel {
     constructor(node) {
         this.node = node;
 
-        this.notifier = this._initNotifier();
-        this.node.appendChild(this.notifier);
+        this.notifier = new Notifier();
+        this.node.appendChild(this.notifier.node);
 
         this.userCashNode = this._createPanelRowItem();
         this.userWinNode = this._createPanelRowItem();
@@ -24,14 +26,6 @@ class Panel {
     _createPanelRowItem() {
         const element = document.createElement('div');
         element.classList = 'panel-row-item';
-
-        return element;
-    }
-
-    _initNotifier() {
-        const element = document.createElement('div');
-        element.classList = 'notifier panel-row';
-        element.innerText = 'Press start to spin';
 
         return element;
     }

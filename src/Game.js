@@ -84,6 +84,8 @@ class Game {
     // All winning lines has shown event
     linesHasShowed = () => {
         this.interfaceController.state.takeWin = true;
+
+        this.interfaceController.panel.notifier.text = 'Take win or gamble';
     }
 
     // TODO: Make this func async for iterative win transfering
@@ -97,9 +99,11 @@ class Game {
 
         // TODO: Enable after taking win
         this.interfaceController.state.spin = true;
+        this.interfaceController.panel.notifier.text = 'Press start to spin';
     }
 
     spinReels = async () => {
+        this.interfaceController.panel.notifier.clear();
         // Disable spin
         this.interfaceController.state.spin = false;
         // Enable stop
@@ -134,10 +138,14 @@ class Game {
         if (this.spinResponse.won) { // Win case
             // Show all winning lines
             // and update user win line by line in callback
-            this.linesController.showWinningLines(this.spinResponse.spin_result, intermidiateWin => this.pointsController.userWin += intermidiateWin);
+            this.linesController.showWinningLines(this.spinResponse.spin_result, intermidiateWin => {
+                this.pointsController.userWin += intermidiateWin;
+                this.interfaceController.panel.notifier.text = `You won ${this.pointsController.userWin} points`;
+            });
         } else { // Lose case
             // In no win then allow spin
             this.interfaceController.state.spin = true;
+            this.interfaceController.panel.notifier.text = 'Press start to spin';
         }
 
         // Checking for free spins
