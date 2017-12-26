@@ -1,5 +1,3 @@
-import s from '../settings.json'
-
 class Line {
     /**
      * @param {HTMLElement} containerNode node of element where svg will be appended
@@ -14,7 +12,7 @@ class Line {
         this.rectNodes = [];
         this.container = containerNode;
         this.lineTypeNumber = lineTypeNumber;
-        this.lineType = s.lineTypes[lineTypeNumber];
+        this.lineType = settings.lineTypes[lineTypeNumber];
         this.reels = reels;
 
         this.cash = cash;
@@ -50,8 +48,8 @@ class Line {
         this.svgNode.appendChild(rectNode);
         this.rectNodes.push(rectNode);
 
-        rectNode.setAttributeNS(null, "width", s.symbolSize );
-        rectNode.setAttributeNS(null, "height", s.symbolSize );
+        rectNode.setAttributeNS(null, "width", settings.symbolSize );
+        rectNode.setAttributeNS(null, "height", settings.symbolSize );
         rectNode.setAttributeNS(null, "x", x);
         rectNode.setAttributeNS(null, "y", y);
         rectNode.setAttributeNS(null, "stroke", this.strokeColor);
@@ -66,7 +64,7 @@ class Line {
         let coord = {};
         let sPrev, symbol, sNext, sMap, rMap;
 
-        for(let i = 0; i < s.numOfReels; i++) {
+        for(let i = 0; i < settings.numOfReels; i++) {
             // Create DOM element
             lineNode = document.createElementNS(this.namespaceURI, 'line');
             this.svgNode.appendChild(lineNode);
@@ -81,7 +79,7 @@ class Line {
             [sMap, rMap] = this.lineType[i];
             symbol = this.reels[rMap].finalSymbols[sMap];
             // Get next symbol
-            if (i !== (s.numOfReels - 1)) {
+            if (i !== (settings.numOfReels - 1)) {
                 [sMap, rMap] = this.lineType[i + 1];
                 sNext = this.reels[rMap].finalSymbols[sMap];
             } else {
@@ -90,7 +88,7 @@ class Line {
 
             this._createConnection(lineNode, sPrev, symbol, sNext);
 
-            if (!symbol.highlighted && i === (s.numOfReels - 1)) {
+            if (!symbol.highlighted && i === (settings.numOfReels - 1)) {
                 this._createLastConnection(symbol);
             }
             if (!symbol.highlighted && i === 0) {
@@ -106,11 +104,11 @@ class Line {
 
         let start = {
             x: symbol.x,
-            y: symbol.y + s.symbolSize / 2
+            y: symbol.y + settings.symbolSize / 2
         }
         let end = {
-            x: symbol.x + s.symbolSize / 2,
-            y: symbol.y + s.symbolSize / 2
+            x: symbol.x + settings.symbolSize / 2,
+            y: symbol.y + settings.symbolSize / 2
         }
 
         this._setLineAttrs(lineNode, start, end);
@@ -121,12 +119,12 @@ class Line {
         this.svgNode.appendChild(lineNode);
 
         let start = {
-            x: symbol.x + s.symbolSize / 2,
-            y: symbol.y + s.symbolSize / 2
+            x: symbol.x + settings.symbolSize / 2,
+            y: symbol.y + settings.symbolSize / 2
         }
         let end = {
-            x: symbol.x + s.symbolSize,
-            y: symbol.y + s.symbolSize / 2
+            x: symbol.x + settings.symbolSize,
+            y: symbol.y + settings.symbolSize / 2
         }
 
         this._setLineAttrs(lineNode, start, end);
@@ -138,30 +136,30 @@ class Line {
         let end = {};
 
         if (!sPrev) { // symbol is first
-            start.x = (symbol.highlighted) ? (symbol.x + s.symbolSize) : (symbol.x + s.symbolSize / 2);
-            end.x = (sNext.highlighted) ? (sNext.x) : (sNext.x + s.symbolSize / 2);
+            start.x = (symbol.highlighted) ? (symbol.x + settings.symbolSize) : (symbol.x + settings.symbolSize / 2);
+            end.x = (sNext.highlighted) ? (sNext.x) : (sNext.x + settings.symbolSize / 2);
             if (symbol.y === sNext.y) { // symbols in line
-                start.y = symbol.y + s.symbolSize / 2;
-                end.y = sNext.y + s.symbolSize / 2;
+                start.y = symbol.y + settings.symbolSize / 2;
+                end.y = sNext.y + settings.symbolSize / 2;
             } else if (symbol.y > sNext.y) { // symbol below next
-                start.y = (symbol.highlighted) ? (symbol.y) : (symbol.y + s.symbolSize / 2);
-                end.y = (sNext.highlighted) ? (sNext.y + s.symbolSize) : (sNext.y + s.symbolSize / 2);
+                start.y = (symbol.highlighted) ? (symbol.y) : (symbol.y + settings.symbolSize / 2);
+                end.y = (sNext.highlighted) ? (sNext.y + settings.symbolSize) : (sNext.y + settings.symbolSize / 2);
             } else if (symbol.y < sNext.y) { // symbol under next
-                start.y = (symbol.highlighted) ? (symbol.y + s.symbolSize) : (symbol.y + s.symbolSize / 2);
-                end.y = (sNext.highlighted) ? (sNext.y) : (sNext.y + s.symbolSize / 2);
+                start.y = (symbol.highlighted) ? (symbol.y + settings.symbolSize) : (symbol.y + settings.symbolSize / 2);
+                end.y = (sNext.highlighted) ? (sNext.y) : (sNext.y + settings.symbolSize / 2);
             }
         } else { // symbol is last
-            start.x = (sPrev.highlighted) ? (sPrev.x + s.symbolSize) : (sPrev.x + s.symbolSize / 2);
-            end.x = (symbol.highlighted) ? (symbol.x) : (symbol.x + s.symbolSize / 2);
+            start.x = (sPrev.highlighted) ? (sPrev.x + settings.symbolSize) : (sPrev.x + settings.symbolSize / 2);
+            end.x = (symbol.highlighted) ? (symbol.x) : (symbol.x + settings.symbolSize / 2);
             if (symbol.y === sPrev.y) { // symbols in line
-                start.y = symbol.y + s.symbolSize / 2;
-                end.y = symbol.y + s.symbolSize / 2;
+                start.y = symbol.y + settings.symbolSize / 2;
+                end.y = symbol.y + settings.symbolSize / 2;
             } else if (symbol.y > sPrev.y) { // symbol below prev
-                start.y = (sPrev.highlighted) ? (sPrev.y + s.symbolSize) : (sPrev.y + s.symbolSize / 2);
-                end.y = (symbol.highlighted) ? (symbol.y) : (symbol.y + s.symbolSize / 2);
+                start.y = (sPrev.highlighted) ? (sPrev.y + settings.symbolSize) : (sPrev.y + settings.symbolSize / 2);
+                end.y = (symbol.highlighted) ? (symbol.y) : (symbol.y + settings.symbolSize / 2);
             } else if (symbol.y < sPrev.y) { // symbol under prev
-                start.y = (sPrev.highlighted) ? (sPrev.y) : (sPrev.y + s.symbolSize / 2);
-                end.y = (symbol.highlighted) ? (symbol.y + s.symbolSize) : (symbol.y + s.symbolSize / 2);
+                start.y = (sPrev.highlighted) ? (sPrev.y) : (sPrev.y + settings.symbolSize / 2);
+                end.y = (symbol.highlighted) ? (symbol.y + settings.symbolSize) : (symbol.y + settings.symbolSize / 2);
             }
         }
 

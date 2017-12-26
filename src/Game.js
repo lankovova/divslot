@@ -1,8 +1,8 @@
+import {getNextArrayItem} from './Helpers/ArrayMethods';
 import PointsController from './Controllers/PointsController';
 import ReelsController from './Controllers/ReelsController';
 import LinesController from './Controllers/LinesController';
 import InterfaceController from './Controllers/InterfaceController';
-import settings from './settings.json';
 
 import axios from 'axios';
 
@@ -68,7 +68,7 @@ class Game {
         if (lines) {
             this.pointsController.lines = lines;
         } else {
-            const newLines = this.getNextArrayItem(settings.lines, this.pointsController.lines);
+            const newLines = getNextArrayItem(settings.lines, this.pointsController.lines);
             this.pointsController.lines = newLines;
         }
     }
@@ -76,23 +76,9 @@ class Game {
         if (betPerLine) {
             this.pointsController.betPerLine = betPerLine;
         } else {
-            const newBetPerLine = this.getNextArrayItem(settings.betPerLine, this.pointsController.betPerLine);
+            const newBetPerLine = getNextArrayItem(settings.betPerLine, this.pointsController.betPerLine);
             this.pointsController.betPerLine = newBetPerLine;
         }
-    }
-
-    // TODO: Move to Helper class
-    /**
-     * Get next number from given array
-     * @param {Array} array Array to get an item from
-     * @param {Number} item Current item
-     * @returns {Number} Next item
-     */
-    getNextArrayItem(array, item) {
-        const currentIndex = array.indexOf(item);
-        const newIndex = (currentIndex === array.length - 1) ? 0 : currentIndex + 1;
-
-        return array[newIndex];
     }
 
     // All winning lines has shown event

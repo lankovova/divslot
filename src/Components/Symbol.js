@@ -1,5 +1,3 @@
-import settings from "../settings.json";
-
 class Symbol {
 	constructor(symbolNumber) {
 		this.symbolNum = symbolNumber;

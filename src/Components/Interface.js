@@ -1,4 +1,3 @@
-import s from '../settings.json';
 import LinePresenter from './LinePresenter';
 
 class Interface {
@@ -31,13 +30,13 @@ class Interface {
         this.container.appendChild(pRight);
         pRight.className += 'line_presenters_container right';
 
-        for (const lineIndex of s.linePresenterLeftLines) {
+        for (const lineIndex of settings.linePresenterLeftLines) {
             const presenter = new LinePresenter(this.lines[lineIndex]);
             pLeft.appendChild(presenter.node);
             this.linePresenters.push(presenter);
         }
 
-        for (const lineIndex of s.linePresenterRightLines) {
+        for (const lineIndex of settings.linePresenterRightLines) {
             const presenter = new LinePresenter(this.lines[lineIndex]);
             pRight.appendChild(presenter.node);
             this.linePresenters.push(presenter);

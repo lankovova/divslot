@@ -1,5 +1,4 @@
 import Symbol from './Symbol';
-import settings from '../settings.json';
 import {transitionEnd} from '../events';
 
 class Reel {

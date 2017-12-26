@@ -1,4 +1,3 @@
-import s from '../settings.json';
 import Line from '../Components/Line';
 
 class LinesController {
@@ -84,7 +83,7 @@ class LinesController {
             setTimeout(() => {
                 line.remove();
                 resolve();
-            }, s.delayBetweenShowingWinningLines);
+            }, settings.delayBetweenShowingWinningLines);
         });
     }
 
@@ -100,7 +99,7 @@ class LinesController {
     }
 
     _createLines() {
-        for (let i = 0; i < s.lineTypes.length; i++) {
+        for (let i = 0; i < settings.lineTypes.length; i++) {
             const line = new Line(this.gameWrapperNode, 'red', i, 0, this.props.reels);
             line.connectHighlites();
             this.lines.push(line);

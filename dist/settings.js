@@ -1,4 +1,4 @@
-{
+var settings = {
     "symbolSize": 140,
     "spaceBetweenReels": 20,
 
