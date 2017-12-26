@@ -28,8 +28,11 @@ class PointsController {
     get lines() { return this._linesAmount };
     set lines(linesAmount) {
         this._linesAmount = linesAmount;
-        this.props.updateLinePresenters(this._linesAmount, this._betPerLine);
+        // Update panel value
         this.props.panel.setLinesAmount(this._linesAmount);
+
+        // Update line presenters text
+        this.props.linePresenters.setText(this._linesAmount, this._betPerLine);
 
         this._updateTotalBet();
     }
@@ -37,8 +40,11 @@ class PointsController {
     get betPerLine() { return PointsController.toPoints(this._betPerLine) };
     set betPerLine(betPerLine) {
         this._betPerLine = PointsController.toKups(betPerLine);
-        this.props.updateLinePresenters(this._linesAmount, this._betPerLine);
+        // Update panel value
         this.props.panel.setBetPerLine(this._betPerLine);
+
+        // Update line presenters text
+        this.props.linePresenters.setText(this._linesAmount, this._betPerLine);
 
         this._updateTotalBet();
     }
@@ -50,25 +56,24 @@ class PointsController {
     }
 
     /**
-     * Get/Set user cash
+     * Set user cash
      * @param {String|Number} cash New cash to set
      */
-    get userCash() { return this._userCash; }
     set userCash(cash) {
         this._userCash = +cash.toFixed(2);
         this.props.panel.setUserCash(this._userCash);
     }
-
+    get userCash() { return this._userCash; }
 
     /**
-     * Get/Set user win
+     * Set user win
      * @param {String|Number} win New win to set
      */
-    get userWin() { return this._userWin; }
     set userWin(win) {
         this._userWin = +win.toFixed(2);
         this.props.panel.setUserWin(this._userWin);
     }
+    get userWin() { return this._userWin; }
 }
 
 export default PointsController;

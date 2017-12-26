@@ -53,7 +53,7 @@ class Game {
                 betPerLine: 1
             }, {
                 panel: this.interfaceController.panel,
-                updateLinePresenters: this.interfaceController.linePresenters.setText
+                linePresenters: this.interfaceController.linePresenters
             }
         );
     }
