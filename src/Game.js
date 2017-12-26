@@ -51,11 +51,9 @@ class Game {
                 userWin: 0,
                 lines: 1,
                 betPerLine: 1
-            },
-            {
-                // FIXME: Think about not passing this props into PointsController
+            }, {
                 panel: this.interfaceController.panel,
-                updateLinePresenters: this.interfaceController.interface.setLinePresentersText
+                updateLinePresenters: this.interfaceController.linePresenters.setText
             }
         );
     }

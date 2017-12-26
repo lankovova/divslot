@@ -1,4 +1,4 @@
-import Interface from '../Components/Interface';
+import LinePresenters from '../Components/LinePresenters';
 import Panel from '../Components/Panel';
 
 class InterfaceController {
@@ -6,7 +6,7 @@ class InterfaceController {
         this.props = props;
 
         // FIXME: Maybe remove unnecessary Interface class
-        this.interface = new Interface({
+        this.linePresenters = new LinePresenters({
             lines: this.props.lines,
             containerNode: this.props.containerNode
         });
