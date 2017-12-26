@@ -133,7 +133,7 @@ class Game {
 
         if (this.spinResponse.won) { // Win case
             // Show all winning lines
-            // and update user win line by line
+            // and update user win line by line in callback
             this.linesController.showWinningLines(this.spinResponse.spin_result, intermidiateWin => this.pointsController.userWin += intermidiateWin);
         } else { // Lose case
             // In no win then allow spin
@@ -141,12 +141,13 @@ class Game {
         }
 
         // Checking for free spins
-        // if (this.spinResponse.free_games) {
-        //     // Free spins here
-        //     if (this.spinResponse.free_games.length !== 0) {
-        //         this.spinReels();
-        //     }
-        // }
+        if (this.spinResponse.free_spins) {
+            // Free spins here
+            console.log('Free spins won');
+
+            // if (this.spinResponse.free_spins_result.length !== 0) {
+            // }
+        }
 
     }
 
