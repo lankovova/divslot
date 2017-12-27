@@ -35,14 +35,14 @@ class Game {
         );
 
         this.interfaceController = new InterfaceController({
+            containerNode: document.querySelector('#reels_wrapper'),
             spinReels: this.spinReels,
             stopReels: this.stopReels,
             takeWin: this.takeWin,
             setLines: this.setLines,
             setBerPerLine: this.setBerPerLine,
             setMaxBet: this.setMaxBet,
-            lines: this.linesController.lines,
-            containerNode: document.querySelector('#reels_wrapper')
+            lines: this.linesController.lines
         });
 
         this.pointsController = new PointsController({

@@ -5,18 +5,16 @@ class InterfaceController {
     constructor(props) {
         this.props = props;
 
-        // FIXME: Maybe remove unnecessary Interface class
-        this.linePresenters = new LinePresenters({
-            lines: this.props.lines,
-            containerNode: this.props.containerNode
-        });
-
         this.state = {
             spin: true,
             stop: false,
             takeWin: false
         };
 
+        this.linePresenters = new LinePresenters({
+            lines: this.props.lines,
+            containerNode: this.props.containerNode
+        });
         this.panel = new Panel(document.querySelector('#panel'));
 
         this._initKeyboardListeners();
