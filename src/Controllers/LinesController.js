@@ -21,7 +21,7 @@ class LinesController {
         let winningLines = [];
 
         for (const [key, res] of Object.entries(gameResult)) {
-            const line = new Line(this.gameWrapperNode, 'red', res.line_index, res.cash, this.props.reels);
+            const line = new Line(this.gameWrapperNode, 'yellow', res.line_index, res.cash, this.props.reels);
 
             let highlightedSymbols = [];
 
@@ -68,12 +68,11 @@ class LinesController {
             await this.showWinningLine(line);
         }
 
-        // All lines has shown here
-        this.props.linesHasShowed();
-
-        // TODO: Cycle showing lines
+        // Resolve promise when all lines has shown
+        Promise.resolve();
     }
 
+    // TODO: Cycle showing lines if no free spin
     /**
      * Show specific line and hide after delay
      * @param {Line} line Line to show

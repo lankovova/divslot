@@ -30,8 +30,7 @@ class Game {
         this.linesController = new LinesController(
             document.querySelector('#game_wrapper'),
             {
-                reels: this.reelsController.reels,
-                linesHasShowed: this.linesHasShowed
+                reels: this.reelsController.reels
             }
         );
 
@@ -71,13 +70,6 @@ class Game {
         this.pointsController.betPerLine = newBetPerLine;
     }
 
-    // All winning lines has shown event
-    linesHasShowed = () => {
-        this.interfaceController.state.takeWin = true;
-
-        this.interfaceController.panel.notifier.text = 'Take win or gamble';
-    }
-
     // TODO: Make this func async for iterative win transfering
     takeWin = () => {
         this.interfaceController.state.takeWin = false;
@@ -108,8 +100,7 @@ class Game {
         // FIXME: PHP = nedo yazuk
         this.spinResponse.won_cash = +this.spinResponse.won_cash;
         this.spinResponse.user_cash = +this.spinResponse.user_cash;
-        if (this.spinResponse.free_spins_won_cash)
-            this.spinResponse.free_spins_won_cash = +this.spinResponse.free_spins_won_cash;
+        if (this.spinResponse.free_spins_won_cash) this.spinResponse.free_spins_won_cash = +this.spinResponse.free_spins_won_cash;
         this.spinResponse.spin_result.map(line => {
             line.cash = +line.cash;
             return line;
@@ -129,9 +120,7 @@ class Game {
 
         console.log( this.spinResponse.free_spins_result );
 
-        // Decrease user cash
-        this.pointsController.userCash -= this.pointsController.totalBet;
-        this.reelsController.spinReels(this.spinResponse.free_spins_result[0].final_symbols );
+        // this.reelsController.spinReels(this.spinResponse.free_spins_result[0].final_symbols );
     }
 
     stopReels = () => {
@@ -141,16 +130,20 @@ class Game {
     }
 
     // All reels has stopped event
-    reelsHasStopped = () => {
+    reelsHasStopped = async () => {
         this.interfaceController.state.stop = false;
 
         if (this.spinResponse.won) { // Win case
             // Show all winning lines
             // and update user win line by line in callback
-            this.linesController.showWinningLines(this.spinResponse.spin_result, intermidiateWin => {
-                this.pointsController.userWin += intermidiateWin;
+            await this.linesController.showWinningLines(this.spinResponse.spin_result, winCashInLine => {
+                this.pointsController.userWin += winCashInLine;
                 this.interfaceController.panel.notifier.text = `You won ${this.pointsController.userWin} points`;
             });
+
+            console.log('All lines has showed');
+            this.interfaceController.state.takeWin = true;
+            this.interfaceController.panel.notifier.text = 'Take win or gamble';
         } else { // Lose case
             // In no win then allow spin
             this.interfaceController.state.spin = true;
@@ -158,15 +151,10 @@ class Game {
         }
 
         // Checking for free spins
-        if (this.spinResponse.free_spins) {
-            // Start free spins
-            this.freeSpin();
-
-            // if (this.spinResponse.free_spins_result.length !== 0) {
-                // Go free spins
-            // }
-        }
-
+        // if (this.spinResponse.free_spins) {
+        //     // Start free spins
+        //     this.freeSpin();
+        // }
     }
 
 }

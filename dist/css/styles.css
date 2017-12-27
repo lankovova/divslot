@@ -114,7 +114,8 @@ body {
                 url('./../assets/images/symbols/7.png'),
                 url('./../assets/images/symbols/8.png'),
                 url('./../assets/images/symbols/9.png'),
-                url('./../assets/images/symbols/10.png');
+                url('./../assets/images/symbols/10.png'),
+                url('./../assets/images/symbols/animation.png');
 }
 
 @keyframes symbolAnimation{
