@@ -18,12 +18,12 @@ class PointsController {
         this.userWin = 0;
     }
 
-    static toKups(points) {
-        return +(points / 100).toFixed(2);
-    }
-    static toPoints(kups) {
-        return Math.floor(kups * 100);
-    }
+    // static toKups(points) {
+    //     return +(points / 100).toFixed(2);
+    // }
+    // static toPoints(kups) {
+    //     return Math.floor(kups * 100);
+    // }
 
     get lines() { return this._linesAmount };
     set lines(linesAmount) {
@@ -37,9 +37,9 @@ class PointsController {
         this._updateTotalBet();
     }
 
-    get betPerLine() { return PointsController.toPoints(this._betPerLine) };
+    get betPerLine() { return this._betPerLine };
     set betPerLine(betPerLine) {
-        this._betPerLine = PointsController.toKups(betPerLine);
+        this._betPerLine = betPerLine;
         // Update panel value
         this.props.panel.setBetPerLine(this._betPerLine);
 
@@ -49,10 +49,10 @@ class PointsController {
         this._updateTotalBet();
     }
 
-    get totalBet() { return +(this._linesAmount * this._betPerLine).toFixed(2) };
+    get totalBet() { return this._linesAmount * this._betPerLine };
 
     _updateTotalBet() {
-        this.props.panel.setTotalBet(+(this._linesAmount * this._betPerLine).toFixed(2));
+        this.props.panel.setTotalBet(this._linesAmount * this._betPerLine);
     }
 
     /**
@@ -60,7 +60,7 @@ class PointsController {
      * @param {String|Number} cash New cash to set
      */
     set userCash(cash) {
-        this._userCash = +cash.toFixed(2);
+        this._userCash = cash;
         this.props.panel.setUserCash(this._userCash);
     }
     get userCash() { return this._userCash; }
@@ -70,7 +70,7 @@ class PointsController {
      * @param {String|Number} win New win to set
      */
     set userWin(win) {
-        this._userWin = +win.toFixed(2);
+        this._userWin = win;
         this.props.panel.setUserWin(this._userWin);
     }
     get userWin() { return this._userWin; }
