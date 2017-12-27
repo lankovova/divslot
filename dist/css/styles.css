@@ -6,6 +6,8 @@
 }
 
 body {
+    font-family: 'Roboto', sans-serif;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -61,6 +63,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+
+    font-size: 14px;
 }
 
 .line_presenters_container.left {
