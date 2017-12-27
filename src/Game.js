@@ -80,14 +80,18 @@ class Game {
         this.pointsController.userWin = 0;
 
         // TODO: Enable after taking win
+        // FIXME: Code duplicate
         this.interfaceController.state.spin = true;
+        this.interfaceController.enableBetChange();
         this.interfaceController.panel.notifier.text = 'Press start to spin';
     }
 
     spinReels = async () => {
-        this.interfaceController.panel.notifier.clear();
+        this.interfaceController.panel.notifier.text = 'Fetching data...';
         // Disable spin
         this.interfaceController.state.spin = false;
+        // Disable possibility to change betPerLine or linesAmount
+        this.interfaceController.disableBetChange();
         // Enable stop
         this.interfaceController.state.stop = true;
 
@@ -108,6 +112,8 @@ class Game {
         // FIXME: END
 
         console.log(this.spinResponse);
+
+        this.interfaceController.panel.notifier.clear();
 
         // Decrease user cash
         this.pointsController.userCash -= this.pointsController.totalBet;
@@ -142,11 +148,15 @@ class Game {
             });
 
             console.log('All lines has showed');
+
+            // Enable possibility to take win
             this.interfaceController.state.takeWin = true;
             this.interfaceController.panel.notifier.text = 'Take win or gamble';
         } else { // Lose case
             // In no win then allow spin
+            // FIXME: Code duplicate
             this.interfaceController.state.spin = true;
+            this.interfaceController.enableBetChange();
             this.interfaceController.panel.notifier.text = 'Press start to spin';
         }
 

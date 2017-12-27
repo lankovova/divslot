@@ -8,7 +8,9 @@ class InterfaceController {
         this.state = {
             spin: true,
             stop: false,
-            takeWin: false
+            takeWin: false,
+            lines: true,
+            betPerLine: true
         };
 
         this.linePresenters = new LinePresenters({
@@ -18,6 +20,15 @@ class InterfaceController {
         this.panel = new Panel(document.querySelector('#panel'));
 
         this._initKeyboardListeners();
+    }
+
+    enableBetChange() {
+        this.state.lines = true;
+        this.state.betPerLine = true;
+    }
+    disableBetChange() {
+        this.state.lines = false;
+        this.state.betPerLine = false;
     }
 
     _initKeyboardListeners() {
@@ -39,18 +50,24 @@ class InterfaceController {
                 }
                 // <
                 case 188: {
-                    // Increase lines amount
-                    this.props.setLines();
+                    if (this.state.lines) {
+                        // Increase lines amount
+                        this.props.setLines();
+                    }
                     break;
                 }
                 // >
                 case 190: {
-                    // Increase bet per line
-                    this.props.setBerPerLine();
+                    if (this.state.betPerLine) {
+                        // Increase bet per line
+                        this.props.setBerPerLine();
+                    }
                     break;
                 }
                 case 77: {
-                    this.props.setMaxBet();
+                    if (this.state.lines && this.state.betPerLine) {
+                        this.props.setMaxBet();
+                    }
                     break;
                 }
                 default: {
