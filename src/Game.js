@@ -115,6 +115,10 @@ class Game {
         this.reelsController.spinReels(symbolsMap);
     }
 
+    freeSpins = () => {
+
+    }
+
     stopReels = () => {
         this.interfaceController.state.stop = false;
 
