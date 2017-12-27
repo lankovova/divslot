@@ -21,9 +21,6 @@ class LinesController {
         let winningLines = [];
 
         for (const [key, res] of Object.entries(gameResult)) {
-            // if (!res.line_index)
-            //     const line = new Line(this.gameWrapperNode, 'red', res.cash, this.props.reels);
-            // else
             const line = new Line(this.gameWrapperNode, 'red', res.line_index, res.cash, this.props.reels);
 
             let highlightedSymbols = [];
@@ -40,7 +37,12 @@ class LinesController {
                 line.addSymbolHighlite(symbol.x, symbol.y);
             }
 
-            line.connectHighlites();
+            // TODO: Handle case when it's scatters line
+            // If there is physical line
+            if (res.line_index) {
+                line.connectHighlites();
+            }
+
             winningLines.push(line);
 
             for (const symbol of highlightedSymbols) {

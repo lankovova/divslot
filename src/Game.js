@@ -104,19 +104,34 @@ class Game {
             lines_amount: this.pointsController.lines,
             bet_per_line: this.pointsController.betPerLine
         })).data;
+
+        // FIXME: PHP = nedo yazuk
+        this.spinResponse.won_cash = +this.spinResponse.won_cash;
+        this.spinResponse.user_cash = +this.spinResponse.user_cash;
+        if (this.spinResponse.free_spins_won_cash)
+            this.spinResponse.free_spins_won_cash = +this.spinResponse.free_spins_won_cash;
+        this.spinResponse.spin_result.map(line => {
+            line.cash = +line.cash;
+            return line;
+        });
+        // FIXME: END
+
         console.log(this.spinResponse);
 
-        const symbolsMap = this.spinResponse.final_symbols;
-
-        // FIXME:
         // Decrease user cash
-        this.pointsController.userCash = 100 - this.pointsController.totalBet;
-
-        this.reelsController.spinReels(symbolsMap);
+        this.pointsController.userCash -= this.pointsController.totalBet;
+        this.reelsController.spinReels(this.spinResponse.final_symbols);
     }
 
-    freeSpins = () => {
+    // TODO: Add free spins functionallity
+    freeSpin = () => {
+        console.log('Free spins won');
 
+        console.log( this.spinResponse.free_spins_result );
+
+        // Decrease user cash
+        this.pointsController.userCash -= this.pointsController.totalBet;
+        this.reelsController.spinReels(this.spinResponse.free_spins_result[0].final_symbols );
     }
 
     stopReels = () => {
@@ -144,10 +159,11 @@ class Game {
 
         // Checking for free spins
         if (this.spinResponse.free_spins) {
-            // Free spins here
-            console.log('Free spins won');
+            // Start free spins
+            this.freeSpin();
 
             // if (this.spinResponse.free_spins_result.length !== 0) {
+                // Go free spins
             // }
         }
 

@@ -6,11 +6,11 @@ var settings = {
     "numOfReels": 5,
     "symbolsAmount": 10,
 
-    "numOfSpinsBeforeStop": 5,
+    "numOfSpinsBeforeStop": 3,
 
-    "delayBetweenShowingWinningLines": 1000,
-    "delayBetweenReelsSpin": 300,
-    "spinAnimationTimeInMs": 1500,
+    "delayBetweenShowingWinningLines": 700,
+    "delayBetweenReelsSpin": 200,
+    "spinAnimationTimeInMs": 1000,
     "spinAnimTimingFunc": "ease-in-out",
 
     "symbolsPath": "./assets/images/symbols/",
