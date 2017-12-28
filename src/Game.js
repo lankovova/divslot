@@ -1,4 +1,4 @@
-import {getNextArrayItem} from './Helpers/ArrayMethods';
+import {getNextArrayItem, getMultiplyNearestLowerNumbers} from './Helpers/ArrayMethods';
 import PointsController from './Controllers/PointsController';
 import ReelsController from './Controllers/ReelsController';
 import LinesController from './Controllers/LinesController';
@@ -22,27 +22,23 @@ class Game {
 
         this.reelsController = new ReelsController(
             document.querySelector('#reels_wrapper'),
-            {
-                reelsHasStopped: this.reelsHasStopped
-            }
+            { reelsHasStopped: this.reelsHasStopped }
         );
 
         this.linesController = new LinesController(
             document.querySelector('#game_wrapper'),
-            {
-                reels: this.reelsController.reels
-            }
+            { reels: this.reelsController.reels }
         );
 
         this.interfaceController = new InterfaceController({
             containerNode: document.querySelector('#reels_wrapper'),
+            lines: this.linesController.lines,
             spinReels: this.spinReels,
             stopReels: this.stopReels,
             takeWin: this.takeWin,
             setLines: this.setLines,
             setBerPerLine: this.setBerPerLine,
-            setMaxBet: this.setMaxBet,
-            lines: this.linesController.lines
+            setMaxBet: this.setMaxBet
         });
 
         this.pointsController = new PointsController({
@@ -57,42 +53,12 @@ class Game {
         );
     }
 
-    // TODO: Move this to Helpers array methods
-    /**
-     * Get lines and betPerLine values for max possible bet depending on user's cash
-     * @returns {Object} Retuns object with values for max bet
-     */
-    getMaxBet = () => {
-        // Init min values
-        let best = {
-            lines: settings.lines[0],
-            betPerLine: settings.betPerLine[0]
-        };
-
-        // Loop from end for better perfomance/optimization
-        for (let i = settings.lines.length - 1; i >= 0; i--) {
-            for (let j = settings.betPerLine.length - 1; j >= 0; j--) {
-                // Skip case when bet is more than userCash
-                if (settings.lines[i] * settings.betPerLine[j] > this.pointsController.userCash) continue;
-
-                // Remember current result if it is closer to userCash than best result
-                if (settings.lines[i] * settings.betPerLine[j] > best.lines * best.betPerLine) {
-                    best = {
-                        lines: settings.lines[i],
-                        betPerLine: settings.betPerLine[j]
-                    };
-                }
-            }
-        }
-
-        return best;
-    }
-
     setMaxBet = () => {
-        const maxBetVars = this.getMaxBet();
+        // Get lines and betPerLine values for max possible bet depending on user's cash
+        const maxBetVars = getMultiplyNearestLowerNumbers(this.pointsController.userCash, settings.lines, settings.betPerLine);
 
-        this.setLines(maxBetVars.lines);
-        this.setBerPerLine(maxBetVars.betPerLine);
+        this.setLines(maxBetVars.firstNumber);
+        this.setBerPerLine(maxBetVars.secondNumber);
     }
     setLines = lines => {
         const newLines = lines ? lines : getNextArrayItem(settings.lines, this.pointsController.lines);

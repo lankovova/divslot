@@ -4136,6 +4136,8 @@ var _Symbol = function () {
 		_classCallCheck(this, _Symbol);
 
 		this.symbolNum = symbolNumber;
+		this.highlighted = false;
+		this.symbolNode;
 
 		this.initSymbol();
 	}
@@ -4146,13 +4148,16 @@ var _Symbol = function () {
 			this.symbolNode = document.createElement('div');
 			this.symbolNode.style.width = settings.symbolSize + 'px';
 			this.symbolNode.style.height = settings.symbolSize + 'px';
-			this.symbolNode.style.background = 'url(\'' + (settings.symbolsPath + settings.symbolsImages[this.symbolNum]) + '\')';
-			this.highlighted = false;
+			this.symbolNode.style.background = 'url(\'' + (settings.symbolsImagesPath + settings.symbols[this.symbolNum].image) + '\')';
 		}
 	}, {
 		key: 'animate',
 		value: function animate() {
-			this.symbolNode.style.animation = 'symbolAnimation 1s steps(15) infinite';
+			// If animation for this symbol exists then apply it
+			if (settings.symbols[this.symbolNum].animation) {
+				this.symbolNode.style.background = 'url(\'' + (settings.symbolsAnimationsPath + settings.symbols[this.symbolNum].animation) + '\')';
+				this.symbolNode.style.animation = 'symbolAnimation 1s steps(15) infinite';
+			}
 		}
 	}, {
 		key: 'node',
@@ -10012,57 +10017,56 @@ var Game = function Game(gameName) {
 
     _classCallCheck(this, Game);
 
-    this.getMaxBet = function () {
-        var lines = settings.lines[0];
-        var betPerLine = settings.betPerLine[0];
-
-        linesLoop: for (var i = settings.lines.length; i > 0; i--) {
-            for (var j = settings.betPerLine.length; j > 0; j--) {
-                if (settings.lines[i] * settings.betPerLine[j] <= _this.pointsController.userCash) {
-                    lines = settings.lines[i];
-                    betPerLine = settings.betPerLine[j];
-
-                    break linesLoop;
-                }
-            }
-        }
-
-        return {
-            lines: lines,
-            betPerLine: betPerLine
-        };
-    };
-
     this.setMaxBet = function () {
-        var maxBetVars = _this.getMaxBet();
+        // Get lines and betPerLine values for max possible bet depending on user's cash
+        var maxBetVars = (0, _ArrayMethods.getMultiplyNearestLowerNumbers)(_this.pointsController.userCash, settings.lines, settings.betPerLine);
 
-        _this.setLines(maxBetVars.lines);
-        _this.setBerPerLine(maxBetVars.betPerLine);
+        _this.setLines(maxBetVars.firstNumber);
+        _this.setBerPerLine(maxBetVars.secondNumber);
     };
 
     this.setLines = function (lines) {
         var newLines = lines ? lines : (0, _ArrayMethods.getNextArrayItem)(settings.lines, _this.pointsController.lines);
         _this.pointsController.lines = newLines;
+
+        _this.checkBetSpinPossibility();
     };
 
     this.setBerPerLine = function (betPerLine) {
         var newBetPerLine = betPerLine ? betPerLine : (0, _ArrayMethods.getNextArrayItem)(settings.betPerLine, _this.pointsController.betPerLine);
         _this.pointsController.betPerLine = newBetPerLine;
+
+        _this.checkBetSpinPossibility();
+    };
+
+    this.checkBetSpinPossibility = function () {
+        if (_this.pointsController.totalBet > _this.pointsController.userCash) {
+            _this.interfaceController.panel.notifier.text = 'Not enough cash for this bet';
+            _this.interfaceController.state.spin = false;
+        } else {
+            _this.interfaceController.panel.notifier.text = 'Press start to spin';
+            _this.interfaceController.state.spin = true;
+        }
     };
 
     this.takeWin = function () {
         _this.interfaceController.state.takeWin = false;
 
+        _this.transferUsersWin();
+
+        // TODO: Enable after transfering win
+        // FIXME: Code duplicate
+        _this.interfaceController.state.spin = true;
+        // Enable possibility to change betPerLine or linesAmount
+        _this.interfaceController.enableBetChange();
+        _this.checkBetSpinPossibility();
+    };
+
+    this.transferUsersWin = function () {
         // Update user cash
         _this.pointsController.userCash = _this.spinResponse.user_cash;
         // Reset user win
         _this.pointsController.userWin = 0;
-
-        // TODO: Enable after taking win
-        // FIXME: Code duplicate
-        _this.interfaceController.state.spin = true;
-        _this.interfaceController.enableBetChange();
-        _this.interfaceController.panel.notifier.text = 'Press start to spin';
     };
 
     this.spinReels = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -10117,7 +10121,6 @@ var Game = function Game(gameName) {
 
     this.freeSpin = function () {
         console.log('Free spins won');
-
         console.log(_this.spinResponse.free_spins_result);
 
         // this.reelsController.spinReels(this.spinResponse.free_spins_result[0].final_symbols );
@@ -10161,9 +10164,10 @@ var Game = function Game(gameName) {
                         // Lose case
                         // In no win then allow spin
                         // FIXME: Code duplicate
-                        _this.interfaceController.enableBetChange();
                         _this.interfaceController.state.spin = true;
-                        _this.interfaceController.panel.notifier.text = 'Press start to spin';
+                        // Enable possibility to change betPerLine or linesAmount
+                        _this.interfaceController.enableBetChange();
+                        _this.checkBetSpinPossibility();
 
                     case 12:
                     case 'end':
@@ -10181,23 +10185,19 @@ var Game = function Game(gameName) {
     // Store for spin response data
     this.spinResponse = {};
 
-    this.reelsController = new _ReelsController2.default(document.querySelector('#reels_wrapper'), {
-        reelsHasStopped: this.reelsHasStopped
-    });
+    this.reelsController = new _ReelsController2.default(document.querySelector('#reels_wrapper'), { reelsHasStopped: this.reelsHasStopped });
 
-    this.linesController = new _LinesController2.default(document.querySelector('#game_wrapper'), {
-        reels: this.reelsController.reels
-    });
+    this.linesController = new _LinesController2.default(document.querySelector('#game_wrapper'), { reels: this.reelsController.reels });
 
     this.interfaceController = new _InterfaceController2.default({
         containerNode: document.querySelector('#reels_wrapper'),
+        lines: this.linesController.lines,
         spinReels: this.spinReels,
         stopReels: this.stopReels,
         takeWin: this.takeWin,
         setLines: this.setLines,
         setBerPerLine: this.setBerPerLine,
-        setMaxBet: this.setMaxBet,
-        lines: this.linesController.lines
+        setMaxBet: this.setMaxBet
     });
 
     this.pointsController = new _PointsController2.default({
@@ -10211,7 +10211,13 @@ var Game = function Game(gameName) {
     });
 }
 
+// Disables/enables spin possibility depending on user's bet/cash
+
+
 // TODO: Make this func async for iterative win transfering
+
+
+// Transfer win cash to user's cash
 
 
 // TODO: Add free spins functionallity
@@ -10245,7 +10251,41 @@ function getNextArrayItem(array, item) {
     return array[newIndex];
 }
 
+/**
+ * Get two closest numbers in arrays which multiplying is the closest and lower to given value
+ * @param {Number} value Value to be close to
+ * @param {Array<Number>} firstArr Array where to find first value
+ * @param {Array<Number>} secondArr Array where to find second value
+ * @returns {Object} Return object with two best numbers
+ */
+function getMultiplyNearestLowerNumbers(value, firstArr, secondArr) {
+    // Init first values
+    var best = {
+        firstNumber: firstArr[0],
+        secondNumber: secondArr[0]
+    };
+
+    // Loop from end for better perfomance/optimization
+    for (var i = firstArr.length - 1; i >= 0; i--) {
+        for (var j = secondArr.length - 1; j >= 0; j--) {
+            // Skip case when multiply of two numbers is greater than value
+            if (firstArr[i] * secondArr[j] > value) continue;
+
+            // Remember current result if it is closer to value than best result
+            if (firstArr[i] * secondArr[j] > best.firstNumber * best.secondNumber) {
+                best = {
+                    firstNumber: firstArr[i],
+                    secondNumber: secondArr[j]
+                };
+            }
+        }
+    }
+
+    return best;
+}
+
 exports.getNextArrayItem = getNextArrayItem;
+exports.getMultiplyNearestLowerNumbers = getMultiplyNearestLowerNumbers;
 
 /***/ }),
 /* 340 */
