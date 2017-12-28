@@ -46,7 +46,7 @@ class Game {
         });
 
         this.pointsController = new PointsController({
-                userCash: 115,
+                userCash: 100,
                 userWin: 0,
                 lines: 1,
                 betPerLine: 1
@@ -57,6 +57,7 @@ class Game {
         );
     }
 
+    // TODO: Move this to Helpers array methods
     /**
      * Get lines and betPerLine values for max possible bet depending on user's cash
      * @returns {Object} Retuns object with values for max bet
@@ -98,7 +99,6 @@ class Game {
         this.pointsController.lines = newLines;
 
         this.checkBetSpinPossibility();
-
     }
     setBerPerLine = betPerLine => {
         const newBetPerLine = betPerLine ? betPerLine : getNextArrayItem(settings.betPerLine, this.pointsController.betPerLine);
@@ -109,7 +109,7 @@ class Game {
 
     // Disables/enables spin possibility depending on user's bet/cash
     checkBetSpinPossibility = () => {
-        if (this.pointsController.lines * this.pointsController.betPerLine > this.pointsController.userCash) {
+        if (this.pointsController.totalBet > this.pointsController.userCash) {
             this.interfaceController.panel.notifier.text = 'Not enough cash for this bet';
             this.interfaceController.state.spin = false;
         } else {
@@ -122,16 +122,22 @@ class Game {
     takeWin = () => {
         this.interfaceController.state.takeWin = false;
 
+        this.transferUsersWin();
+
+        // TODO: Enable after transfering win
+        // FIXME: Code duplicate
+        this.interfaceController.state.spin = true;
+        // Enable possibility to change betPerLine or linesAmount
+        this.interfaceController.enableBetChange();
+        this.checkBetSpinPossibility();
+    }
+
+    // Transfer win cash to user's cash
+    transferUsersWin = () => {
         // Update user cash
         this.pointsController.userCash = this.spinResponse.user_cash;
         // Reset user win
         this.pointsController.userWin = 0;
-
-        // TODO: Enable after taking win
-        // FIXME: Code duplicate
-        this.interfaceController.state.spin = true;
-        this.interfaceController.enableBetChange();
-        this.interfaceController.panel.notifier.text = 'Press start to spin';
     }
 
     spinReels = async () => {
@@ -171,7 +177,6 @@ class Game {
     // TODO: Add free spins functionallity
     freeSpin = () => {
         console.log('Free spins won');
-
         console.log( this.spinResponse.free_spins_result );
 
         // this.reelsController.spinReels(this.spinResponse.free_spins_result[0].final_symbols );
@@ -203,9 +208,10 @@ class Game {
         } else { // Lose case
             // In no win then allow spin
             // FIXME: Code duplicate
-            this.interfaceController.enableBetChange();
             this.interfaceController.state.spin = true;
-            this.interfaceController.panel.notifier.text = 'Press start to spin';
+            // Enable possibility to change betPerLine or linesAmount
+            this.interfaceController.enableBetChange();
+            this.checkBetSpinPossibility();
         }
 
         // Checking for free spins
