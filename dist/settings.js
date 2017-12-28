@@ -13,18 +13,20 @@ var settings = {
     "spinAnimationTimeInMs": 1000,
     "spinAnimTimingFunc": "ease-in-out",
 
-    "symbolsPath": "./assets/images/symbols/",
-    "symbolsImages": [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-        "6.jpg",
-        "7.png",
-        "8.png",
-        "9.png",
-        "10.png"
+    "symbolsImagesPath": "./assets/images/symbols/",
+    "symbolsAnimationsPath": "./assets/images/symbols/animations/",
+
+    "symbols": [
+        {"image": "1.png"},
+        {"image": "2.png"},
+        {"image": "3.png"},
+        {"image": "4.png", "animation": "testAnim.png"},
+        {"image": "5.png"},
+        {"image": "6.jpg"},
+        {"image": "7.png"},
+        {"image": "8.png"},
+        {"image": "9.png"},
+        {"image": "10.png"}
     ],
 
     "lines": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],

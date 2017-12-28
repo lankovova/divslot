@@ -115,16 +115,14 @@ body {
                 url('./../assets/images/symbols/8.png'),
                 url('./../assets/images/symbols/9.png'),
                 url('./../assets/images/symbols/10.png'),
-                url('./../assets/images/symbols/animation.png');
+                url('./../assets/images/symbols/animations/testAnim.png');
 }
 
-@keyframes symbolAnimation{
+@keyframes symbolAnimation {
     0% {
-        background: url('./../assets/images/symbols/animation.png');
         background-position: 0;
     }
     100% {
-        background: url('./../assets/images/symbols/animation.png');
         background-position: -2100px;
     }
 }
