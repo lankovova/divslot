@@ -46,7 +46,7 @@ class Game {
         });
 
         this.pointsController = new PointsController({
-                userCash: 100,
+                userCash: 115,
                 userWin: 0,
                 lines: 1,
                 betPerLine: 1
@@ -57,17 +57,65 @@ class Game {
         );
     }
 
+    /**
+     * Get lines and betPerLine values for max possible bet depending on user's cash
+     * @returns {Object} Retuns object with values for max bet
+     */
+    getMaxBet = () => {
+        // Init min values
+        let best = {
+            lines: settings.lines[0],
+            betPerLine: settings.betPerLine[0]
+        };
+
+        // Loop from end for better perfomance/optimization
+        for (let i = settings.lines.length - 1; i >= 0; i--) {
+            for (let j = settings.betPerLine.length - 1; j >= 0; j--) {
+                // Skip case when bet is more than userCash
+                if (settings.lines[i] * settings.betPerLine[j] > this.pointsController.userCash) continue;
+
+                // Remember current result if it is closer to userCash than best result
+                if (settings.lines[i] * settings.betPerLine[j] > best.lines * best.betPerLine) {
+                    best = {
+                        lines: settings.lines[i],
+                        betPerLine: settings.betPerLine[j]
+                    };
+                }
+            }
+        }
+
+        return best;
+    }
+
     setMaxBet = () => {
-        this.setLines(settings.lines[settings.lines.length - 1]);
-        this.setBerPerLine(settings.betPerLine[settings.betPerLine.length - 1]);
+        const maxBetVars = this.getMaxBet();
+
+        this.setLines(maxBetVars.lines);
+        this.setBerPerLine(maxBetVars.betPerLine);
     }
     setLines = lines => {
         const newLines = lines ? lines : getNextArrayItem(settings.lines, this.pointsController.lines);
         this.pointsController.lines = newLines;
+
+        this.checkBetSpinPossibility();
+
     }
     setBerPerLine = betPerLine => {
         const newBetPerLine = betPerLine ? betPerLine : getNextArrayItem(settings.betPerLine, this.pointsController.betPerLine);
         this.pointsController.betPerLine = newBetPerLine;
+
+        this.checkBetSpinPossibility();
+    }
+
+    // Disables/enables spin possibility depending on user's bet/cash
+    checkBetSpinPossibility = () => {
+        if (this.pointsController.lines * this.pointsController.betPerLine > this.pointsController.userCash) {
+            this.interfaceController.panel.notifier.text = 'Not enough cash for this bet';
+            this.interfaceController.state.spin = false;
+        } else {
+            this.interfaceController.panel.notifier.text = 'Press start to spin';
+            this.interfaceController.state.spin = true;
+        }
     }
 
     // TODO: Make this func async for iterative win transfering
@@ -155,8 +203,8 @@ class Game {
         } else { // Lose case
             // In no win then allow spin
             // FIXME: Code duplicate
-            this.interfaceController.state.spin = true;
             this.interfaceController.enableBetChange();
+            this.interfaceController.state.spin = true;
             this.interfaceController.panel.notifier.text = 'Press start to spin';
         }
 
