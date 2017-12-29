@@ -42,19 +42,24 @@ class Game {
             setMaxBet: this.setMaxBet
         });
 
-        this.pointsController = new PointsController({
-                panel: this.interfaceController.panel,
-                linePresenters: this.interfaceController.linePresenters
-            }, {
-                lines: 1,
-                betPerLine: 1
-            }
-        );
-
         this.interfaceController.panel.notifier.text = 'Loading...';
         (async () => {
             // Load some necessarily information, use it
-            this.pointsController.userCash = this.pointsController.kupsToPoints((await this.getPlayerData()).cash);
+            const playerData = await this.getPlayerData();
+            const userCash = +playerData.cash;
+
+            console.log(userCash);
+
+            this.pointsController = new PointsController({
+                panel: this.interfaceController.panel,
+                linePresenters: this.interfaceController.linePresenters
+            }, {
+                userCash: userCash,
+                denomination: 10,
+                lines: 1,
+                betPerLine: 1,
+            });
+
             // And enable game to play
             this.interfaceController.enableGameStart();
             this.interfaceController.panel.notifier.text = 'Press start to spin';
@@ -75,9 +80,9 @@ class Game {
 
     setDenomination = newDenom => this.setBetRelatedValue(settings.denominations, this.pointsController.denomination, this.pointsController.setDenomination)(newDenom);
 
-    setBetRelatedValue = (array, current, setNewValue) => {
+    setBetRelatedValue = (array, currentValue, setNewValue) => {
         return value => {
-            const newValue = value ? value : getNextArrayItem(array, current);
+            const newValue = value ? value : getNextArrayItem(array, currentValue);
             setNewValue(newValue);
             this.checkBetSpinPossibility();
         }
