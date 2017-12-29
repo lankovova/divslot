@@ -68,25 +68,19 @@ class Game {
         this.setLines(maxBetVars.firstNumber);
         this.setBerPerLine(maxBetVars.secondNumber);
     }
-    setLines = lines => {
-        const newLines = lines ? lines : getNextArrayItem(settings.lines, this.pointsController.lines);
-        this.pointsController.lines = newLines;
 
-        this.checkBetSpinPossibility();
-    }
-    setBerPerLine = betPerLine => {
-        const newBetPerLine = betPerLine ? betPerLine : getNextArrayItem(settings.betPerLine, this.pointsController.betPerLine);
-        this.pointsController.betPerLine = newBetPerLine;
+    setBerPerLine = newBetPerLine => this.setBetRelatedValue(settings.betPerLine, this.pointsController.betPerLine, this.pointsController.setBetPerLine)(newBetPerLine);
 
-        this.checkBetSpinPossibility();
-    }
+    setLines = newLines => this.setBetRelatedValue(settings.lines, this.pointsController.lines, this.pointsController.setLines)(newLines);
 
-    setDenomination = denomination => {
-        const newDenomination = denomination ? denomination : getNextArrayItem(settings.denominations, this.pointsController.denomination);
-        this.pointsController.denomination = newDenomination;
+    setDenomination = newDenom => this.setBetRelatedValue(settings.denominations, this.pointsController.denomination, this.pointsController.setDenomination)(newDenom);
 
-        // Is it really needed?
-        this.checkBetSpinPossibility();
+    setBetRelatedValue = (array, current, setNewValue) => {
+        return value => {
+            const newValue = value ? value : getNextArrayItem(array, current);
+            setNewValue(newValue);
+            this.checkBetSpinPossibility();
+        }
     }
 
     // Disables/enables spin possibility depending on user's bet/cash
@@ -117,7 +111,7 @@ class Game {
     // Transfer win cash to user's cash
     transferUsersWin = () => {
         // Update user cash
-        this.pointsController.userCash = this.pointsController.kupsToPoints(this.spinResponse.player_cash);
+        this.pointsController.userCash = this.pointsController.coinsToPoints(this.spinResponse.player_coins);
         // Reset user win
         this.pointsController.userWin = 0;
     }

@@ -6,7 +6,7 @@ class PointsController {
         this._linesAmount;
         this._betPerLine;
 
-        this.denomination;
+        this._denomination;
 
         this.props = props;
 
@@ -14,11 +14,11 @@ class PointsController {
     }
 
     _init({lines = settings.lines[0], betPerLine = settings.betPerLine[0], userCash = 0, userWin = 0, denomination = settings.denominations[0]}) {
-        this.lines = lines;
-        this.betPerLine = betPerLine;
+        this.setLines(lines);
+        this.setBetPerLine(betPerLine);
+        this.setDenomination(denomination);
         this.userCash = userCash;
         this.userWin = 0;
-        this.denomination = denomination;
     }
 
     coinsToPoints(coins) {
@@ -28,8 +28,21 @@ class PointsController {
         return kups * 100 / this.denomination;
     }
 
+    get denomination() { return this._denomination };
+    setDenomination = denomination => {
+        this._denomination = denomination;
+        // Update panel value
+        this.props.panel.setDenomination(this._denomination);
+
+        // TODO: Update line presenters and bet depending on denomination
+        // Update line presenters text
+        this.props.linePresenters.setText(this._linesAmount, this._betPerLine);
+
+        this._updateTotalBet();
+    }
+
     get lines() { return this._linesAmount };
-    set lines(linesAmount) {
+    setLines = linesAmount => {
         this._linesAmount = linesAmount;
         // Update panel value
         this.props.panel.setLinesAmount(this._linesAmount);
@@ -41,7 +54,7 @@ class PointsController {
     }
 
     get betPerLine() { return this._betPerLine };
-    set betPerLine(betPerLine) {
+    setBetPerLine = betPerLine => {
         this._betPerLine = betPerLine;
         // Update panel value
         this.props.panel.setBetPerLine(this._betPerLine);

@@ -9,6 +9,7 @@ class Panel {
 
         this.userCashNode = this._createPanelRowItem();
         this.userWinNode = this._createPanelRowItem();
+        this.denominationNode = this._createPanelRowItem();
         this.linesAmountNode = this._createPanelRowItem();
         this.betPerLineNode = this._createPanelRowItem();
         this.totalBetNode = this._createPanelRowItem();
@@ -17,6 +18,7 @@ class Panel {
         rowWrapper.classList = 'panel-row';
         rowWrapper.appendChild(this.userCashNode);
         rowWrapper.appendChild(this.userWinNode);
+        rowWrapper.appendChild(this.denominationNode);
         rowWrapper.appendChild(this.linesAmountNode);
         rowWrapper.appendChild(this.betPerLineNode);
         rowWrapper.appendChild(this.totalBetNode);
@@ -36,6 +38,10 @@ class Panel {
 
     setUserWin(win) {
         this.userWinNode.innerText = `Win: ${win}`;
+    }
+
+    setDenomination(denom) {
+        this.denominationNode.innerText = `Denom: ${denom}`;
     }
 
     setLinesAmount(lines) {
