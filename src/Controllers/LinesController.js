@@ -21,7 +21,7 @@ class LinesController {
         let winningLines = [];
 
         for (const [key, res] of Object.entries(gameResult)) {
-            const line = new Line(this.gameWrapperNode, 'yellow', res.line_index, res.cash, this.props.reels);
+            const line = new Line(this.gameWrapperNode, 'yellow', res.line_index, res.points, this.props.reels);
 
             let highlightedSymbols = [];
 
@@ -62,7 +62,7 @@ class LinesController {
         const winningLines = this.createWinningLines(gameResult);
 
         for (const line of winningLines) {
-            // Add new win cash for each line
+            // Add new win points for each line
             addUserWin(line.points);
 
             await this.showWinningLine(line);

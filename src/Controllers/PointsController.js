@@ -1,5 +1,5 @@
 class PointsController {
-    constructor(options, props) {
+    constructor(props, options) {
         this._userCash;
         this._userWin;
 

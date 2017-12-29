@@ -43,11 +43,11 @@ class Game {
         });
 
         this.pointsController = new PointsController({
-                lines: 1,
-                betPerLine: 1
-            }, {
                 panel: this.interfaceController.panel,
                 linePresenters: this.interfaceController.linePresenters
+            }, {
+                lines: 1,
+                betPerLine: 1
             }
         );
 
@@ -117,7 +117,7 @@ class Game {
     // Transfer win cash to user's cash
     transferUsersWin = () => {
         // Update user cash
-        this.pointsController.userCash = this.pointsController.coinsToPoints(this.spinResponse.playerCoins);
+        this.pointsController.userCash = this.pointsController.kupsToPoints(this.spinResponse.player_cash);
         // Reset user win
         this.pointsController.userWin = 0;
     }

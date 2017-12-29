@@ -5,7 +5,7 @@ class Line {
      * @param {Number} lineTypeNumber index of the settings.lineTypes
      * @param {Array} reels reel objects
      */
-    constructor(containerNode, strokeColor, lineTypeNumber, cash, reels) {
+    constructor(containerNode, strokeColor, lineTypeNumber, points, reels) {
         this.namespaceURI = "http://www.w3.org/2000/svg";
         this.strokeWidth = 5;
         this.strokeColor = strokeColor;
@@ -15,7 +15,7 @@ class Line {
         this.lineType = settings.lineTypes[lineTypeNumber];
         this.reels = reels;
 
-        this.cash = cash;
+        this.points = points;
 
         this.svgNode = document.createElementNS(this.namespaceURI, 'svg');
         this.container.appendChild(this.svgNode);
