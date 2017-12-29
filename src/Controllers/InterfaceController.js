@@ -6,11 +6,12 @@ class InterfaceController {
         this.props = props;
 
         this.state = {
-            spin: true,
+            spin: false,
             stop: false,
             takeWin: false,
-            lines: true,
-            betPerLine: true
+            denomination: false,
+            lines: false,
+            betPerLine: false
         };
 
         this.linePresenters = new LinePresenters({
@@ -20,6 +21,13 @@ class InterfaceController {
         this.panel = new Panel(document.querySelector('#panel'));
 
         this._initKeyboardListeners();
+    }
+
+    enableGameStart() {
+        this.state.spin = true;
+        this.state.denomination = true;
+        this.state.lines = true;
+        this.state.betPerLine = true;
     }
 
     enableBetChange() {
@@ -64,9 +72,17 @@ class InterfaceController {
                     }
                     break;
                 }
+                // m
                 case 77: {
                     if (this.state.lines && this.state.betPerLine) {
                         this.props.setMaxBet();
+                    }
+                    break;
+                }
+                // d
+                case 68: {
+                    if (this.state.denomination) {
+                        this.props.setDenomination();
                     }
                     break;
                 }

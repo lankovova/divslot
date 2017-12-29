@@ -1,29 +1,32 @@
 class PointsController {
-    constructor(startCash, props) {
+    constructor(options, props) {
         this._userCash;
         this._userWin;
 
         this._linesAmount;
         this._betPerLine;
 
+        this.denomination;
+
         this.props = props;
 
-        this._init(startCash);
+        this._init(options);
     }
 
-    _init({lines, betPerLine, userCash, userWin}) {
+    _init({lines = settings.lines[0], betPerLine = settings.betPerLine[0], userCash = 0, userWin = 0, denomination = settings.denominations[0]}) {
         this.lines = lines;
         this.betPerLine = betPerLine;
         this.userCash = userCash;
         this.userWin = 0;
+        this.denomination = denomination;
     }
 
-    // static toKups(points) {
-    //     return +(points / 100).toFixed(2);
-    // }
-    // static toPoints(kups) {
-    //     return Math.floor(kups * 100);
-    // }
+    coinsToPoints(coins) {
+        return coins / this.denomination;
+    }
+    kupsToPoints(kups) {
+        return kups * 100 / this.denomination;
+    }
 
     get lines() { return this._linesAmount };
     set lines(linesAmount) {

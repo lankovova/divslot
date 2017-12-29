@@ -33,17 +33,16 @@ class Game {
         this.interfaceController = new InterfaceController({
             containerNode: document.querySelector('#reels_wrapper'),
             lines: this.linesController.lines,
-            spinReels: this.spinReels,
-            stopReels: this.stopReels,
+            spinReels: this.getDataAndSpin,
+            stopReels: this.stop,
             takeWin: this.takeWin,
+            setDenomination: this.setDenomination,
             setLines: this.setLines,
             setBerPerLine: this.setBerPerLine,
             setMaxBet: this.setMaxBet
         });
 
         this.pointsController = new PointsController({
-                userCash: 100,
-                userWin: 0,
                 lines: 1,
                 betPerLine: 1
             }, {
@@ -51,6 +50,15 @@ class Game {
                 linePresenters: this.interfaceController.linePresenters
             }
         );
+
+        this.interfaceController.panel.notifier.text = 'Loading...';
+        (async () => {
+            // Load some necessarily information, use it
+            this.pointsController.userCash = this.pointsController.kupsToPoints((await this.getPlayerData()).cash);
+            // And enable game to play
+            this.interfaceController.enableGameStart();
+            this.interfaceController.panel.notifier.text = 'Press start to spin';
+        })();
     }
 
     setMaxBet = () => {
@@ -70,6 +78,14 @@ class Game {
         const newBetPerLine = betPerLine ? betPerLine : getNextArrayItem(settings.betPerLine, this.pointsController.betPerLine);
         this.pointsController.betPerLine = newBetPerLine;
 
+        this.checkBetSpinPossibility();
+    }
+
+    setDenomination = denomination => {
+        const newDenomination = denomination ? denomination : getNextArrayItem(settings.denominations, this.pointsController.denomination);
+        this.pointsController.denomination = newDenomination;
+
+        // Is it really needed?
         this.checkBetSpinPossibility();
     }
 
@@ -101,12 +117,44 @@ class Game {
     // Transfer win cash to user's cash
     transferUsersWin = () => {
         // Update user cash
-        this.pointsController.userCash = this.spinResponse.user_cash;
+        this.pointsController.userCash = this.pointsController.coinsToPoints(this.spinResponse.playerCoins);
         // Reset user win
         this.pointsController.userWin = 0;
     }
 
-    spinReels = async () => {
+    getPlayerData = async () => {
+        try {
+            return (await axios.post('http://admin.chcgreen.org/getplayerdata')).data;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    // Getting spin data
+    getSpinResponse = async () => {
+        try {
+            const response = await axios.post('http://admin.chcgreen.org/spin', {
+                lines_amount: this.pointsController.lines,
+                bet_per_line: this.pointsController.betPerLine,
+                denomination: this.pointsController.denomination,
+                game: this.gameName
+            });
+
+            return response.data;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    spin = finalSymbols => {
+        // Clear notifier
+        this.interfaceController.panel.notifier.clear();
+
+        // Spin reels
+        this.reelsController.spinReels(finalSymbols);
+    }
+
+    getDataAndSpin = () => {
         this.interfaceController.panel.notifier.text = 'Fetching data...';
         // Disable spin
         this.interfaceController.state.spin = false;
@@ -115,29 +163,16 @@ class Game {
         // Enable stop
         this.interfaceController.state.stop = true;
 
-        // Getting spin data
-        this.spinResponse = (await axios.post('http://admin.chcgreen.org/spin', {
-            lines_amount: this.pointsController.lines,
-            bet_per_line: this.pointsController.betPerLine
-        })).data;
+        this.getSpinResponse().then(result => {
+            console.log(result);
+            this.spinResponse = result;
 
-        // FIXME: PHP = nedo yazuk
-        this.spinResponse.won_cash = +this.spinResponse.won_cash;
-        this.spinResponse.user_cash = +this.spinResponse.user_cash;
-        if (this.spinResponse.free_spins_won_cash) this.spinResponse.free_spins_won_cash = +this.spinResponse.free_spins_won_cash;
-        this.spinResponse.spin_result.map(line => {
-            line.cash = +line.cash;
-            return line;
+            // Decrease user cash
+            this.pointsController.userCash -= this.pointsController.totalBet;
+
+            // Spin reels to given final symbols
+            this.spin(this.spinResponse.final_symbols);
         });
-        // FIXME: END
-
-        console.log(this.spinResponse);
-
-        this.interfaceController.panel.notifier.clear();
-
-        // Decrease user cash
-        this.pointsController.userCash -= this.pointsController.totalBet;
-        this.reelsController.spinReels(this.spinResponse.final_symbols);
     }
 
     // TODO: Add free spins functionallity
@@ -145,10 +180,10 @@ class Game {
         console.log('Free spins won');
         console.log( this.spinResponse.free_spins_result );
 
-        // this.reelsController.spinReels(this.spinResponse.free_spins_result[0].final_symbols );
+        // this.spin(...);
     }
 
-    stopReels = () => {
+    stop = () => {
         this.interfaceController.state.stop = false;
 
         this.reelsController.stopReels();

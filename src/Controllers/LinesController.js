@@ -63,7 +63,7 @@ class LinesController {
 
         for (const line of winningLines) {
             // Add new win cash for each line
-            addUserWin(line.cash);
+            addUserWin(line.points);
 
             await this.showWinningLine(line);
         }
