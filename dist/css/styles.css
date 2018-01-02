@@ -81,6 +81,7 @@ body {
 
 #reels_container {
     display: flex;
+    position: relative;
 }
 
 .reels_wrapper {

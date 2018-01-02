@@ -20,8 +20,8 @@ class Line {
         this.svgNode = document.createElementNS(this.namespaceURI, 'svg');
         this.container.appendChild(this.svgNode);
 
-        this.svgNode.style.width = this._lineWidth() + 'px';
-        this.svgNode.style.height = this._lineHeight() + 'px';
+        this.svgNode.style.width = "100%";
+        this.svgNode.style.height = "100%";
         this.svgNode.style.display = "none";
         this.svgNode.style.position = "absolute";
         this.svgNode.style.zIndex = "1";

@@ -13,6 +13,9 @@ class Symbol {
 		this.symbolNode.style.height = `${settings.symbolSize}px`;
 		this.symbolNode.style.background = `url('${settings.symbolsImagesPath + settings.symbols[this.symbolNum].image}')`;
 		this.symbolNode.style.backgroundSize = 'contain';
+		this.symbolNode.onclick = () =>  {
+			console.log(this.x);
+		}
 	}
 
 	animate() {
@@ -28,13 +31,33 @@ class Symbol {
 	}
 
 	get x() {
-		let x = this.symbolNode.getBoundingClientRect();
-		return x.x;
+		let containerId = "reels_container";
+		let currParent = '';
+		let currChild = this.symbolNode;
+		let x = 0;
+
+		while (containerId !== currParent.id) {
+			currParent = currChild.parentNode;
+			x += currChild.offsetLeft;
+			currChild = currParent;
+		}
+
+		return x;
 	}
 
 	get y() {
-		let y = this.symbolNode.getBoundingClientRect();
-		return y.y;
+		let containerId = "reels_container";
+		let currParent = '';
+		let currChild = this.symbolNode;
+		let y = 0;
+
+		while (containerId !== currParent.id) {
+			currParent = currChild.parentNode;
+			y += currChild.offsetTop;
+			currChild = currParent;
+		}
+
+		return y;
 	}
 }
 

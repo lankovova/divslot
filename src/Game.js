@@ -20,7 +20,7 @@ class Game {
         );
 
         this.linesController = new LinesController(
-            document.querySelector('#game_wrapper'),
+            document.querySelector('#reels_container'),
             { reels: this.reelsController.reels }
         );
 
