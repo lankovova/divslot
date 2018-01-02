@@ -3,6 +3,13 @@ import Panel from '../Components/Panel';
 
 class InterfaceController {
     constructor(props) {
+        console.log(`Controls:
+        space - Spin
+        < - Increase lines
+        > - Increase bet per line
+        d - Increase denomination
+        m - Set max bet`);
+
         this.props = props;
 
         this.state = {

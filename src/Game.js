@@ -10,12 +10,6 @@ class Game {
     constructor(gameName) {
         this.gameName = gameName;
 
-        console.log(`Controls:
-        space - Spin
-        < - Increase lines
-        > - Increase bet per line
-        m - Set max bet`);
-
         this.gameNode = document.querySelector('#game');
         // Store for spin response data
         this.spinResponse = {};
