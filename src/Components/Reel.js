@@ -84,7 +84,7 @@ class Reel {
      * @param {Array<Symbol>} finalSymbols Array of Symbols
      */
     addFinalSymbols(finalSymbols) {
-        this.finalSymbols = finalSymbols.slice();
+        this.finalSymbols = finalSymbols.slice().reverse();
 
         this.addSymbols(finalSymbols);
     }
