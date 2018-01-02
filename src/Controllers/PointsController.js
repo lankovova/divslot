@@ -14,10 +14,17 @@ class PointsController {
     }
 
     _init({lines = settings.lines[0], betPerLine = settings.betPerLine[0], denomination = settings.denominations[0], userCash = 0, userWin = 0}) {
-        this.setDenomination(denomination);
+        // Init denom
+        this._denomination = denomination;
+        this.props.panel.setDenomination(this._denomination);
+
         this.setLines(lines);
         this.setBetPerLine(betPerLine);
-        this.userCash = this.kupsToCoins(userCash);
+
+        // Init user cash
+        this._userCash = this.kupsToCoins(userCash);
+        this.props.panel.setUserCash( this.coinsToPoints(this._userCash) );
+
         this.userWin = userWin;
     }
 
@@ -46,7 +53,9 @@ class PointsController {
         this._denomination = denomination;
 
         // Update panel value
-        // this.props.panel.setDenomination(this._denomination);
+        this.props.panel.setDenomination(this._denomination);
+
+        this.updateUserCash();
     }
 
     get lines() { return this._linesAmount };
@@ -89,7 +98,11 @@ class PointsController {
         this._userCash = this.pointsToCoins(cash);
         this.props.panel.setUserCash( this.coinsToPoints(this._userCash) );
     }
-    get userCash() { return this._userCash; }
+    get userCash() { return this.coinsToPoints(this._userCash); }
+
+    updateUserCash() {
+        this.props.panel.setUserCash( this.coinsToPoints(this._userCash) );
+    }
 
     /**
      * Set user win

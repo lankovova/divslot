@@ -48,14 +48,12 @@ class Game {
             const playerData = await this.getPlayerData();
             const userCash = +playerData.cash;
 
-            console.log(userCash);
-
             this.pointsController = new PointsController({
                 panel: this.interfaceController.panel,
                 linePresenters: this.interfaceController.linePresenters
             }, {
                 userCash: userCash,
-                denomination: 10,
+                denomination: 1,
                 lines: 1,
                 betPerLine: 1,
             });
@@ -83,7 +81,8 @@ class Game {
     setBetRelatedValue = (array, currentValue, setNewValue) => {
         return value => {
             const newValue = value ? value : getNextArrayItem(array, currentValue);
-            setNewValue(newValue);
+            // setNewValue(newValue);
+            setNewValue.call(null, newValue);
             this.checkBetSpinPossibility();
         }
     }
