@@ -1,5 +1,5 @@
-import Reel from '../Components/Reel';
-import Symbol from '../Components/Symbol';
+import Reel from '../Components/ReelFallAnimation';
+import Symbol from '../Components/SymbolFallAnimation';
 
 class ReelsContorller {
     /**
