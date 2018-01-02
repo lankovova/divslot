@@ -1,5 +1,5 @@
 var settings = {
-    "symbolSize": 140,
+    "symbolSize": 170,
     "spaceBetweenReels": 20,
 
     "numOfRows": 3,
@@ -17,9 +17,9 @@ var settings = {
 
     "symbols": [
         {"image": "1.png"},
-        {"image": "2.png", "animation": "2Anim.png"},
+        {"image": "2.png"},
         {"image": "3.png"},
-        {"image": "4.png"},
+        {"image": "4.png", "animation": "4Anim.png"},
         {"image": "5.png"},
         {"image": "6.png"},
         {"image": "7.png"},

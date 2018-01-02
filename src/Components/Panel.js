@@ -4,9 +4,6 @@ class Panel {
     constructor(node) {
         this.node = node;
 
-        this.notifier = new Notifier();
-        this.node.appendChild(this.notifier.node);
-
         this.userCashNode = this._createPanelRowItem();
         this.userWinNode = this._createPanelRowItem();
         this.denominationNode = this._createPanelRowItem();
@@ -14,15 +11,28 @@ class Panel {
         this.betPerLineNode = this._createPanelRowItem();
         this.totalBetNode = this._createPanelRowItem();
 
+        document.querySelector('#menuBtn').onmousedown = function() {
+            this.style.backgroundPosition = 'bottom left';
+        };
+        document.querySelector('#menuBtn').onmouseup = function() {
+            this.style.backgroundPosition = '';
+        };
+        document.querySelector('#menuBtn').onmouseleave = function() {
+            this.style.backgroundPosition = '';
+        };
+
+        this.notifier = new Notifier();
+        // this.node.appendChild(this.notifier.node);
+
         const rowWrapper = document.createElement('div');
         rowWrapper.classList = 'panel-row';
-        rowWrapper.appendChild(this.userCashNode);
-        rowWrapper.appendChild(this.userWinNode);
-        rowWrapper.appendChild(this.denominationNode);
-        rowWrapper.appendChild(this.linesAmountNode);
-        rowWrapper.appendChild(this.betPerLineNode);
-        rowWrapper.appendChild(this.totalBetNode);
-        this.node.appendChild(rowWrapper);
+        // rowWrapper.appendChild(this.userCashNode);
+        // rowWrapper.appendChild(this.userWinNode);
+        // rowWrapper.appendChild(this.denominationNode);
+        // rowWrapper.appendChild(this.linesAmountNode);
+        // rowWrapper.appendChild(this.betPerLineNode);
+        // rowWrapper.appendChild(this.totalBetNode);
+        // this.node.appendChild(rowWrapper);
     }
 
     _createPanelRowItem() {

@@ -7,32 +7,20 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    width: 100vw;
-    height: 100vh;
 }
 
 .game_wrapper {
-    display: flex;
-    align-items: center;
     width: 100vw;
     height: 100vh;
 }
 
 #game {
     background: cadetblue;
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    /* width: 100%;
+    height: 100%; */
 }
 
-.panel {
+/* .panel {
     display: flex;
     flex-direction: column;
     background: lightgreen;
@@ -51,7 +39,7 @@ body {
 .panel .notifier {
     background: lightseagreen;
     padding: 10px;
-}
+} */
 
 .reels_wrapper {
     display: flex;
@@ -92,6 +80,11 @@ body {
     display: flex;
 }
 
+.reels_wrapper {
+    /* background: url('./../assets/images/game_bg.png'); */
+    padding: 10px 0;
+}
+
 .reel_wrapper {
     background: url('./../assets/images/reel_bg.png');
     background-size: cover;
@@ -103,6 +96,52 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
+}
+
+.header {
+    background: url('./../assets/images/header.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 0;
+    padding-top: 6.2465%;
+}
+
+.panel .panel_row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-size: 100% 100%;
+}
+.panel_row-top {
+    height: 70px;
+    background: url('./../assets/images/panel/panel_top.png');
+}
+.panel_row-bot {
+    height: 133px;
+    background: url('./../assets/images/panel/panel_bot.png');
+}
+
+.panel_row-top .menu_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: url('./../assets/images/panel/menu.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 200px 100px;
+    height: 50px;
+    width: 100px;
+
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 18px;
+    color: #222a54;
+}
+.panel_row-top .menu_btn:hover {
+    background-position: top right;
 }
 
 /* #preloader {
