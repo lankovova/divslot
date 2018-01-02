@@ -39,7 +39,7 @@ class LinesController {
 
             // TODO: Handle case when it's scatters line
             // If there is physical line
-            if (res.line_index) {
+            if (res.line_index !== undefined) {
                 line.connectHighlites();
             }
 

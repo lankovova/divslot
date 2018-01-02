@@ -12,6 +12,7 @@ class Symbol {
 		this.symbolNode.style.width = `${settings.symbolSize}px`;
 		this.symbolNode.style.height = `${settings.symbolSize}px`;
 		this.symbolNode.style.background = `url('${settings.symbolsImagesPath + settings.symbols[this.symbolNum].image}')`;
+		this.symbolNode.style.backgroundSize = 'contain';
 	}
 
 	animate() {

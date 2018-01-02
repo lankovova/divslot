@@ -3,6 +3,13 @@ import Panel from '../Components/Panel';
 
 class InterfaceController {
     constructor(props) {
+        console.log(`Controls:
+        space - Spin
+        < - Increase lines
+        > - Increase bet per line
+        d - Increase denomination
+        m - Set max bet`);
+
         this.props = props;
 
         this.state = {
@@ -30,11 +37,13 @@ class InterfaceController {
         this.state.betPerLine = true;
     }
 
-    enableBetChange() {
+    enableValuesChange() {
+        this.state.denomination = true;
         this.state.lines = true;
         this.state.betPerLine = true;
     }
-    disableBetChange() {
+    disableValuesChange() {
+        this.state.denomination = false;
         this.state.lines = false;
         this.state.betPerLine = false;
     }

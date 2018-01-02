@@ -4,7 +4,6 @@ var settings = {
 
     "numOfRows": 3,
     "numOfReels": 5,
-    "symbolsAmount": 10,
 
     "numOfSpinsBeforeStop": 3,
 
@@ -13,16 +12,16 @@ var settings = {
     "spinAnimationTimeInMs": 1000,
     "spinAnimTimingFunc": "ease-in-out",
 
-    "symbolsImagesPath": "./assets/images/symbols/",
-    "symbolsAnimationsPath": "./assets/images/symbols/animations/",
+    "symbolsImagesPath": "./assets/images/bananasSymbols/",
+    "symbolsAnimationsPath": "./assets/images/bananasSymbols/animations/",
 
     "symbols": [
         {"image": "1.png"},
-        {"image": "2.png"},
+        {"image": "2.png", "animation": "2Anim.png"},
         {"image": "3.png"},
-        {"image": "4.png", "animation": "testAnim.png"},
+        {"image": "4.png"},
         {"image": "5.png"},
-        {"image": "6.jpg"},
+        {"image": "6.png"},
         {"image": "7.png"},
         {"image": "8.png"},
         {"image": "9.png"},

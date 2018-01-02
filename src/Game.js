@@ -10,12 +10,6 @@ class Game {
     constructor(gameName) {
         this.gameName = gameName;
 
-        console.log(`Controls:
-        space - Spin
-        < - Increase lines
-        > - Increase bet per line
-        m - Set max bet`);
-
         this.gameNode = document.querySelector('#game');
         // Store for spin response data
         this.spinResponse = {};
@@ -107,8 +101,8 @@ class Game {
         // TODO: Enable after transfering win
         // FIXME: Code duplicate
         this.interfaceController.state.spin = true;
-        // Enable possibility to change betPerLine or linesAmount
-        this.interfaceController.enableBetChange();
+        // Enable possibility to change values
+        this.interfaceController.enableValuesChange();
         this.checkBetSpinPossibility();
     }
 
@@ -157,7 +151,7 @@ class Game {
         // Disable spin
         this.interfaceController.state.spin = false;
         // Disable possibility to change betPerLine or linesAmount
-        this.interfaceController.disableBetChange();
+        this.interfaceController.disableValuesChange();
         // Enable stop
         this.interfaceController.state.stop = true;
 
@@ -176,9 +170,9 @@ class Game {
     // TODO: Add free spins functionallity
     freeSpin = () => {
         console.log('Free spins won');
-        console.log( this.spinResponse.free_spins_result );
+        console.log( this.spinResponse.bonus_spins );
 
-        // this.spin(...);
+        // this.spin(this.spinResponse.bonus_spins.spins[0]);
     }
 
     stop = () => {
@@ -190,6 +184,13 @@ class Game {
     // All reels has stopped event
     reelsHasStopped = async () => {
         this.interfaceController.state.stop = false;
+
+        // Checking for free spins
+        // if (this.spinResponse.bonus_spins) {
+        //     // Start free spins
+        //     this.freeSpin();
+        //     return;
+        // }
 
         if (this.spinResponse.won) { // Win case
             // Show all winning lines
@@ -209,15 +210,10 @@ class Game {
             // FIXME: Code duplicate
             this.interfaceController.state.spin = true;
             // Enable possibility to change betPerLine or linesAmount
-            this.interfaceController.enableBetChange();
+            this.interfaceController.enableValuesChange();
             this.checkBetSpinPossibility();
         }
 
-        // Checking for free spins
-        // if (this.spinResponse.free_spins) {
-        //     // Start free spins
-        //     this.freeSpin();
-        // }
     }
 
 }

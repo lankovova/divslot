@@ -10639,7 +10639,7 @@ var Reel = function () {
 
             // Init starting symbols
             for (var i = 0; i < settings.numOfRows; i++) {
-                var symbol = new _Symbol3.default(Math.floor(Math.random() * settings.symbolsAmount));
+                var symbol = new _Symbol3.default(Math.floor(Math.random() * settings.symbols.length));
 
                 this.finalSymbols.push(symbol);
                 // Add symbol into reel node
@@ -10691,7 +10691,7 @@ var Reel = function () {
             var spinningSymbolsArr = [];
 
             for (var i = 0; i < settings.numOfSpinsBeforeStop * settings.numOfRows; i++) {
-                var symbol = new _Symbol3.default(Math.floor(Math.random() * settings.symbolsAmount));
+                var symbol = new _Symbol3.default(Math.floor(Math.random() * settings.settings.symbols.length));
                 spinningSymbolsArr.push(symbol);
             }
 

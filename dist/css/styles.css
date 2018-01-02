@@ -93,7 +93,8 @@ body {
 }
 
 .reel_wrapper {
-    background: transparent;
+    background: url('./../assets/images/reel_bg.png');
+    background-size: cover;
     position: relative;
     overflow: hidden;
 }
@@ -104,7 +105,7 @@ body {
     left: 0;
 }
 
-#preloader {
+/* #preloader {
     background: url('./../assets/images/symbols/1.png'),
                 url('./../assets/images/symbols/2.png'),
                 url('./../assets/images/symbols/3.png'),
@@ -116,7 +117,7 @@ body {
                 url('./../assets/images/symbols/9.png'),
                 url('./../assets/images/symbols/10.png'),
                 url('./../assets/images/symbols/animations/testAnim.png');
-}
+} */
 
 @keyframes symbolAnimation {
     0% {
