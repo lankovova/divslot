@@ -18,10 +18,8 @@ export default class SymbolFallAnimation extends Symbol {
     }
 
     fall(multiplier) {
-        console.log(this.symbolNode);
-        this.symbolNode.style.bottom = `${multiplier * settings.symbolSize}px`;
-
         return new Promise(resolve => {
+            this.symbolNode.style.bottom = `${multiplier * settings.symbolSize}px`;
             setTimeout(() => {
                 resolve();
             }, 1000);
