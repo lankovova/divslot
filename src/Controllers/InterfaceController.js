@@ -38,10 +38,12 @@ class InterfaceController {
     }
 
     enableBetChange() {
+        this.state.denomination = true;
         this.state.lines = true;
         this.state.betPerLine = true;
     }
     disableBetChange() {
+        this.state.denomination = false;
         this.state.lines = false;
         this.state.betPerLine = false;
     }
