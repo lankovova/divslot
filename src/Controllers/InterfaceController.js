@@ -37,12 +37,12 @@ class InterfaceController {
         this.state.betPerLine = true;
     }
 
-    enableBetChange() {
+    enableValuesChange() {
         this.state.denomination = true;
         this.state.lines = true;
         this.state.betPerLine = true;
     }
-    disableBetChange() {
+    disableValuesChange() {
         this.state.denomination = false;
         this.state.lines = false;
         this.state.betPerLine = false;
