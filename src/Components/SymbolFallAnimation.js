@@ -6,7 +6,7 @@ export default class SymbolFallAnimation extends Symbol {
         super(symbolNumber);
 
         this.node.addEventListener(transitionEnd, () => {
-            console.log('Symbol fall stopped');
+            // console.log('Symbol fall stopped');
         });
     }
 
@@ -14,14 +14,17 @@ export default class SymbolFallAnimation extends Symbol {
         super.initSymbol();
         this.symbolNode.style.position = "absolute";
         this.symbolNode.style.bottom = `${settings.numOfRows * settings.symbolSize}px`;
+        this.symbolNode.style.transition = `bottom 300ms ${settings.fallAnimTimingFunc}`;
     }
 
     fall(multiplier) {
-        let animTime = settings.spinAnimationTimeInMs / 6 * (settings.numOfRows - multiplier + 1);
-        this.symbolNode.style.transition = `bottom ${animTime}ms ${settings.fallAnimTimingFunc}`;
+        console.log(this.symbolNode);
+        this.symbolNode.style.bottom = `${multiplier * settings.symbolSize}px`;
 
-        setTimeout(() => {
-            this.symbolNode.style.bottom = `${multiplier * settings.symbolSize}px`;
-        }, (settings.spinAnimationTimeInMs / settings.numOfRows) * (multiplier + 1));
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, 1000);
+        });
     }
 }

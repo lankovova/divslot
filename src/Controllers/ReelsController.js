@@ -34,6 +34,7 @@ class ReelsContorller {
      * @param {Number[][]} finalSymbolsMap Map of final symbols
      */
     async spinReels(finalSymbolsMap) {
+        // Clear all reels
         for (const reel of this.reels) {
             reel.removeOldSymbols();
         }

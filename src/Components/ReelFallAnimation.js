@@ -1,26 +1,35 @@
 import Symbol from './SymbolFallAnimation';
-import Reel from './Reel';
 
-export default class ReelFallAnimation extends Reel {
+class ReelFallAnimation {
     /**
      * Create reel with starting symbols in it
      * @param {Number} reelIndex Index of reel in Game
      * @param {Function} onStop Function to call when reel has stopped
      */
     constructor(reelIndex, onStop) {
-        super(reelIndex, onStop);
+        this.finalSymbols = [];
+
+        this.reelNode;
+        this.reelIndex = reelIndex;
+
+        this.props = {
+            onStop
+        };
+
+        this._init();
     }
 
     /**
      * Spin reel to final symbols
      * @param {Array<Symbol>} finalSymbols Array of final symbols
      */
-    spin(finalSymbols) {
+    async spin(finalSymbols) {
         this.addFinalSymbols(finalSymbols);
 
         // Animate spin
         for (let i = 0; i < this.finalSymbols.length; i++) {
-            this.finalSymbols[i].fall(i);
+            console.log(i);
+            await this.finalSymbols[i].fall(i);
         }
     }
 
@@ -56,8 +65,46 @@ export default class ReelFallAnimation extends Reel {
         reelWrapperNode.appendChild(this.reelNode);
 
         document.querySelector('#reels_container').appendChild(reelWrapperNode);
-
-        this._initListeners();
     }
 
+    /**
+     * Add final symbols to reel
+     * @param {Array<Symbol>} finalSymbols Array of Symbols
+     */
+    addFinalSymbols(finalSymbols) {
+        this.finalSymbols = finalSymbols.slice().reverse();
+
+        this.addSymbols(finalSymbols);
+    }
+
+    /**
+     * Add symbols to reel
+     * @param {Array<Symbol>} symbolsArr Array of Symbols to add to reel
+     */
+    addSymbols(symbolsArr) {
+        for (let i = symbolsArr.length - 1; i >= 0; i--) {
+            const symbol = symbolsArr[i];
+            this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
+        }
+    }
+
+    resetReel() {
+        // Remove useless symbols
+        while (this.reelNode.childNodes.length !== settings.numOfRows) {
+            this.reelNode.removeChild(this.reelNode.childNodes[settings.numOfRows]);
+        }
+
+        // Remove spin animation time to move reel
+        this.reelNode.style.transitionDuration = '0ms';
+        // Set reel in default position
+        this.reelNode.style.transform = '';
+
+        // Set spin animation time back
+        setTimeout(() => {
+            // Reset spin duration
+            this.reelNode.style.transitionDuration = `${settings.spinAnimationTimeInMs}ms`;
+        }, 0);
+    }
 }
+
+export default ReelFallAnimation;
