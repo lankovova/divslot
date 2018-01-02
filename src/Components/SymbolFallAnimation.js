@@ -11,10 +11,10 @@ export default class SymbolFallAnimation extends Symbol {
         this.symbolNode.style.position = "absolute";
         this.symbolNode.style.bottom = `${settings.numOfRows * settings.symbolSize}px`;
     }
-    
+
     fall(multiplier) {
         let animTime = settings.spinAnimationTimeInMs / 6 * (settings.numOfRows - multiplier + 1);
-        this.symbolNode.style.transition = `bottom ${animTime}ms`;
+        this.symbolNode.style.transition = `bottom ${animTime}ms ${settings.fallAnimTimingFunc}`;
 
         setTimeout(() => {
             this.symbolNode.style.bottom = `${multiplier * settings.symbolSize}px`;

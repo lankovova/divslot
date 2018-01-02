@@ -1,6 +1,5 @@
 import Symbol from './SymbolFallAnimation';
 import Reel from './Reel';
-import {transitionEnd} from '../events';
 
 export default class ReelFallAnimation extends Reel{
     /**
@@ -24,7 +23,7 @@ export default class ReelFallAnimation extends Reel{
             this.finalSymbols[i].fall(i);
         }
     }
-    
+
     /**
      * Remove old symbols from reel
      */
@@ -42,7 +41,7 @@ export default class ReelFallAnimation extends Reel{
 
         // Init starting symbols
         for (let i = 0; i < settings.numOfRows; i++) {
-            const symbol = new Symbol(Math.floor(Math.random() * settings.symbolsAmount));
+            const symbol = new Symbol(Math.floor(Math.random() * settings.symbols.length));
             symbol.node.style.bottom = `${settings.symbolSize * (i)}px`;
             this.finalSymbols.push(symbol);
             // Add symbol into reel node
@@ -60,5 +59,5 @@ export default class ReelFallAnimation extends Reel{
 
         this._initListeners();
     }
-  
+
 }

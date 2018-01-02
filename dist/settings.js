@@ -1,5 +1,5 @@
 var settings = {
-    "symbolSize": 170,
+    "symbolSize": 140,
     "spaceBetweenReels": 20,
 
     "numOfRows": 3,
@@ -9,8 +9,9 @@ var settings = {
 
     "delayBetweenShowingWinningLines": 700,
     "delayBetweenReelsSpin": 200,
-    "spinAnimationTimeInMs": 1000,
+    "spinAnimationTimeInMs": 800,
     "spinAnimTimingFunc": "ease-in-out",
+    "fallAnimTimingFunc": "cubic-bezier(.79,1.51,.74,.84)",
 
     "symbolsImagesPath": "./assets/images/bananasSymbols/",
     "symbolsAnimationsPath": "./assets/images/bananasSymbols/animations/",

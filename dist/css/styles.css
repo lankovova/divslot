@@ -131,9 +131,9 @@ body {
     background: url('./../assets/images/panel/menu.png');
     background-position: top left;
     background-repeat: no-repeat;
-    background-size: 200px 100px;
-    height: 50px;
-    width: 100px;
+    background-size: 163px 120px;
+    width: 81px;
+    height: 60px;
 
     text-transform: uppercase;
     font-weight: 900;
