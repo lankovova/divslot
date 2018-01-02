@@ -4,6 +4,10 @@ import { transitionEnd } from "../events";
 export default class SymbolFallAnimation extends Symbol {
     constructor(symbolNumber) {
         super(symbolNumber);
+
+        this.node.addEventListener(transitionEnd, () => {
+            console.log('Symbol anim stopped');
+        });
     }
 
     initSymbol() {

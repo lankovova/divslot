@@ -1,7 +1,7 @@
 import Symbol from './SymbolFallAnimation';
 import Reel from './Reel';
 
-export default class ReelFallAnimation extends Reel{
+export default class ReelFallAnimation extends Reel {
     /**
      * Create reel with starting symbols in it
      * @param {Number} reelIndex Index of reel in Game
@@ -37,7 +37,7 @@ export default class ReelFallAnimation extends Reel{
         this.reelNode = document.createElement('div');
         this.reelNode.className = 'reel';
         this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInMs}ms ${settings.spinAnimTimingFunc}`;
-        this.reelNode.style.height = `${settings.symbolSize * (settings.numOfRows + 1)}px`; // + bonus slot for hibben symbol
+        this.reelNode.style.height = `${settings.symbolSize * (settings.numOfRows + 1)}px`; // + bonus slot for hidden symbol
 
         // Init starting symbols
         for (let i = 0; i < settings.numOfRows; i++) {

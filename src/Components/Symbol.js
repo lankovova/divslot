@@ -13,7 +13,7 @@ class Symbol {
 		this.symbolNode.style.height = `${settings.symbolSize}px`;
 		this.symbolNode.style.background = `url('${settings.symbolsImagesPath + settings.symbols[this.symbolNum].image}')`;
 		this.symbolNode.style.backgroundSize = 'contain';
-		this.symbolNode.onclick = () =>  {
+		this.symbolNode.onclick = () => {
 			console.log(this.x);
 		}
 	}
