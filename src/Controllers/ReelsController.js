@@ -1,5 +1,4 @@
 import Reel from '../Components/ReelFallAnimation';
-import Symbol from '../Components/SymbolFallAnimation';
 
 class ReelsContorller {
     /**
@@ -44,6 +43,9 @@ class ReelsContorller {
             // Add final symbols to reel
             this.reels[i].addFinalSymbols(finalSymbols);
         }
+
+        // Delay before start reels spin
+        await (() => new Promise(resolve => setTimeout(resolve, settings.delayBeforeStartReelsSpin)))();
 
         // For each reel
         for (let i = 0; i < this.reels.length; i++) {
@@ -91,7 +93,8 @@ class ReelsContorller {
         let resultArray = [];
 
         for (let i = 0; i < symbolsMap.length; i++) {
-            resultArray.push(new Symbol(symbolsMap[i][reelIndex]));
+            resultArray.push(symbolsMap[i][reelIndex]);
+            // resultArray.push(new Symbol(symbolsMap[i][reelIndex]));
         }
 
         return resultArray;

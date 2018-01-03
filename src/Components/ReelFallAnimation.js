@@ -63,21 +63,33 @@ class ReelFallAnimation {
 
     /**
      * Add final symbols to reel
-     * @param {Array<Symbol>} finalSymbols Array of Symbols
+     * @param {Array<Number>} finalSymbolsMap Array of Symbols
      */
-    addFinalSymbols(finalSymbols) {
+    addFinalSymbols(finalSymbolsMap) {
+        let finalSymbols = [];
+
+        for (let i = 0; i < finalSymbolsMap.length; i++) {
+            finalSymbols.push(new Symbol(finalSymbolsMap[i], { symbolHasFelled: this._symbolHasFelled }));
+        }
+
         this.finalSymbols = finalSymbols.slice().reverse();
 
-        this.addSymbols(finalSymbols);
+        this._addSymbols(finalSymbols);
     }
 
     /**
      * Add symbols to reel
      * @param {Array<Symbol>} symbolsArr Array of Symbols to add to reel
      */
-    addSymbols(symbolsArr) {
+    _addSymbols(symbolsArr) {
         for (let i = 0; i < symbolsArr.length; i++) {
             this.reelNode.appendChild(symbolsArr[i].node);
+        }
+    }
+
+    _symbolHasFelled = symbolIndexInReel => {
+        if (symbolIndexInReel === settings.numOfRows - 1) {
+            this.props.onStop(this.reelIndex);
         }
     }
 }

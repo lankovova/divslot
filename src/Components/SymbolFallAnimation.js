@@ -2,12 +2,14 @@ import Symbol from "./Symbol";
 import { transitionEnd } from "../events";
 
 export default class SymbolFallAnimation extends Symbol {
-    constructor(symbolNumber) {
+    constructor(symbolNumber, props) {
         super(symbolNumber);
 
-        this.node.addEventListener(transitionEnd, () => {
-            console.log('Symbol fall stopped');
-        });
+        this.props = props;
+
+        this.indexInReel;
+
+        this.initListeners();
     }
 
     initSymbol() {
@@ -17,14 +19,20 @@ export default class SymbolFallAnimation extends Symbol {
         this.symbolNode.style.transition = `bottom 300ms ${settings.fallAnimTimingFunc}`;
     }
 
-    fall(multiplier) {
+    initListeners() {
+        this.node.addEventListener(transitionEnd, () => {
+            this.props.symbolHasFelled(this.indexInReel);
+        });
+    }
+
+    fall(indexInReel) {
         return new Promise(resolve => {
+            this.indexInReel = indexInReel;
+
+            this.symbolNode.style.bottom = `${indexInReel * settings.symbolSize}px`;
             setTimeout(() => {
-                this.symbolNode.style.bottom = `${multiplier * settings.symbolSize}px`;
-                setTimeout(() => {
-                    resolve();
-                }, settings.delayBetweenFallingSymbols);
-            }, settings.delayBeforeStartFallingReel);
+                resolve();
+            }, settings.delayBetweenFallingSymbols);
         });
     }
 }

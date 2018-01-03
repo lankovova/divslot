@@ -10,7 +10,9 @@ var settings = {
     "delayBetweenShowingWinningLines": 700,
     "delayBetweenReelsSpin": 200,
     "delayBetweenFallingSymbols": 300,
-    "delayBeforeStartFallingReel": 0,
+    // Do not set this delay lower than 50 ms
+    // due to the slow browser perfomance
+    "delayBeforeStartReelsSpin": 200,
     "spinAnimationTimeInMs": 1000,
     "spinAnimTimingFunc": "ease-in-out",
     "fallAnimTimingFunc": "cubic-bezier(.79,1.51,.74,.84)",
