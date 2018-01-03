@@ -183,6 +183,8 @@ class Game {
 
     // All reels has stopped event
     reelsHasStopped = async () => {
+        console.log('reelsHasStopped in Game');
+
         this.interfaceController.state.stop = false;
 
         // Checking for free spins

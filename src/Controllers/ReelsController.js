@@ -34,9 +34,6 @@ class ReelsContorller {
      * @param {Number[][]} finalSymbolsMap Map of final symbols
      */
     async spinReels(finalSymbolsMap) {
-        // Delay before start reels spin
-        await (() => new Promise(resolve => setTimeout(resolve, settings.delayBeforeStartReelsSpin)))();
-
         // For each reel
         for (let i = 0; i < this.reels.length; i++) {
             let finalSymbols = this.getReelSymbolsFromSymbolsMap(finalSymbolsMap, i);
@@ -93,6 +90,8 @@ class ReelsContorller {
         if (reelIndex === this.reels.length - 1) {
             // Set previous delay betwwen reels spin start
             this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
+
+            console.log('all reels has stopped');
 
             this.props.reelsHasStopped();
         }
