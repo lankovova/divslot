@@ -26,6 +26,7 @@ export default class SymbolFallAnimation extends Symbol {
     }
 
     fall(indexInReel) {
+        // Next symbol fall faster than previous
         this.symbolNode.style.transition = `bottom ${1000 / 6 * (settings.numOfRows - indexInReel)}ms ${settings.fallAnimTimingFunc}`;
         return new Promise(resolve => {
             this.indexInReel = indexInReel;
