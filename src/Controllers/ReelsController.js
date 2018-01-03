@@ -93,8 +93,8 @@ class ReelsContorller {
         if (reelIndex === this.reels.length - 1) {
             // Set previous delay betwwen reels spin start
             this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
-
-            this.props.reelsHasStopped();
+            // Wait until all is done and call stack is free
+            setTimeout(() => this.props.reelsHasStopped(), 0);
         }
     }
 
