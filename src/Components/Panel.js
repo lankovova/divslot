@@ -4,35 +4,23 @@ class Panel {
     constructor(node) {
         this.node = node;
 
+        const addClickEffect = (el, spriteClickPartPosition) => {
+            el.onmousedown = function() { this.style.backgroundPosition = spriteClickPartPosition; };
+            el.onmouseup = function() { this.style.backgroundPosition = ''; };
+            el.onmouseleave = function() { this.style.backgroundPosition = ''; };
+        }
+        addClickEffect(document.querySelector('#menuBtn'), 'bottom left');
+        addClickEffect(document.querySelector('#linesBtn'), 'bottom left');
+        addClickEffect(document.querySelector('#betperlineBtn'), 'bottom left');
+
+        this.linesAmountField = document.querySelector('#linesAmountField');
+        this.betPerLineAmountField = document.querySelector('#betperlineAmountField');
+        this.notifier = new Notifier();
+
         this.userCashNode = this._createPanelRowItem();
         this.userWinNode = this._createPanelRowItem();
         this.denominationNode = this._createPanelRowItem();
-        this.linesAmountNode = this._createPanelRowItem();
-        this.betPerLineNode = this._createPanelRowItem();
         this.totalBetNode = this._createPanelRowItem();
-
-        document.querySelector('#menuBtn').onmousedown = function() {
-            this.style.backgroundPosition = 'bottom left';
-        };
-        document.querySelector('#menuBtn').onmouseup = function() {
-            this.style.backgroundPosition = '';
-        };
-        document.querySelector('#menuBtn').onmouseleave = function() {
-            this.style.backgroundPosition = '';
-        };
-
-        this.notifier = new Notifier();
-        // this.node.appendChild(this.notifier.node);
-
-        const rowWrapper = document.createElement('div');
-        rowWrapper.classList = 'panel-row';
-        // rowWrapper.appendChild(this.userCashNode);
-        // rowWrapper.appendChild(this.userWinNode);
-        // rowWrapper.appendChild(this.denominationNode);
-        // rowWrapper.appendChild(this.linesAmountNode);
-        // rowWrapper.appendChild(this.betPerLineNode);
-        // rowWrapper.appendChild(this.totalBetNode);
-        // this.node.appendChild(rowWrapper);
     }
 
     _createPanelRowItem() {
@@ -55,11 +43,11 @@ class Panel {
     }
 
     setLinesAmount(lines) {
-        this.linesAmountNode.innerText = `Lines: ${lines}`;
+        this.linesAmountField.innerText = lines;
     }
 
     setBetPerLine(betPerLine) {
-        this.betPerLineNode.innerText = `Bet/Line: ${betPerLine}`;
+        this.betPerLineAmountField.innerText = betPerLine;
     }
 
     setTotalBet(bet) {

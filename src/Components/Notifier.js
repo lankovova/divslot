@@ -1,14 +1,12 @@
 class Notifier {
     constructor() {
-        this._node = document.createElement('div');
-        this._node.classList = 'notifier panel-row';
-        // FIXME:
-        this._node.innerText = 'Init text';
+        this._node = document.querySelector('#notifier');
+        this._node.innerText = 'Welcome';
     }
 
     clear() {
-        // this._node.innerText = '';
         this._node.innerText = '...';
+        // this._node.innerText = '';
     }
 
     set text(text) {

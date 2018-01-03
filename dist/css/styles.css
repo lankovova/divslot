@@ -17,7 +17,7 @@ body {
 #game {
     width: 100%;
     height: 100%;
-    background: cadetblue;
+    background: darkgoldenrod;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -119,25 +119,29 @@ body {
     background-size: 100% 100%;
 }
 .panel_row-top {
-    height: 70px;
+    height: 80px;
     background: url('./../assets/images/panel/panel_top.png');
 }
 .panel_row-bot {
-    height: 133px;
+    height: 90px;
     background: url('./../assets/images/panel/panel_bot.png');
 }
 
-.panel_row-top .menu_btn {
+.flex_center {
     display: flex;
     align-items: center;
     justify-content: center;
+}
 
-    background: url('./../assets/images/panel/menu.png');
+.panel_row-top .menu_btn {
+    margin: 5px 10px 0 10px;
+
+    background: url('./../assets/images/panel/menu_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
-    background-size: 163px 120px;
-    width: 81px;
-    height: 60px;
+    background-size: 181px 140px;
+    width: 90px;
+    height: 70px;
 
     text-transform: uppercase;
     font-weight: 900;
@@ -146,6 +150,89 @@ body {
 }
 .panel_row-top .menu_btn:hover {
     background-position: top right;
+}
+
+.panel_row-top .lines_btn {
+    margin: 5px 10px 0 10px;
+
+    display: flex;
+
+    background: url('./../assets/images/panel/button_with_number.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 209px 121px;
+    width: 104px;
+    height: 60px;
+
+    padding-left: 5px;
+    box-sizing: border-box;
+
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 18px;
+    color: #222a54;
+}
+.panel_row-top .lines_btn .title {
+    height: 100%;
+    width: 65%;
+}
+.panel_row-top .lines_btn .number {
+    height: 100%;
+    width: 35%;
+    color: white;
+}
+.panel_row-top .lines_btn:hover {
+    background-position: top right;
+}
+
+.panel_row-top .betperline_btn {
+    margin: 5px 10px 0 10px;
+
+    display: flex;
+
+    background: url('./../assets/images/panel/button_with_number.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 209px 121px;
+    width: 104px;
+    height: 60px;
+
+    padding-left: 5px;
+    box-sizing: border-box;
+
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 18px;
+    color: #222a54;
+}
+.panel_row-top .betperline_btn .title {
+    flex-direction: column;
+    height: 100%;
+    width: 65%;
+}
+.panel_row-top .betperline_btn .number {
+    height: 100%;
+    width: 35%;
+    color: white;
+}
+.panel_row-top .betperline_btn:hover {
+    background-position: top right;
+}
+
+.notifier {
+    margin: 0 10px 0 10px;
+
+    width: 350px;
+    height: 45px;
+
+    background: url('./../assets/images/panel/notifier.png');
+    background-size: 100% 100%;
+
+    border-radius: 5px;
+
+    color: #d4e7f0;
+    font-size: 18px;
+    text-transform: uppercase;
 }
 
 /* #preloader {
