@@ -6,7 +6,7 @@ export default class SymbolFallAnimation extends Symbol {
         super(symbolNumber);
 
         this.node.addEventListener(transitionEnd, () => {
-            // console.log('Symbol fall stopped');
+            console.log('Symbol fall stopped');
         });
     }
 

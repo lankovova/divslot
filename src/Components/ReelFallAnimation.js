@@ -40,7 +40,7 @@ class ReelFallAnimation {
         this.reelNode.className = 'reel';
         this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInMs}ms ${settings.spinAnimTimingFunc}`;
         this.reelNode.style.height = `${settings.symbolSize * (settings.numOfRows + 1)}px`; // + bonus slot for hidden symbol
-        this.reelNode.style.width = `${settings.symbolSize}px`; // + bonus slot for hidden symbol
+        this.reelNode.style.width = `${settings.symbolSize}px`;
 
         // Init starting symbols
         for (let i = 0; i < settings.numOfRows; i++) {
