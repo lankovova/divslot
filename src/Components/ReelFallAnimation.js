@@ -29,10 +29,12 @@ class ReelFallAnimation {
         // Init starting symbols
         for (let i = 0; i < settings.numOfRows; i++) {
             const symbol = new Symbol(Math.floor(Math.random() * settings.symbols.length));
-            symbol.node.style.bottom = `${settings.symbolSize * (i)}px`;
-            this.finalSymbols.push(symbol);
+            symbol.node.style.bottom = `${settings.symbolSize * i}px`;
+
+            // FIXME: Remove this useless shit
+            this.finalSymbols.unshift(symbol);
             // Add symbol into reel node
-            this.reelNode.appendChild(symbol.node);
+            this.reelNode.prepend(symbol.node);
         }
 
         const reelWrapperNode = document.createElement('div');
