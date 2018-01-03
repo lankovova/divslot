@@ -48,10 +48,10 @@ class Line {
         this.svgNode.appendChild(rectNode);
         this.rectNodes.push(rectNode);
 
-        rectNode.setAttributeNS(null, "width", settings.symbolSize );
-        rectNode.setAttributeNS(null, "height", settings.symbolSize );
-        rectNode.setAttributeNS(null, "x", x);
-        rectNode.setAttributeNS(null, "y", y);
+        rectNode.setAttributeNS(null, "width", settings.symbolSize - this.strokeWidth);
+        rectNode.setAttributeNS(null, "height", settings.symbolSize - this.strokeWidth);
+        rectNode.setAttributeNS(null, "x", x + (this.strokeWidth / 2));
+        rectNode.setAttributeNS(null, "y", y + (this.strokeWidth / 2));
         rectNode.setAttributeNS(null, "stroke", this.strokeColor);
         rectNode.setAttributeNS(null, "fill", 'transparent');
         rectNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
@@ -167,10 +167,11 @@ class Line {
     }
 
     _setLineAttrs(lineNode, start, end) {
-        lineNode.setAttributeNS(null, "x1", start.x);
-        lineNode.setAttributeNS(null, "y1", start.y);
-        lineNode.setAttributeNS(null, "x2", end.x);
-        lineNode.setAttributeNS(null, "y2", end.y);
+        // 1 - fix for nice line connection
+        lineNode.setAttributeNS(null, "x1", start.x + 1);
+        lineNode.setAttributeNS(null, "y1", start.y + 1);
+        lineNode.setAttributeNS(null, "x2", end.x + 1);
+        lineNode.setAttributeNS(null, "y2", end.y + 1);
         lineNode.setAttributeNS(null, "stroke", this.strokeColor);
         lineNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
         lineNode.setAttributeNS(null, "stroke-linecap", 'round');
