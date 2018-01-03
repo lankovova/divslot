@@ -19,16 +19,9 @@ class ReelFallAnimation {
         this._init();
     }
 
-    /**
-     * Spin reel to final symbols
-     * @param {Array<Symbol>} finalSymbols Array of final symbols
-     */
-    async spin(finalSymbols) {
-        this.addFinalSymbols(finalSymbols);
-
-        // Animate spin
+    async spin() {
+        // Drop each symbol in reel with delay
         for (let i = 0; i < this.finalSymbols.length; i++) {
-            console.log(i);
             await this.finalSymbols[i].fall(i);
         }
     }
@@ -47,6 +40,7 @@ class ReelFallAnimation {
         this.reelNode.className = 'reel';
         this.reelNode.style.transition = `transform ${settings.spinAnimationTimeInMs}ms ${settings.spinAnimTimingFunc}`;
         this.reelNode.style.height = `${settings.symbolSize * (settings.numOfRows + 1)}px`; // + bonus slot for hidden symbol
+        this.reelNode.style.width = `${settings.symbolSize}px`; // + bonus slot for hidden symbol
 
         // Init starting symbols
         for (let i = 0; i < settings.numOfRows; i++) {
@@ -82,28 +76,9 @@ class ReelFallAnimation {
      * @param {Array<Symbol>} symbolsArr Array of Symbols to add to reel
      */
     addSymbols(symbolsArr) {
-        for (let i = symbolsArr.length - 1; i >= 0; i--) {
-            const symbol = symbolsArr[i];
-            this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
+        for (let i = 0; i < symbolsArr.length; i++) {
+            this.reelNode.appendChild(symbolsArr[i].node);
         }
-    }
-
-    resetReel() {
-        // Remove useless symbols
-        while (this.reelNode.childNodes.length !== settings.numOfRows) {
-            this.reelNode.removeChild(this.reelNode.childNodes[settings.numOfRows]);
-        }
-
-        // Remove spin animation time to move reel
-        this.reelNode.style.transitionDuration = '0ms';
-        // Set reel in default position
-        this.reelNode.style.transform = '';
-
-        // Set spin animation time back
-        setTimeout(() => {
-            // Reset spin duration
-            this.reelNode.style.transitionDuration = `${settings.spinAnimationTimeInMs}ms`;
-        }, 0);
     }
 }
 

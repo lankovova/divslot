@@ -8,8 +8,10 @@ var settings = {
     "numOfSpinsBeforeStop": 3,
 
     "delayBetweenShowingWinningLines": 700,
-    "delayBetweenReelsSpin": 1000,
-    "spinAnimationTimeInMs": 800,
+    "delayBetweenReelsSpin": 200,
+    "delayBetweenFallingSymbols": 300,
+    "delayBeforeStartFallingReel": 0,
+    "spinAnimationTimeInMs": 1000,
     "spinAnimTimingFunc": "ease-in-out",
     "fallAnimTimingFunc": "cubic-bezier(.79,1.51,.74,.84)",
 

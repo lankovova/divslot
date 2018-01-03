@@ -19,10 +19,12 @@ export default class SymbolFallAnimation extends Symbol {
 
     fall(multiplier) {
         return new Promise(resolve => {
-            this.symbolNode.style.bottom = `${multiplier * settings.symbolSize}px`;
             setTimeout(() => {
-                resolve();
-            }, 1000);
+                this.symbolNode.style.bottom = `${multiplier * settings.symbolSize}px`;
+                setTimeout(() => {
+                    resolve();
+                }, settings.delayBetweenFallingSymbols);
+            }, settings.delayBeforeStartFallingReel);
         });
     }
 }

@@ -34,16 +34,21 @@ class ReelsContorller {
      * @param {Number[][]} finalSymbolsMap Map of final symbols
      */
     async spinReels(finalSymbolsMap) {
-        // Clear all reels
-        for (const reel of this.reels) {
-            reel.removeOldSymbols();
-        }
-        // For each reel
+        // For each reels
         for (let i = 0; i < this.reels.length; i++) {
             let finalSymbols = this.getReelSymbolsFromSymbolsMap(finalSymbolsMap, i);
 
+            // Clear reel
+            this.reels[i].removeOldSymbols();
+
+            // Add final symbols to reel
+            this.reels[i].addFinalSymbols(finalSymbols);
+        }
+
+        // For each reel
+        for (let i = 0; i < this.reels.length; i++) {
             // Wait previous reel to resolve before spinning next
-            await this.spinReel(this.reels[i], finalSymbols);
+            await this.spinReel(this.reels[i]);
         }
     }
 
