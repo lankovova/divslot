@@ -1,4 +1,5 @@
-import Reel from '../Components/ReelFallAnimation';
+// import Reel from '../Components/ReelFallAnimation';
+import Reel from '../Components/Reel';
 
 class ReelsContorller {
     /**
@@ -33,33 +34,51 @@ class ReelsContorller {
      * @param {Number[][]} finalSymbolsMap Map of final symbols
      */
     async spinReels(finalSymbolsMap) {
-        // For each reel
-        for (let i = 0; i < this.reels.length; i++) {
-            let finalSymbols = this.getReelSymbolsFromSymbolsMap(finalSymbolsMap, i);
-
-            // Clear reel
-            this.reels[i].removeOldSymbols();
-
-            // Add final symbols to reel
-            this.reels[i].addFinalSymbols(finalSymbols);
-        }
-
         // Delay before start reels spin
         await (() => new Promise(resolve => setTimeout(resolve, settings.delayBeforeStartReelsSpin)))();
 
         // For each reel
         for (let i = 0; i < this.reels.length; i++) {
+            let finalSymbols = this.getReelSymbolsFromSymbolsMap(finalSymbolsMap, i);
+
             // Wait previous reel to resolve before spinning next
-            await this.spinReel(this.reels[i]);
+            await this.spinReel(this.reels[i], finalSymbols);
         }
     }
+
+    /**
+     * Spin all reels to final symbols
+     * @param {Number[][]} finalSymbolsMap Map of final symbols
+     */
+    // async spinFallReels(finalSymbolsMap) {
+    //     // For each reel
+    //     for (let i = 0; i < this.reels.length; i++) {
+    //         let finalSymbols = this.getReelSymbolsFromSymbolsMap(finalSymbolsMap, i);
+
+    //         // Clear reel
+    //         this.reels[i].removeOldSymbols();
+
+    //         // Add final symbols to reel
+    //         this.reels[i].addFinalSymbols(finalSymbols);
+    //     }
+
+    //     // Delay before start reels spin
+    //     await (() => new Promise(resolve => setTimeout(resolve, settings.delayBeforeStartReelsSpin)))();
+
+    //     // For each reel
+    //     for (let i = 0; i < this.reels.length; i++) {
+
+    //         // Wait previous reel to resolve before spinning next
+    //         await this.spinReel(this.reels[i]);
+    //     }
+    // }
 
     /**
      * Spins the given reel
      * @param {Reel} reel Reel to spin
      */
-    spinReel(reel) {
-        reel.spin();
+    spinReel(reel, finalSymbols) {
+        reel.spin(finalSymbols);
 
         // Resolve promise after delay between reels spin
         return new Promise(resolve => {

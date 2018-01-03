@@ -83,7 +83,13 @@ class Reel {
      * Add final symbols to reel
      * @param {Array<Symbol>} finalSymbols Array of Symbols
      */
-    addFinalSymbols(finalSymbols) {
+    addFinalSymbols(finalSymbolsMap) {
+        let finalSymbols = [];
+
+        for (let i = 0; i < finalSymbolsMap.length; i++) {
+            finalSymbols.push(new Symbol(finalSymbolsMap[i]));
+        }
+
         this.finalSymbols = finalSymbols.slice().reverse();
 
         this.addSymbols(finalSymbols);
