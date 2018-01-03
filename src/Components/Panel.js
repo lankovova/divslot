@@ -12,14 +12,15 @@ class Panel {
         addClickEffect(document.querySelector('#menuBtn'), 'bottom left');
         addClickEffect(document.querySelector('#linesBtn'), 'bottom left');
         addClickEffect(document.querySelector('#betperlineBtn'), 'bottom left');
+        addClickEffect(document.querySelector('#denominationBtn'), 'bottom left');
 
         this.linesAmountField = document.querySelector('#linesAmountField');
         this.betPerLineAmountField = document.querySelector('#betperlineAmountField');
+        this.denominationAmountField = document.querySelector('#denominationAmountField');
         this.notifier = new Notifier();
 
         this.userCashNode = this._createPanelRowItem();
         this.userWinNode = this._createPanelRowItem();
-        this.denominationNode = this._createPanelRowItem();
         this.totalBetNode = this._createPanelRowItem();
     }
 
@@ -39,7 +40,7 @@ class Panel {
     }
 
     setDenomination(denom) {
-        this.denominationNode.innerText = `Denom: ${denom}`;
+        this.denominationAmountField.innerText = denom / 100;
     }
 
     setLinesAmount(lines) {

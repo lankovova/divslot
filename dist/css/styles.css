@@ -219,7 +219,7 @@ body {
     background-position: top right;
 }
 
-.notifier {
+.panel_row-top .notifier {
     margin: 0 10px 0 10px;
 
     width: 350px;
@@ -233,6 +233,37 @@ body {
     color: #d4e7f0;
     font-size: 18px;
     text-transform: uppercase;
+}
+
+.panel_row-bot .denomination_btn {
+    flex-direction: column;
+    justify-content: space-around;
+
+    background: url('./../assets/images/panel/denomination_btn.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 200px 141px;
+    width: 100px;
+    height: 70px;
+
+    padding: 2px 0 9px 0;
+    box-sizing: border-box;
+
+    font-weight: 900;
+}
+.panel_row-bot .denomination_btn .text {
+    color: #052d56;
+    font-size: 14px;
+}
+.panel_row-bot .denomination_btn .number {
+    color: white;
+    font-size: 26px;
+}
+.panel_row-bot .denomination_btn .currency {
+    color: #cdc700;
+}
+.panel_row-bot .denomination_btn:hover {
+    background-position: top right;
 }
 
 /* #preloader {
