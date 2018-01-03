@@ -16,7 +16,7 @@ export default class SymbolFallAnimation extends Symbol {
         super.initSymbol();
         this.symbolNode.style.position = "absolute";
         this.symbolNode.style.bottom = `${settings.numOfRows * settings.symbolSize}px`;
-        this.symbolNode.style.transition = `bottom 300ms ${settings.fallAnimTimingFunc}`;
+        this.symbolNode.style.transition = `transform 300ms ${settings.fallAnimTimingFunc}`;
     }
 
     initListeners() {
@@ -27,11 +27,11 @@ export default class SymbolFallAnimation extends Symbol {
 
     fall(indexInReel) {
         // Next symbol fall faster than previous
-        this.symbolNode.style.transition = `bottom ${1000 / 6 * (settings.numOfRows - indexInReel)}ms ${settings.fallAnimTimingFunc}`;
+        this.symbolNode.style.transition = `transform ${1000 / 6 * (settings.numOfRows - indexInReel)}ms ${settings.fallAnimTimingFunc}`;
         return new Promise(resolve => {
             this.indexInReel = indexInReel;
-
-            this.symbolNode.style.bottom = `${indexInReel * settings.symbolSize}px`;
+            this.symbolNode.style.transform = `translateY(${(settings.numOfRows - indexInReel) * settings.symbolSize}px)`;
+            // this.symbolNode.style.bottom = `${indexInReel * settings.symbolSize}px`;
             setTimeout(() => {
                 resolve();
             }, settings.delayBetweenFallingSymbols);
