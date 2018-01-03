@@ -386,7 +386,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 var bind = __webpack_require__(128);
-var isBuffer = __webpack_require__(353);
+var isBuffer = __webpack_require__(354);
 
 /*global toString:true*/
 
@@ -3062,7 +3062,7 @@ module.exports = navigator && navigator.userAgent || '';
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(18);
-var normalizeHeaderName = __webpack_require__(355);
+var normalizeHeaderName = __webpack_require__(356);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -4124,64 +4124,69 @@ module.exports = Math.scale || function scale(x, inLow, inHigh, outLow, outHigh)
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _Symbol3 = __webpack_require__(343);
+
+var _Symbol4 = _interopRequireDefault(_Symbol3);
+
+var _events = __webpack_require__(344);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _Symbol = function () {
-	function _Symbol(symbolNumber) {
-		_classCallCheck(this, _Symbol);
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-		this.symbolNum = symbolNumber;
-		this.highlighted = false;
-		this.symbolNode;
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-		this.initSymbol();
-	}
+var SymbolFallAnimation = function (_Symbol2) {
+    _inherits(SymbolFallAnimation, _Symbol2);
 
-	_createClass(_Symbol, [{
-		key: 'initSymbol',
-		value: function initSymbol() {
-			this.symbolNode = document.createElement('div');
-			this.symbolNode.style.width = settings.symbolSize + 'px';
-			this.symbolNode.style.height = settings.symbolSize + 'px';
-			this.symbolNode.style.background = 'url(\'' + (settings.symbolsImagesPath + settings.symbols[this.symbolNum].image) + '\')';
-		}
-	}, {
-		key: 'animate',
-		value: function animate() {
-			// If animation for this symbol exists then apply it
-			if (settings.symbols[this.symbolNum].animation) {
-				this.symbolNode.style.background = 'url(\'' + (settings.symbolsAnimationsPath + settings.symbols[this.symbolNum].animation) + '\')';
-				this.symbolNode.style.animation = 'symbolAnimation 1s steps(15) infinite';
-			}
-		}
-	}, {
-		key: 'node',
-		get: function get() {
-			return this.symbolNode;
-		}
-	}, {
-		key: 'x',
-		get: function get() {
-			var x = this.symbolNode.getBoundingClientRect();
-			return x.x;
-		}
-	}, {
-		key: 'y',
-		get: function get() {
-			var y = this.symbolNode.getBoundingClientRect();
-			return y.y;
-		}
-	}]);
+    function SymbolFallAnimation(symbolNumber) {
+        _classCallCheck(this, SymbolFallAnimation);
 
-	return _Symbol;
-}();
+        var _this = _possibleConstructorReturn(this, (SymbolFallAnimation.__proto__ || Object.getPrototypeOf(SymbolFallAnimation)).call(this, symbolNumber));
 
-exports.default = _Symbol;
+        _this.node.addEventListener(_events.transitionEnd, function () {
+            console.log('Symbol fall stopped');
+        });
+        return _this;
+    }
+
+    _createClass(SymbolFallAnimation, [{
+        key: "initSymbol",
+        value: function initSymbol() {
+            _get(SymbolFallAnimation.prototype.__proto__ || Object.getPrototypeOf(SymbolFallAnimation.prototype), "initSymbol", this).call(this);
+            this.symbolNode.style.position = "absolute";
+            this.symbolNode.style.bottom = settings.numOfRows * settings.symbolSize + "px";
+            this.symbolNode.style.transition = "bottom 300ms " + settings.fallAnimTimingFunc;
+        }
+    }, {
+        key: "fall",
+        value: function fall(multiplier) {
+            var _this2 = this;
+
+            return new Promise(function (resolve) {
+                setTimeout(function () {
+                    _this2.symbolNode.style.bottom = multiplier * settings.symbolSize + "px";
+                    setTimeout(function () {
+                        resolve();
+                    }, settings.delayBetweenFallingSymbols);
+                }, settings.delayBeforeStartFallingReel);
+            });
+        }
+    }]);
+
+    return SymbolFallAnimation;
+}(_Symbol4.default);
+
+exports.default = SymbolFallAnimation;
 
 /***/ }),
 /* 128 */
@@ -4399,12 +4404,12 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(18);
-var settle = __webpack_require__(356);
-var buildURL = __webpack_require__(358);
-var parseHeaders = __webpack_require__(359);
-var isURLSameOrigin = __webpack_require__(360);
+var settle = __webpack_require__(357);
+var buildURL = __webpack_require__(359);
+var parseHeaders = __webpack_require__(360);
+var isURLSameOrigin = __webpack_require__(361);
 var createError = __webpack_require__(131);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(361);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(362);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -4501,7 +4506,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(362);
+      var cookies = __webpack_require__(363);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -4586,7 +4591,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(357);
+var enhanceError = __webpack_require__(358);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -9970,7 +9975,7 @@ var _Game2 = _interopRequireDefault(_Game);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function () {
-    var game = new _Game2.default('babyOnFire');
+    var game = new _Game2.default('Bananas');
 })();
 
 /***/ }),
@@ -9994,15 +9999,15 @@ var _ReelsController = __webpack_require__(341);
 
 var _ReelsController2 = _interopRequireDefault(_ReelsController);
 
-var _LinesController = __webpack_require__(344);
+var _LinesController = __webpack_require__(345);
 
 var _LinesController2 = _interopRequireDefault(_LinesController);
 
-var _InterfaceController = __webpack_require__(346);
+var _InterfaceController = __webpack_require__(347);
 
 var _InterfaceController2 = _interopRequireDefault(_InterfaceController);
 
-var _axios = __webpack_require__(351);
+var _axios = __webpack_require__(352);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -10025,18 +10030,25 @@ var Game = function Game(gameName) {
         _this.setBerPerLine(maxBetVars.secondNumber);
     };
 
-    this.setLines = function (lines) {
-        var newLines = lines ? lines : (0, _ArrayMethods.getNextArrayItem)(settings.lines, _this.pointsController.lines);
-        _this.pointsController.lines = newLines;
-
-        _this.checkBetSpinPossibility();
+    this.setBerPerLine = function (newBetPerLine) {
+        return _this.setBetRelatedValue(settings.betPerLine, _this.pointsController.betPerLine, _this.pointsController.setBetPerLine)(newBetPerLine);
     };
 
-    this.setBerPerLine = function (betPerLine) {
-        var newBetPerLine = betPerLine ? betPerLine : (0, _ArrayMethods.getNextArrayItem)(settings.betPerLine, _this.pointsController.betPerLine);
-        _this.pointsController.betPerLine = newBetPerLine;
+    this.setLines = function (newLines) {
+        return _this.setBetRelatedValue(settings.lines, _this.pointsController.lines, _this.pointsController.setLines)(newLines);
+    };
 
-        _this.checkBetSpinPossibility();
+    this.setDenomination = function (newDenom) {
+        return _this.setBetRelatedValue(settings.denominations, _this.pointsController.denomination, _this.pointsController.setDenomination)(newDenom);
+    };
+
+    this.setBetRelatedValue = function (array, currentValue, setNewValue) {
+        return function (value) {
+            var newValue = value ? value : (0, _ArrayMethods.getNextArrayItem)(array, currentValue);
+            // setNewValue(newValue);
+            setNewValue.call(null, newValue);
+            _this.checkBetSpinPossibility();
+        };
     };
 
     this.checkBetSpinPossibility = function () {
@@ -10057,94 +10069,138 @@ var Game = function Game(gameName) {
         // TODO: Enable after transfering win
         // FIXME: Code duplicate
         _this.interfaceController.state.spin = true;
-        // Enable possibility to change betPerLine or linesAmount
-        _this.interfaceController.enableBetChange();
+        // Enable possibility to change values
+        _this.interfaceController.enableValuesChange();
         _this.checkBetSpinPossibility();
     };
 
     this.transferUsersWin = function () {
         // Update user cash
-        _this.pointsController.userCash = _this.spinResponse.user_cash;
+        _this.pointsController.userCash = _this.pointsController.coinsToPoints(_this.spinResponse.player_coins);
         // Reset user win
         _this.pointsController.userWin = 0;
     };
 
-    this.spinReels = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    this.getPlayerData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
-                        _this.interfaceController.panel.notifier.text = 'Fetching data...';
-                        // Disable spin
-                        _this.interfaceController.state.spin = false;
-                        // Disable possibility to change betPerLine or linesAmount
-                        _this.interfaceController.disableBetChange();
-                        // Enable stop
-                        _this.interfaceController.state.stop = true;
+                        _context.prev = 0;
+                        _context.next = 3;
+                        return _axios2.default.post('http://admin.chcgreen.org/getplayerdata');
 
-                        // Getting spin data
-                        _context.next = 6;
-                        return _axios2.default.post('http://admin.chcgreen.org/spin', {
-                            lines_amount: _this.pointsController.lines,
-                            bet_per_line: _this.pointsController.betPerLine
-                        });
+                    case 3:
+                        return _context.abrupt('return', _context.sent.data);
 
                     case 6:
-                        _this.spinResponse = _context.sent.data;
+                        _context.prev = 6;
+                        _context.t0 = _context['catch'](0);
 
+                        console.log(_context.t0);
 
-                        // FIXME: PHP = nedo yazuk
-                        _this.spinResponse.won_cash = +_this.spinResponse.won_cash;
-                        _this.spinResponse.user_cash = +_this.spinResponse.user_cash;
-                        if (_this.spinResponse.free_spins_won_cash) _this.spinResponse.free_spins_won_cash = +_this.spinResponse.free_spins_won_cash;
-                        _this.spinResponse.spin_result.map(function (line) {
-                            line.cash = +line.cash;
-                            return line;
-                        });
-                        // FIXME: END
-
-                        console.log(_this.spinResponse);
-
-                        _this.interfaceController.panel.notifier.clear();
-
-                        // Decrease user cash
-                        _this.pointsController.userCash -= _this.pointsController.totalBet;
-                        _this.reelsController.spinReels(_this.spinResponse.final_symbols);
-
-                    case 15:
+                    case 9:
                     case 'end':
                         return _context.stop();
                 }
             }
-        }, _callee, _this);
+        }, _callee, _this, [[0, 6]]);
     }));
+    this.getSpinResponse = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+            while (1) {
+                switch (_context2.prev = _context2.next) {
+                    case 0:
+                        _context2.prev = 0;
+                        _context2.next = 3;
+                        return _axios2.default.post('http://admin.chcgreen.org/spin', {
+                            lines_amount: _this.pointsController.lines,
+                            bet_per_line: _this.pointsController.betPerLine,
+                            denomination: _this.pointsController.denomination,
+                            game: _this.gameName
+                        });
+
+                    case 3:
+                        response = _context2.sent;
+                        return _context2.abrupt('return', response.data);
+
+                    case 7:
+                        _context2.prev = 7;
+                        _context2.t0 = _context2['catch'](0);
+
+                        console.log(_context2.t0);
+
+                    case 10:
+                    case 'end':
+                        return _context2.stop();
+                }
+            }
+        }, _callee2, _this, [[0, 7]]);
+    }));
+
+    this.spin = function (finalSymbols) {
+        // Clear notifier
+        _this.interfaceController.panel.notifier.clear();
+
+        // Spin reels
+        _this.reelsController.spinReels(finalSymbols);
+    };
+
+    this.getDataAndSpin = function () {
+        _this.interfaceController.panel.notifier.text = 'Fetching data...';
+        // Disable spin
+        _this.interfaceController.state.spin = false;
+        // Disable possibility to change betPerLine or linesAmount
+        _this.interfaceController.disableValuesChange();
+        // Enable stop
+        _this.interfaceController.state.stop = true;
+
+        _this.getSpinResponse().then(function (result) {
+            console.log(result);
+            _this.spinResponse = result;
+
+            // Decrease user cash
+            _this.pointsController.userCash -= _this.pointsController.totalBet;
+
+            // Spin reels to given final symbols
+            _this.spin(_this.spinResponse.final_symbols);
+        });
+    };
 
     this.freeSpin = function () {
         console.log('Free spins won');
-        console.log(_this.spinResponse.free_spins_result);
+        console.log(_this.spinResponse.bonus_spins);
 
-        // this.reelsController.spinReels(this.spinResponse.free_spins_result[0].final_symbols );
+        // this.spin(this.spinResponse.bonus_spins.spins[0]);
     };
 
-    this.stopReels = function () {
+    this.stop = function () {
         _this.interfaceController.state.stop = false;
 
         _this.reelsController.stopReels();
     };
 
-    this.reelsHasStopped = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+    this.reelsHasStopped = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
             while (1) {
-                switch (_context2.prev = _context2.next) {
+                switch (_context3.prev = _context3.next) {
                     case 0:
                         _this.interfaceController.state.stop = false;
 
+                        // Checking for free spins
+                        // if (this.spinResponse.bonus_spins) {
+                        //     // Start free spins
+                        //     this.freeSpin();
+                        //     return;
+                        // }
+
                         if (!_this.spinResponse.won) {
-                            _context2.next = 9;
+                            _context3.next = 9;
                             break;
                         }
 
-                        _context2.next = 4;
+                        _context3.next = 4;
                         return _this.linesController.showWinningLines(_this.spinResponse.spin_result, function (winCashInLine) {
                             _this.pointsController.userWin += winCashInLine;
                             _this.interfaceController.panel.notifier.text = 'You won ' + _this.pointsController.userWin + ' points';
@@ -10157,7 +10213,7 @@ var Game = function Game(gameName) {
                         // Enable possibility to take win
                         _this.interfaceController.state.takeWin = true;
                         _this.interfaceController.panel.notifier.text = 'Take win or gamble';
-                        _context2.next = 12;
+                        _context3.next = 12;
                         break;
 
                     case 9:
@@ -10166,20 +10222,18 @@ var Game = function Game(gameName) {
                         // FIXME: Code duplicate
                         _this.interfaceController.state.spin = true;
                         // Enable possibility to change betPerLine or linesAmount
-                        _this.interfaceController.enableBetChange();
+                        _this.interfaceController.enableValuesChange();
                         _this.checkBetSpinPossibility();
 
                     case 12:
                     case 'end':
-                        return _context2.stop();
+                        return _context3.stop();
                 }
             }
-        }, _callee2, _this);
+        }, _callee3, _this);
     }));
 
     this.gameName = gameName;
-
-    console.log('Controls:\n        space - Spin\n        < - Increase lines\n        > - Increase bet per line\n        m - Set max bet');
 
     this.gameNode = document.querySelector('#game');
     // Store for spin response data
@@ -10187,28 +10241,56 @@ var Game = function Game(gameName) {
 
     this.reelsController = new _ReelsController2.default(document.querySelector('#reels_wrapper'), { reelsHasStopped: this.reelsHasStopped });
 
-    this.linesController = new _LinesController2.default(document.querySelector('#game_wrapper'), { reels: this.reelsController.reels });
+    this.linesController = new _LinesController2.default(document.querySelector('#reels_container'), { reels: this.reelsController.reels });
 
     this.interfaceController = new _InterfaceController2.default({
         containerNode: document.querySelector('#reels_wrapper'),
         lines: this.linesController.lines,
-        spinReels: this.spinReels,
-        stopReels: this.stopReels,
+        spinReels: this.getDataAndSpin,
+        stopReels: this.stop,
         takeWin: this.takeWin,
+        setDenomination: this.setDenomination,
         setLines: this.setLines,
         setBerPerLine: this.setBerPerLine,
         setMaxBet: this.setMaxBet
     });
 
-    this.pointsController = new _PointsController2.default({
-        userCash: 100,
-        userWin: 0,
-        lines: 1,
-        betPerLine: 1
-    }, {
-        panel: this.interfaceController.panel,
-        linePresenters: this.interfaceController.linePresenters
-    });
+    this.interfaceController.panel.notifier.text = 'Loading...';
+    _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+        var playerData, userCash;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+            while (1) {
+                switch (_context4.prev = _context4.next) {
+                    case 0:
+                        _context4.next = 2;
+                        return _this.getPlayerData();
+
+                    case 2:
+                        playerData = _context4.sent;
+                        userCash = +playerData.cash;
+
+
+                        _this.pointsController = new _PointsController2.default({
+                            panel: _this.interfaceController.panel,
+                            linePresenters: _this.interfaceController.linePresenters
+                        }, {
+                            userCash: userCash,
+                            denomination: 1,
+                            lines: 1,
+                            betPerLine: 1
+                        });
+
+                        // And enable game to play
+                        _this.interfaceController.enableGameStart();
+                        _this.interfaceController.panel.notifier.text = 'Press start to spin';
+
+                    case 7:
+                    case 'end':
+                        return _context4.stop();
+                }
+            }
+        }, _callee4, _this);
+    }))();
 }
 
 // Disables/enables spin possibility depending on user's bet/cash
@@ -10218,6 +10300,9 @@ var Game = function Game(gameName) {
 
 
 // Transfer win cash to user's cash
+
+
+// Getting spin data
 
 
 // TODO: Add free spins functionallity
@@ -10303,40 +10388,116 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var PointsController = function () {
-    function PointsController(startCash, props) {
+    function PointsController(props, options) {
+        var _this = this;
+
         _classCallCheck(this, PointsController);
 
-        this._userCash;
-        this._userWin;
+        this.setDenomination = function (denomination) {
+            _this._denomination = denomination;
+
+            // Update panel value
+            _this.props.panel.setDenomination(_this._denomination);
+
+            _this.updateUserCash();
+        };
+
+        this.setLines = function (linesAmount) {
+            _this._linesAmount = linesAmount;
+
+            // Update panel value
+            _this.props.panel.setLinesAmount(_this._linesAmount);
+
+            // Update line presenters text
+            _this.props.linePresenters.setText(_this._linesAmount, _this._betPerLine);
+
+            _this._updateTotalBet();
+        };
+
+        this.setBetPerLine = function (betPerLine) {
+            _this._betPerLine = betPerLine;
+
+            // Update panel value
+            _this.props.panel.setBetPerLine(_this._betPerLine);
+
+            // Update line presenters text
+            _this.props.linePresenters.setText(_this._linesAmount, _this._betPerLine);
+
+            _this._updateTotalBet();
+        };
+
+        this._userCash; // In coins
+        this._userWin; // In points
 
         this._linesAmount;
         this._betPerLine;
 
+        this._denomination;
+
         this.props = props;
 
-        this._init(startCash);
+        this._init(options);
     }
 
     _createClass(PointsController, [{
         key: "_init",
         value: function _init(_ref) {
-            var lines = _ref.lines,
-                betPerLine = _ref.betPerLine,
-                userCash = _ref.userCash,
-                userWin = _ref.userWin;
+            var _ref$lines = _ref.lines,
+                lines = _ref$lines === undefined ? settings.lines[0] : _ref$lines,
+                _ref$betPerLine = _ref.betPerLine,
+                betPerLine = _ref$betPerLine === undefined ? settings.betPerLine[0] : _ref$betPerLine,
+                _ref$denomination = _ref.denomination,
+                denomination = _ref$denomination === undefined ? settings.denominations[0] : _ref$denomination,
+                _ref$userCash = _ref.userCash,
+                userCash = _ref$userCash === undefined ? 0 : _ref$userCash,
+                _ref$userWin = _ref.userWin,
+                userWin = _ref$userWin === undefined ? 0 : _ref$userWin;
 
-            this.lines = lines;
-            this.betPerLine = betPerLine;
-            this.userCash = userCash;
-            this.userWin = 0;
+            // Init denom
+            this._denomination = denomination;
+            this.props.panel.setDenomination(this._denomination);
+
+            this.setLines(lines);
+            this.setBetPerLine(betPerLine);
+
+            // Init user cash
+            this._userCash = this.kupsToCoins(userCash);
+            this.props.panel.setUserCash(this.coinsToPoints(this._userCash));
+
+            this.userWin = userWin;
+        }
+    }, {
+        key: "coinsToPoints",
+        value: function coinsToPoints(coins) {
+            return Math.floor(coins / this._denomination);
+        }
+    }, {
+        key: "kupsToPoints",
+        value: function kupsToPoints(kups) {
+            return Math.floor(kups * 100 / this._denomination);
+        }
+    }, {
+        key: "kupsToCoins",
+        value: function kupsToCoins(kups) {
+            return kups * 100;
+        }
+    }, {
+        key: "coinsToKups",
+        value: function coinsToKups(coins) {
+            return coins / 100;
+        }
+    }, {
+        key: "pointsToCoins",
+        value: function pointsToCoins(points) {
+            return points * this._denomination;
+        }
+    }, {
+        key: "pointsToKups",
+        value: function pointsToKups(points) {
+            return points * this._denomination / 100;
         }
 
-        // static toKups(points) {
-        //     return +(points / 100).toFixed(2);
-        // }
-        // static toPoints(kups) {
-        //     return Math.floor(kups * 100);
-        // }
+        // FIXME: Separate changing and displaying values
 
     }, {
         key: "_updateTotalBet",
@@ -10350,34 +10511,30 @@ var PointsController = function () {
          */
 
     }, {
+        key: "updateUserCash",
+        value: function updateUserCash() {
+            this.props.panel.setUserCash(this.coinsToPoints(this._userCash));
+        }
+
+        /**
+         * Set user win
+         * @param {String|Number} win New win to set
+         */
+
+    }, {
+        key: "denomination",
+        get: function get() {
+            return this._denomination;
+        }
+    }, {
         key: "lines",
         get: function get() {
             return this._linesAmount;
-        },
-        set: function set(linesAmount) {
-            this._linesAmount = linesAmount;
-            // Update panel value
-            this.props.panel.setLinesAmount(this._linesAmount);
-
-            // Update line presenters text
-            this.props.linePresenters.setText(this._linesAmount, this._betPerLine);
-
-            this._updateTotalBet();
         }
     }, {
         key: "betPerLine",
         get: function get() {
             return this._betPerLine;
-        },
-        set: function set(betPerLine) {
-            this._betPerLine = betPerLine;
-            // Update panel value
-            this.props.panel.setBetPerLine(this._betPerLine);
-
-            // Update line presenters text
-            this.props.linePresenters.setText(this._linesAmount, this._betPerLine);
-
-            this._updateTotalBet();
         }
     }, {
         key: "totalBet",
@@ -10387,18 +10544,12 @@ var PointsController = function () {
     }, {
         key: "userCash",
         set: function set(cash) {
-            this._userCash = cash;
-            this.props.panel.setUserCash(this._userCash);
+            this._userCash = this.pointsToCoins(cash);
+            this.props.panel.setUserCash(this.coinsToPoints(this._userCash));
         },
         get: function get() {
-            return this._userCash;
+            return this.coinsToPoints(this._userCash);
         }
-
-        /**
-         * Set user win
-         * @param {String|Number} win New win to set
-         */
-
     }, {
         key: "userWin",
         set: function set(win) {
@@ -10428,13 +10579,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Reel = __webpack_require__(342);
+var _ReelFallAnimation = __webpack_require__(342);
 
-var _Reel2 = _interopRequireDefault(_Reel);
+var _ReelFallAnimation2 = _interopRequireDefault(_ReelFallAnimation);
 
-var _Symbol2 = __webpack_require__(127);
+var _SymbolFallAnimation = __webpack_require__(127);
 
-var _Symbol3 = _interopRequireDefault(_Symbol2);
+var _SymbolFallAnimation2 = _interopRequireDefault(_SymbolFallAnimation);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10482,7 +10633,7 @@ var ReelsContorller = function () {
 
             for (var i = 0; i < settings.numOfReels; i++) {
                 // Fill created reel with random symbols
-                this.reels.push(new _Reel2.default(i, this.onReelStop));
+                this.reels.push(new _ReelFallAnimation2.default(i, this.onReelStop));
             }
         }
 
@@ -10495,29 +10646,39 @@ var ReelsContorller = function () {
         key: 'spinReels',
         value: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(finalSymbolsMap) {
-                var i, finalSymbols;
+                var i, finalSymbols, _i;
+
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                i = 0;
+                                // For each reel
+                                for (i = 0; i < this.reels.length; i++) {
+                                    finalSymbols = this.getReelSymbolsFromSymbolsMap(finalSymbolsMap, i);
 
-                            case 1:
-                                if (!(i < this.reels.length)) {
+                                    // Clear reel
+
+                                    this.reels[i].removeOldSymbols();
+
+                                    // Add final symbols to reel
+                                    this.reels[i].addFinalSymbols(finalSymbols);
+                                }
+
+                                // For each reel
+                                _i = 0;
+
+                            case 2:
+                                if (!(_i < this.reels.length)) {
                                     _context.next = 8;
                                     break;
                                 }
 
-                                finalSymbols = this.getReelSymbolsFromSymbolsMap(finalSymbolsMap, i);
-
-                                // Wait previous reel to resolve before spinning next
-
                                 _context.next = 5;
-                                return this.spinReel(this.reels[i], finalSymbols);
+                                return this.spinReel(this.reels[_i]);
 
                             case 5:
-                                i++;
-                                _context.next = 1;
+                                _i++;
+                                _context.next = 2;
                                 break;
 
                             case 8:
@@ -10538,15 +10699,14 @@ var ReelsContorller = function () {
         /**
          * Spins the given reel
          * @param {Reel} reel Reel to spin
-         * @param {Symbol[]} finalSymbols Array of final symbols in current reel
          */
 
     }, {
         key: 'spinReel',
-        value: function spinReel(reel, finalSymbols) {
+        value: function spinReel(reel) {
             var _this2 = this;
 
-            reel.spin(finalSymbols);
+            reel.spin();
 
             // Resolve promise after delay between reels spin
             return new Promise(function (resolve) {
@@ -10574,7 +10734,7 @@ var ReelsContorller = function () {
             var resultArray = [];
 
             for (var i = 0; i < symbolsMap.length; i++) {
-                resultArray.push(new _Symbol3.default(symbolsMap[i][reelIndex]));
+                resultArray.push(new _SymbolFallAnimation2.default(symbolsMap[i][reelIndex]));
             }
 
             return resultArray;
@@ -10599,24 +10759,24 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Symbol2 = __webpack_require__(127);
+var _SymbolFallAnimation = __webpack_require__(127);
 
-var _Symbol3 = _interopRequireDefault(_Symbol2);
-
-var _events = __webpack_require__(343);
+var _SymbolFallAnimation2 = _interopRequireDefault(_SymbolFallAnimation);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Reel = function () {
+var ReelFallAnimation = function () {
     /**
      * Create reel with starting symbols in it
      * @param {Number} reelIndex Index of reel in Game
      * @param {Function} onStop Function to call when reel has stopped
      */
-    function Reel(reelIndex, onStop) {
-        _classCallCheck(this, Reel);
+    function ReelFallAnimation(reelIndex, onStop) {
+        _classCallCheck(this, ReelFallAnimation);
 
         this.finalSymbols = [];
 
@@ -10630,17 +10790,19 @@ var Reel = function () {
         this._init();
     }
 
-    _createClass(Reel, [{
+    _createClass(ReelFallAnimation, [{
         key: '_init',
         value: function _init() {
             this.reelNode = document.createElement('div');
             this.reelNode.className = 'reel';
             this.reelNode.style.transition = 'transform ' + settings.spinAnimationTimeInMs + 'ms ' + settings.spinAnimTimingFunc;
+            this.reelNode.style.height = settings.symbolSize * (settings.numOfRows + 1) + 'px'; // + bonus slot for hidden symbol
+            this.reelNode.style.width = settings.symbolSize + 'px';
 
             // Init starting symbols
             for (var i = 0; i < settings.numOfRows; i++) {
-                var symbol = new _Symbol3.default(Math.floor(Math.random() * settings.symbols.length));
-
+                var symbol = new _SymbolFallAnimation2.default(Math.floor(Math.random() * settings.symbols.length));
+                symbol.node.style.bottom = settings.symbolSize * i + 'px';
                 this.finalSymbols.push(symbol);
                 // Add symbol into reel node
                 this.reelNode.appendChild(symbol.node);
@@ -10654,48 +10816,57 @@ var Reel = function () {
             reelWrapperNode.appendChild(this.reelNode);
 
             document.querySelector('#reels_container').appendChild(reelWrapperNode);
-
-            this._initListeners();
         }
     }, {
-        key: '_initListeners',
-        value: function _initListeners() {
-            var _this = this;
+        key: 'spin',
+        value: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                var i;
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                i = 0;
 
-            // End spin animation event
-            this.reelNode.addEventListener(_events.transitionEnd, function () {
-                // Reset reel symbols
-                _this.resetReel();
+                            case 1:
+                                if (!(i < this.finalSymbols.length)) {
+                                    _context.next = 7;
+                                    break;
+                                }
 
-                _this.props.onStop(_this.reelIndex);
-            });
-        }
+                                _context.next = 4;
+                                return this.finalSymbols[i].fall(i);
+
+                            case 4:
+                                i++;
+                                _context.next = 1;
+                                break;
+
+                            case 7:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function spin() {
+                return _ref.apply(this, arguments);
+            }
+
+            return spin;
+        }()
 
         /**
-         * Spin reel to final symbols
-         * @param {Array<Symbol>} finalSymbols Array of final symbols
+         * Remove old symbols from reel
          */
 
     }, {
-        key: 'spin',
-        value: function spin(finalSymbols) {
-            this.addSpinningSymbols();
-            this.addFinalSymbols(finalSymbols);
-
-            // Animate spin
-            this.reelNode.style.transform = 'translate(0, ' + (settings.numOfSpinsBeforeStop + 1) * settings.numOfRows * settings.symbolSize + 'px)';
-        }
-    }, {
-        key: 'addSpinningSymbols',
-        value: function addSpinningSymbols() {
-            var spinningSymbolsArr = [];
-
-            for (var i = 0; i < settings.numOfSpinsBeforeStop * settings.numOfRows; i++) {
-                var symbol = new _Symbol3.default(Math.floor(Math.random() * settings.settings.symbols.length));
-                spinningSymbolsArr.push(symbol);
+        key: 'removeOldSymbols',
+        value: function removeOldSymbols() {
+            while (this.reelNode.firstChild) {
+                this.reelNode.removeChild(this.reelNode.firstChild);
             }
-
-            this.addSymbols(spinningSymbolsArr);
         }
 
         /**
@@ -10706,7 +10877,7 @@ var Reel = function () {
     }, {
         key: 'addFinalSymbols',
         value: function addFinalSymbols(finalSymbols) {
-            this.finalSymbols = finalSymbols.slice();
+            this.finalSymbols = finalSymbols.slice().reverse();
 
             this.addSymbols(finalSymbols);
         }
@@ -10719,41 +10890,107 @@ var Reel = function () {
     }, {
         key: 'addSymbols',
         value: function addSymbols(symbolsArr) {
-            for (var i = symbolsArr.length - 1; i >= 0; i--) {
-                var symbol = symbolsArr[i];
-                this.reelNode.insertBefore(symbol.node, this.reelNode.firstChild);
+            for (var i = 0; i < symbolsArr.length; i++) {
+                this.reelNode.appendChild(symbolsArr[i].node);
             }
-        }
-    }, {
-        key: 'resetReel',
-        value: function resetReel() {
-            var _this2 = this;
-
-            // Remove useless symbols
-            while (this.reelNode.childNodes.length !== settings.numOfRows) {
-                this.reelNode.removeChild(this.reelNode.childNodes[settings.numOfRows]);
-            }
-
-            // Remove spin animation time to move reel
-            this.reelNode.style.transitionDuration = '0ms';
-            // Set reel in default position
-            this.reelNode.style.transform = '';
-
-            // Set spin animation time back
-            setTimeout(function () {
-                // Reset spin duration
-                _this2.reelNode.style.transitionDuration = settings.spinAnimationTimeInMs + 'ms';
-            }, 0);
         }
     }]);
 
-    return Reel;
+    return ReelFallAnimation;
 }();
 
-exports.default = Reel;
+exports.default = ReelFallAnimation;
 
 /***/ }),
 /* 343 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _Symbol = function () {
+	function _Symbol(symbolNumber) {
+		_classCallCheck(this, _Symbol);
+
+		this.symbolNum = symbolNumber;
+		this.highlighted = false;
+		this.symbolNode;
+
+		this.initSymbol();
+	}
+
+	_createClass(_Symbol, [{
+		key: 'initSymbol',
+		value: function initSymbol() {
+			this.symbolNode = document.createElement('div');
+			this.symbolNode.style.width = settings.symbolSize + 'px';
+			this.symbolNode.style.height = settings.symbolSize + 'px';
+			this.symbolNode.style.background = 'url(\'' + (settings.symbolsImagesPath + settings.symbols[this.symbolNum].image) + '\')';
+			this.symbolNode.style.backgroundSize = 'contain';
+		}
+	}, {
+		key: 'animate',
+		value: function animate() {
+			// If animation for this symbol exists then apply it
+			if (settings.symbols[this.symbolNum].animation) {
+				this.symbolNode.style.background = 'url(\'' + (settings.symbolsAnimationsPath + settings.symbols[this.symbolNum].animation) + '\')';
+				this.symbolNode.style.animation = 'symbolAnimation 1s steps(15) infinite';
+			}
+		}
+	}, {
+		key: 'node',
+		get: function get() {
+			return this.symbolNode;
+		}
+	}, {
+		key: 'x',
+		get: function get() {
+			var containerId = "reels_container";
+			var currParent = '';
+			var currChild = this.symbolNode;
+			var x = 0;
+
+			while (containerId !== currParent.id) {
+				currParent = currChild.parentNode;
+				x += currChild.offsetLeft;
+				currChild = currParent;
+			}
+
+			return x;
+		}
+	}, {
+		key: 'y',
+		get: function get() {
+			var containerId = "reels_container";
+			var currParent = '';
+			var currChild = this.symbolNode;
+			var y = 0;
+
+			while (containerId !== currParent.id) {
+				currParent = currChild.parentNode;
+				y += currChild.offsetTop;
+				currChild = currParent;
+			}
+
+			return y;
+		}
+	}]);
+
+	return _Symbol;
+}();
+
+exports.default = _Symbol;
+
+/***/ }),
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10784,7 +11021,7 @@ var transitionEnd = getTransitionEndEventName();
 exports.transitionEnd = transitionEnd;
 
 /***/ }),
-/* 344 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10798,7 +11035,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Line = __webpack_require__(345);
+var _Line = __webpack_require__(346);
 
 var _Line2 = _interopRequireDefault(_Line);
 
@@ -10847,7 +11084,7 @@ var LinesController = function () {
                     var key = _ref2[0];
                     var res = _ref2[1];
 
-                    var line = new _Line2.default(this.gameWrapperNode, 'yellow', res.line_index, res.cash, this.props.reels);
+                    var line = new _Line2.default(this.gameWrapperNode, 'yellow', res.line_index, res.points, this.props.reels);
 
                     var highlightedSymbols = [];
 
@@ -10892,7 +11129,7 @@ var LinesController = function () {
                         }
                     }
 
-                    if (res.line_index) {
+                    if (res.line_index !== undefined) {
                         line.connectHighlites();
                     }
 
@@ -10972,8 +11209,8 @@ var LinesController = function () {
 
                                 line = _step4.value;
 
-                                // Add new win cash for each line
-                                addUserWin(line.cash);
+                                // Add new win points for each line
+                                addUserWin(line.points);
 
                                 _context.next = 11;
                                 return this.showWinningLine(line);
@@ -11108,7 +11345,7 @@ var LinesController = function () {
 exports.default = LinesController;
 
 /***/ }),
-/* 345 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11131,7 +11368,7 @@ var Line = function () {
      * @param {Number} lineTypeNumber index of the settings.lineTypes
      * @param {Array} reels reel objects
      */
-    function Line(containerNode, strokeColor, lineTypeNumber, cash, reels) {
+    function Line(containerNode, strokeColor, lineTypeNumber, points, reels) {
         _classCallCheck(this, Line);
 
         this.namespaceURI = "http://www.w3.org/2000/svg";
@@ -11143,30 +11380,30 @@ var Line = function () {
         this.lineType = settings.lineTypes[lineTypeNumber];
         this.reels = reels;
 
-        this.cash = cash;
+        this.points = points;
 
         this.svgNode = document.createElementNS(this.namespaceURI, 'svg');
         this.container.appendChild(this.svgNode);
 
-        this.svgNode.style.width = this._lineWidth() + 'px';
-        this.svgNode.style.height = this._lineHeight() + 'px';
+        this.svgNode.style.width = "100%";
+        this.svgNode.style.height = "100%";
         this.svgNode.style.display = "none";
         this.svgNode.style.position = "absolute";
         this.svgNode.style.zIndex = "1";
     }
 
     _createClass(Line, [{
-        key: 'show',
+        key: "show",
         value: function show() {
             this.svgNode.style.display = "block";
         }
     }, {
-        key: 'hide',
+        key: "hide",
         value: function hide() {
             this.svgNode.style.display = "none";
         }
     }, {
-        key: 'remove',
+        key: "remove",
         value: function remove() {
             this.svgNode.remove();
         }
@@ -11177,7 +11414,7 @@ var Line = function () {
          */
 
     }, {
-        key: 'addSymbolHighlite',
+        key: "addSymbolHighlite",
         value: function addSymbolHighlite(x, y) {
             var rectNode = document.createElementNS(this.namespaceURI, 'rect');
             this.svgNode.appendChild(rectNode);
@@ -11196,7 +11433,7 @@ var Line = function () {
          */
 
     }, {
-        key: 'connectHighlites',
+        key: "connectHighlites",
         value: function connectHighlites() {
             var lineNode = void 0;
             var coord = {};
@@ -11252,7 +11489,7 @@ var Line = function () {
             }
         }
     }, {
-        key: '_createFirstConnection',
+        key: "_createFirstConnection",
         value: function _createFirstConnection(symbol) {
             var lineNode = document.createElementNS(this.namespaceURI, 'line');
             this.svgNode.appendChild(lineNode);
@@ -11269,7 +11506,7 @@ var Line = function () {
             this._setLineAttrs(lineNode, start, end);
         }
     }, {
-        key: '_createLastConnection',
+        key: "_createLastConnection",
         value: function _createLastConnection(symbol) {
             var lineNode = document.createElementNS(this.namespaceURI, 'line');
             this.svgNode.appendChild(lineNode);
@@ -11286,7 +11523,7 @@ var Line = function () {
             this._setLineAttrs(lineNode, start, end);
         }
     }, {
-        key: '_createConnection',
+        key: "_createConnection",
         value: function _createConnection(lineNode, sPrev, symbol, sNext) {
 
             var start = {};
@@ -11331,7 +11568,7 @@ var Line = function () {
             this._setLineAttrs(lineNode, start, end);
         }
     }, {
-        key: '_setLineAttrs',
+        key: "_setLineAttrs",
         value: function _setLineAttrs(lineNode, start, end) {
             lineNode.setAttributeNS(null, "x1", start.x);
             lineNode.setAttributeNS(null, "y1", start.y);
@@ -11342,12 +11579,12 @@ var Line = function () {
             lineNode.setAttributeNS(null, "stroke-linecap", 'round');
         }
     }, {
-        key: '_lineWidth',
+        key: "_lineWidth",
         value: function _lineWidth() {
             return this.container.offsetWidth;
         }
     }, {
-        key: '_lineHeight',
+        key: "_lineHeight",
         value: function _lineHeight() {
             return this.container.offsetHeight;
         }
@@ -11359,7 +11596,7 @@ var Line = function () {
 exports.default = Line;
 
 /***/ }),
-/* 346 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11371,11 +11608,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _LinePresenters = __webpack_require__(347);
+var _LinePresenters = __webpack_require__(348);
 
 var _LinePresenters2 = _interopRequireDefault(_LinePresenters);
 
-var _Panel = __webpack_require__(349);
+var _Panel = __webpack_require__(350);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
@@ -11387,14 +11624,17 @@ var InterfaceController = function () {
     function InterfaceController(props) {
         _classCallCheck(this, InterfaceController);
 
+        console.log('Controls:\n        space - Spin\n        < - Increase lines\n        > - Increase bet per line\n        d - Increase denomination\n        m - Set max bet');
+
         this.props = props;
 
         this.state = {
-            spin: true,
+            spin: false,
             stop: false,
             takeWin: false,
-            lines: true,
-            betPerLine: true
+            denomination: false,
+            lines: false,
+            betPerLine: false
         };
 
         this.linePresenters = new _LinePresenters2.default({
@@ -11407,14 +11647,24 @@ var InterfaceController = function () {
     }
 
     _createClass(InterfaceController, [{
-        key: 'enableBetChange',
-        value: function enableBetChange() {
+        key: 'enableGameStart',
+        value: function enableGameStart() {
+            this.state.spin = true;
+            this.state.denomination = true;
             this.state.lines = true;
             this.state.betPerLine = true;
         }
     }, {
-        key: 'disableBetChange',
-        value: function disableBetChange() {
+        key: 'enableValuesChange',
+        value: function enableValuesChange() {
+            this.state.denomination = true;
+            this.state.lines = true;
+            this.state.betPerLine = true;
+        }
+    }, {
+        key: 'disableValuesChange',
+        value: function disableValuesChange() {
+            this.state.denomination = false;
             this.state.lines = false;
             this.state.betPerLine = false;
         }
@@ -11458,10 +11708,19 @@ var InterfaceController = function () {
                             }
                             break;
                         }
+                    // m
                     case 77:
                         {
                             if (_this.state.lines && _this.state.betPerLine) {
                                 _this.props.setMaxBet();
+                            }
+                            break;
+                        }
+                    // d
+                    case 68:
+                        {
+                            if (_this.state.denomination) {
+                                _this.props.setDenomination();
                             }
                             break;
                         }
@@ -11480,7 +11739,7 @@ var InterfaceController = function () {
 exports.default = InterfaceController;
 
 /***/ }),
-/* 347 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11492,7 +11751,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _LinePresenter = __webpack_require__(348);
+var _LinePresenter = __webpack_require__(349);
 
 var _LinePresenter2 = _interopRequireDefault(_LinePresenter);
 
@@ -11624,7 +11883,7 @@ var LinePresenters = function () {
 exports.default = LinePresenters;
 
 /***/ }),
-/* 348 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11679,7 +11938,7 @@ var LinePresenter = function () {
 exports.default = LinePresenter;
 
 /***/ }),
-/* 349 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11691,7 +11950,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Notifier = __webpack_require__(350);
+var _Notifier = __webpack_require__(351);
 
 var _Notifier2 = _interopRequireDefault(_Notifier);
 
@@ -11705,23 +11964,29 @@ var Panel = function () {
 
         this.node = node;
 
+        var addClickEffect = function addClickEffect(el, spriteClickPartPosition) {
+            el.onmousedown = function () {
+                this.style.backgroundPosition = spriteClickPartPosition;
+            };
+            el.onmouseup = function () {
+                this.style.backgroundPosition = '';
+            };
+            el.onmouseleave = function () {
+                this.style.backgroundPosition = '';
+            };
+        };
+        addClickEffect(document.querySelector('#menuBtn'), 'bottom left');
+        addClickEffect(document.querySelector('#linesBtn'), 'bottom left');
+        addClickEffect(document.querySelector('#betperlineBtn'), 'bottom left');
+
+        this.linesAmountField = document.querySelector('#linesAmountField');
+        this.betPerLineAmountField = document.querySelector('#betperlineAmountField');
         this.notifier = new _Notifier2.default();
-        this.node.appendChild(this.notifier.node);
 
         this.userCashNode = this._createPanelRowItem();
         this.userWinNode = this._createPanelRowItem();
-        this.linesAmountNode = this._createPanelRowItem();
-        this.betPerLineNode = this._createPanelRowItem();
+        this.denominationNode = this._createPanelRowItem();
         this.totalBetNode = this._createPanelRowItem();
-
-        var rowWrapper = document.createElement('div');
-        rowWrapper.classList = 'panel-row';
-        rowWrapper.appendChild(this.userCashNode);
-        rowWrapper.appendChild(this.userWinNode);
-        rowWrapper.appendChild(this.linesAmountNode);
-        rowWrapper.appendChild(this.betPerLineNode);
-        rowWrapper.appendChild(this.totalBetNode);
-        this.node.appendChild(rowWrapper);
     }
 
     _createClass(Panel, [{
@@ -11743,14 +12008,19 @@ var Panel = function () {
             this.userWinNode.innerText = 'Win: ' + win;
         }
     }, {
+        key: 'setDenomination',
+        value: function setDenomination(denom) {
+            this.denominationNode.innerText = 'Denom: ' + denom;
+        }
+    }, {
         key: 'setLinesAmount',
         value: function setLinesAmount(lines) {
-            this.linesAmountNode.innerText = 'Lines: ' + lines;
+            this.linesAmountField.innerText = lines;
         }
     }, {
         key: 'setBetPerLine',
         value: function setBetPerLine(betPerLine) {
-            this.betPerLineNode.innerText = 'Bet/Line: ' + betPerLine;
+            this.betPerLineAmountField.innerText = betPerLine;
         }
     }, {
         key: 'setTotalBet',
@@ -11765,7 +12035,7 @@ var Panel = function () {
 exports.default = Panel;
 
 /***/ }),
-/* 350 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11783,17 +12053,15 @@ var Notifier = function () {
     function Notifier() {
         _classCallCheck(this, Notifier);
 
-        this._node = document.createElement('div');
-        this._node.classList = 'notifier panel-row';
-        // FIXME:
-        this._node.innerText = 'Init text';
+        this._node = document.querySelector('#notifier');
+        this._node.innerText = 'Welcome';
     }
 
     _createClass(Notifier, [{
         key: 'clear',
         value: function clear() {
-            // this._node.innerText = '';
             this._node.innerText = '...';
+            // this._node.innerText = '';
         }
     }, {
         key: 'text',
@@ -11813,13 +12081,13 @@ var Notifier = function () {
 exports.default = Notifier;
 
 /***/ }),
-/* 351 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(352);
+module.exports = __webpack_require__(353);
 
 /***/ }),
-/* 352 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11827,7 +12095,7 @@ module.exports = __webpack_require__(352);
 
 var utils = __webpack_require__(18);
 var bind = __webpack_require__(128);
-var Axios = __webpack_require__(354);
+var Axios = __webpack_require__(355);
 var defaults = __webpack_require__(91);
 
 /**
@@ -11862,14 +12130,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(133);
-axios.CancelToken = __webpack_require__(368);
+axios.CancelToken = __webpack_require__(369);
 axios.isCancel = __webpack_require__(132);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(369);
+axios.spread = __webpack_require__(370);
 
 module.exports = axios;
 
@@ -11878,7 +12146,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 353 */
+/* 354 */
 /***/ (function(module, exports) {
 
 /*!
@@ -11905,7 +12173,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 354 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11913,8 +12181,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(91);
 var utils = __webpack_require__(18);
-var InterceptorManager = __webpack_require__(363);
-var dispatchRequest = __webpack_require__(364);
+var InterceptorManager = __webpack_require__(364);
+var dispatchRequest = __webpack_require__(365);
 
 /**
  * Create a new instance of Axios
@@ -11991,7 +12259,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 355 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12010,7 +12278,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 356 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12043,7 +12311,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 357 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12071,7 +12339,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 358 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12146,7 +12414,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 359 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12206,7 +12474,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 360 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12281,7 +12549,7 @@ module.exports = (
 
 
 /***/ }),
-/* 361 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12324,7 +12592,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 362 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12384,7 +12652,7 @@ module.exports = (
 
 
 /***/ }),
-/* 363 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12443,18 +12711,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 364 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(18);
-var transformData = __webpack_require__(365);
+var transformData = __webpack_require__(366);
 var isCancel = __webpack_require__(132);
 var defaults = __webpack_require__(91);
-var isAbsoluteURL = __webpack_require__(366);
-var combineURLs = __webpack_require__(367);
+var isAbsoluteURL = __webpack_require__(367);
+var combineURLs = __webpack_require__(368);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -12536,7 +12804,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 365 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12563,7 +12831,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 366 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12584,7 +12852,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 367 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12605,7 +12873,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 368 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12669,7 +12937,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 369 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

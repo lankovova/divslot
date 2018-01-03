@@ -55,10 +55,9 @@ class ReelsContorller {
     /**
      * Spins the given reel
      * @param {Reel} reel Reel to spin
-     * @param {Symbol[]} finalSymbols Array of final symbols in current reel
      */
-    spinReel(reel, finalSymbols) {
-        reel.spin(finalSymbols);
+    spinReel(reel) {
+        reel.spin();
 
         // Resolve promise after delay between reels spin
         return new Promise(resolve => {

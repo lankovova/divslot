@@ -19,22 +19,6 @@ class ReelFallAnimation {
         this._init();
     }
 
-    async spin() {
-        // Drop each symbol in reel with delay
-        for (let i = 0; i < this.finalSymbols.length; i++) {
-            await this.finalSymbols[i].fall(i);
-        }
-    }
-
-    /**
-     * Remove old symbols from reel
-     */
-    removeOldSymbols() {
-        while (this.reelNode.firstChild) {
-            this.reelNode.removeChild(this.reelNode.firstChild);
-        }
-    }
-
     _init() {
         this.reelNode = document.createElement('div');
         this.reelNode.className = 'reel';
@@ -59,6 +43,22 @@ class ReelFallAnimation {
         reelWrapperNode.appendChild(this.reelNode);
 
         document.querySelector('#reels_container').appendChild(reelWrapperNode);
+    }
+
+    async spin() {
+        // Drop each symbol in reel with delay
+        for (let i = 0; i < this.finalSymbols.length; i++) {
+            await this.finalSymbols[i].fall(i);
+        }
+    }
+
+    /**
+     * Remove old symbols from reel
+     */
+    removeOldSymbols() {
+        while (this.reelNode.firstChild) {
+            this.reelNode.removeChild(this.reelNode.firstChild);
+        }
     }
 
     /**
