@@ -22,9 +22,14 @@ class Panel {
             points: document.querySelector('#userCashPointsField'),
             kups: document.querySelector('#userCashKupsField')
         };
-
-        this.userWinNode = this._createPanelRowItem();
-        this.totalBetNode = this._createPanelRowItem();
+        this.totalBetFields = {
+            points: document.querySelector('#bet_points_field'),
+            kups: document.querySelector('#bet_kups_field'),
+        }
+        this.userWinFields = {
+            points: document.querySelector('#win_points_field'),
+            kups: document.querySelector('#win_kups_field'),
+        }
     }
 
     _createPanelRowItem() {
@@ -39,8 +44,10 @@ class Panel {
         this.userCashFields.kups.innerText = `${cash.kups} Kups`;
     }
 
+    // FIXME: Pass object with points and kups here
     setUserWin(win) {
-        this.userWinNode.innerText = `Win: ${win}`;
+        this.userWinFields.points.innerText = win;
+        // this.userWinFields.kups.innerText = `${win} Kup`;
     }
 
     setDenomination(denom) {
@@ -55,8 +62,10 @@ class Panel {
         this.betPerLineAmountField.innerText = betPerLine;
     }
 
+    // FIXME: Pass object with points and kups here
     setTotalBet(bet) {
-        this.totalBetNode.innerText = `Bet: ${bet}`;
+        this.totalBetFields.points.innerText = bet;
+        // this.totalBetFields.kups.innerText = `${bet} Kup`;
     }
 
 }

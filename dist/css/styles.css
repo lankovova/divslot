@@ -236,25 +236,26 @@ body {
     background: url('./../assets/images/panel/denomination_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
-    background-size: 200px 141px;
-    width: 100px;
-    height: 70px;
+    background-size: 160px 117px;
+    width: 80px;
+    height: 58px;
 
-    padding: 2px 0 9px 0;
+    padding: 5px 0 10px 0;
     box-sizing: border-box;
 
     font-weight: 900;
 }
 .panel_row-bot .denomination_btn .text {
     color: #052d56;
-    font-size: 14px;
+    font-size: 12px;
 }
 .panel_row-bot .denomination_btn .number {
     color: white;
-    font-size: 26px;
+    font-size: 20px;
 }
 .panel_row-bot .denomination_btn .currency {
     color: #cdc700;
+    font-size: 14px;
 }
 .panel_row-bot .denomination_btn:hover {
     background-position: top right;
@@ -318,7 +319,54 @@ body {
     font-size: 11px;
 }
 
+.tnblock_wrapper {
+    height: 100%;
+    padding: 10px 0 10px 0;
+    margin: 0 5px;
+    box-sizing: border-box;
+}
+.tnblock_bet {
+    background: url('./../assets/images/panel/bet_field.png');
+    background-size: 100% 100%;
+}
+.tnblock_bet .numbers .points { color: #75cdff; }
+.tnblock_bet .numbers .kups { color: #7994a2; }
+.tnblock_win {
+    background: url('./../assets/images/panel/win_field.png');
+    background-size: 100% 100%;
+}
+.tnblock_win .numbers .points { color: #448604; }
+.tnblock_win .numbers .kups { color: #39472a; }
+.tnblock_wrapper .tnblock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-width: 60px;
 
+    padding: 0 10px;
+}
+.tnblock_wrapper .tnblock .title_wrapper {
+    height: 45%;
+}
+.tnblock_wrapper .tnblock .title {
+    color: white;
+    text-transform: uppercase;
+}
+.tnblock_wrapper .tnblock .numbers {
+    color: white;
+    height: 55%;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.tnblock_wrapper .tnblock .numbers .points {
+    font-size: 22px;
+    font-weight: 900;
+}
+.tnblock_wrapper .tnblock .numbers .kups {
+    font-size: 11px;
+    font-weight: 900;
+}
 
 
 
