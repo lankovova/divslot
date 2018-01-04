@@ -23,7 +23,10 @@ class PointsController {
 
         // Init user cash
         this._userCash = this.kupsToCoins(userCash);
-        this.props.panel.setUserCash( this.coinsToPoints(this._userCash) );
+        this.props.panel.setUserCash({
+            points: this.coinsToPoints(this._userCash),
+            kups: this.coinsToKups(this._userCash)
+        });
 
         this.userWin = userWin;
     }
@@ -96,12 +99,18 @@ class PointsController {
      */
     set userCash(cash) {
         this._userCash = this.pointsToCoins(cash);
-        this.props.panel.setUserCash( this.coinsToPoints(this._userCash) );
+        this.props.panel.setUserCash({
+            points: this.coinsToPoints(this._userCash),
+            kups: this.coinsToKups(this._userCash)
+        });
     }
     get userCash() { return this.coinsToPoints(this._userCash); }
 
     updateUserCash() {
-        this.props.panel.setUserCash( this.coinsToPoints(this._userCash) );
+        this.props.panel.setUserCash({
+            points: this.coinsToPoints(this._userCash),
+            kups: this.coinsToKups(this._userCash)
+        });
     }
 
     /**

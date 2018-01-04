@@ -14,12 +14,15 @@ class Panel {
         addClickEffect(document.querySelector('#betperlineBtn'), 'bottom left');
         addClickEffect(document.querySelector('#denominationBtn'), 'bottom left');
 
+        this.notifier = new Notifier();
         this.linesAmountField = document.querySelector('#linesAmountField');
         this.betPerLineAmountField = document.querySelector('#betperlineAmountField');
         this.denominationAmountField = document.querySelector('#denominationAmountField');
-        this.notifier = new Notifier();
+        this.userCashFields = {
+            points: document.querySelector('#userCashPointsField'),
+            kups: document.querySelector('#userCashKupsField')
+        };
 
-        this.userCashNode = this._createPanelRowItem();
         this.userWinNode = this._createPanelRowItem();
         this.totalBetNode = this._createPanelRowItem();
     }
@@ -32,7 +35,8 @@ class Panel {
     }
 
     setUserCash(cash) {
-        this.userCashNode.innerText = `Cash: ${cash}`;
+        this.userCashFields.points.innerText = cash.points;
+        this.userCashFields.kups.innerText = `${cash.kups} Kups`;
     }
 
     setUserWin(win) {

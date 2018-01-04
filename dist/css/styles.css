@@ -58,14 +58,6 @@ body {
     font-size: 14px;
 }
 
-.line_presenters_container.left {
-
-}
-
-.line_presenters_container.right {
-
-}
-
 .line_presenter {
     width: 30px;
     height: 30px;
@@ -124,6 +116,8 @@ body {
 }
 .panel_row-bot {
     height: 90px;
+    padding: 6px 0 0 0;
+    box-sizing: border-box;
     background: url('./../assets/images/panel/panel_bot.png');
 }
 
@@ -265,6 +259,70 @@ body {
 .panel_row-bot .denomination_btn:hover {
     background-position: top right;
 }
+
+.panel_row-bot .user_cash {
+    background: url('./../assets/images/panel/user_cash_bg.png');
+    background-size: 100% 100%;
+
+    width: 200px;
+    height: 100%;
+
+    margin: 0 10px;
+
+    padding: 5px 10px 10px 10px;
+    box-sizing: border-box;
+}
+.panel_row-bot .fields_wrapper {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.panel_row-bot .user_cash .fields_wrapper .field {
+    background: url('./../assets/images/panel/user_cash_field_bg.png');
+    background-size: 100% 100%;
+
+    width: 100%;
+    height: 50%;
+
+    display: flex;
+    justify-content: space-between;
+
+    padding: 5px;
+    box-sizing: border-box;
+}
+.panel_row-bot .user_cash .fields_wrapper .credit {
+    margin-bottom: 5px;
+}
+.panel_row-bot .user_cash .fields_wrapper .field .title {
+    color: white;
+    text-transform: uppercase;
+}
+.panel_row-bot .user_cash .fields_wrapper .field .numbers {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.panel_row-bot .user_cash .fields_wrapper .field .numbers .points {
+    color: white;
+    text-align: end;
+
+    font-size: 17px;
+}
+.panel_row-bot .user_cash .fields_wrapper .field .numbers .kups {
+    color: #cdc700;
+    text-align: end;
+
+    font-size: 11px;
+}
+
+
+
+
+
+
 
 /* #preloader {
     background: url('./../assets/images/symbols/1.png'),
