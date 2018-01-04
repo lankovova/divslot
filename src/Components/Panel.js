@@ -15,12 +15,18 @@ class Panel {
         addClickEffect(document.querySelector('#denominationBtn'), 'bottom left');
 
         this.notifier = new Notifier();
+
         this.linesAmountField = document.querySelector('#linesAmountField');
         this.betPerLineAmountField = document.querySelector('#betperlineAmountField');
         this.denominationAmountField = document.querySelector('#denominationAmountField');
+
         this.userCashFields = {
             points: document.querySelector('#userCashPointsField'),
             kups: document.querySelector('#userCashKupsField')
+        };
+        this.userInsuranceFields = {
+            points: document.querySelector('#userInsurancePointsField'),
+            kups: document.querySelector('#userInsuranceKupsField')
         };
         this.totalBetFields = {
             points: document.querySelector('#bet_points_field'),
@@ -30,30 +36,37 @@ class Panel {
             points: document.querySelector('#win_points_field'),
             kups: document.querySelector('#win_kups_field'),
         }
+
+        // TEMP
+        this.setUserInsurance({
+            points: 1000,
+            kups: 10.00
+        });
+    }
+
+    setDenomination(denom) {
+        this.denominationAmountField.innerText = (denom / 100).toFixed(2);
+    }
+    setLinesAmount(lines) {
+        this.linesAmountField.innerText = lines;
+    }
+    setBetPerLine(betPerLine) {
+        this.betPerLineAmountField.innerText = betPerLine;
     }
 
     setUserCash({points, kups}) {
         this.userCashFields.points.innerText = points;
         this.userCashFields.kups.innerText = `${kups.toFixed(2)} Kup`;
     }
+    setUserInsurance({points, kups}) {
+        this.userInsuranceFields.points.innerText = points;
+        this.userInsuranceFields.kups.innerText = `${kups.toFixed(2)} Kup`;
+    }
 
     setUserWin({points, kups}) {
         this.userWinFields.points.innerText = points;
         this.userWinFields.kups.innerText = `${kups.toFixed(2)} Kup`;
     }
-
-    setDenomination(denom) {
-        this.denominationAmountField.innerText = (denom / 100).toFixed(2);
-    }
-
-    setLinesAmount(lines) {
-        this.linesAmountField.innerText = lines;
-    }
-
-    setBetPerLine(betPerLine) {
-        this.betPerLineAmountField.innerText = betPerLine;
-    }
-
     setTotalBet({points, kups}) {
         this.totalBetFields.points.innerText = points;
         this.totalBetFields.kups.innerText = `${kups.toFixed(2)} Kup`;

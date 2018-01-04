@@ -50,7 +50,6 @@ class PointsController {
         return points * this._denomination / 100;
     }
 
-    // FIXME: Separate changing and displaying values
     get denomination() { return this._denomination };
     setDenomination = denomination => {
         this._denomination = denomination;
