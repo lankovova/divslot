@@ -32,26 +32,18 @@ class Panel {
         }
     }
 
-    _createPanelRowItem() {
-        const element = document.createElement('div');
-        element.classList = 'panel-row-item';
-
-        return element;
+    setUserCash({points, kups}) {
+        this.userCashFields.points.innerText = points;
+        this.userCashFields.kups.innerText = `${kups} Kups`;
     }
 
-    setUserCash(cash) {
-        this.userCashFields.points.innerText = cash.points;
-        this.userCashFields.kups.innerText = `${cash.kups} Kups`;
-    }
-
-    // FIXME: Pass object with points and kups here
-    setUserWin(win) {
-        this.userWinFields.points.innerText = win;
-        // this.userWinFields.kups.innerText = `${win} Kup`;
+    setUserWin({points, kups}) {
+        this.userWinFields.points.innerText = points;
+        this.userWinFields.kups.innerText = `${kups} Kup`;
     }
 
     setDenomination(denom) {
-        this.denominationAmountField.innerText = denom / 100;
+        this.denominationAmountField.innerText = (denom / 100).toFixed(2);
     }
 
     setLinesAmount(lines) {
@@ -62,10 +54,9 @@ class Panel {
         this.betPerLineAmountField.innerText = betPerLine;
     }
 
-    // FIXME: Pass object with points and kups here
-    setTotalBet(bet) {
-        this.totalBetFields.points.innerText = bet;
-        // this.totalBetFields.kups.innerText = `${bet} Kup`;
+    setTotalBet({points, kups}) {
+        this.totalBetFields.points.innerText = points;
+        this.totalBetFields.kups.innerText = `${kups} Kup`;
     }
 
 }

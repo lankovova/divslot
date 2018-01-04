@@ -9952,7 +9952,7 @@ var Game = function Game(gameName) {
 
     this.setMaxBet = function () {
         // Get lines and betPerLine values for max possible bet depending on user's cash
-        var maxBetVars = (0, _ArrayMethods.getMultiplyNearestLowerNumbers)(_this.pointsController.userCash, settings.lines, settings.betPerLine);
+        var maxBetVars = (0, _ArrayMethods.getMultiplyNearestLowerNumbers)(_this.pointsController.userCashInPoints, settings.lines, settings.betPerLine);
 
         _this.setLines(maxBetVars.firstNumber);
         _this.setBerPerLine(maxBetVars.secondNumber);
@@ -9980,7 +9980,7 @@ var Game = function Game(gameName) {
     };
 
     this.checkBetSpinPossibility = function () {
-        if (_this.pointsController.totalBet > _this.pointsController.userCash) {
+        if (_this.pointsController.totalBet > _this.pointsController.userCashInPoints) {
             _this.interfaceController.panel.notifier.text = 'Not enough cash for this bet';
             _this.interfaceController.state.spin = false;
         } else {
@@ -10004,7 +10004,7 @@ var Game = function Game(gameName) {
 
     this.transferUsersWin = function () {
         // Update user cash
-        _this.pointsController.userCash = _this.pointsController.coinsToPoints(_this.spinResponse.player_coins);
+        _this.pointsController.userCash = _this.spinResponse.player_coins;
         // Reset user win
         _this.pointsController.userWin = 0;
     };
@@ -10089,7 +10089,7 @@ var Game = function Game(gameName) {
             _this.spinResponse = result;
 
             // Decrease user cash
-            _this.pointsController.userCash -= _this.pointsController.totalBet;
+            _this.pointsController.userCash -= _this.pointsController.pointsToCoins(_this.pointsController.totalBet);
 
             // Spin reels to given final symbols
             _this.spin(_this.spinResponse.final_symbols);
@@ -10330,6 +10330,7 @@ var PointsController = function () {
             _this.props.panel.setDenomination(_this._denomination);
 
             _this.updateUserCash();
+            _this._updateTotalBet();
         };
 
         this.setLines = function (linesAmount) {
@@ -10392,7 +10393,10 @@ var PointsController = function () {
 
             // Init user cash
             this._userCash = this.kupsToCoins(userCash);
-            this.props.panel.setUserCash(this.coinsToPoints(this._userCash));
+            this.props.panel.setUserCash({
+                points: this.coinsToPoints(this._userCash),
+                kups: this.coinsToKups(this._userCash)
+            });
 
             this.userWin = userWin;
         }
@@ -10432,18 +10436,24 @@ var PointsController = function () {
     }, {
         key: "_updateTotalBet",
         value: function _updateTotalBet() {
-            this.props.panel.setTotalBet(this._linesAmount * this._betPerLine);
+            this.props.panel.setTotalBet({
+                points: this.totalBet,
+                kups: this.pointsToKups(this.totalBet)
+            });
         }
 
         /**
          * Set user cash
-         * @param {String|Number} cash New cash to set
+         * @param {String|Number} cash New cash to set in coins
          */
 
     }, {
         key: "updateUserCash",
         value: function updateUserCash() {
-            this.props.panel.setUserCash(this.coinsToPoints(this._userCash));
+            this.props.panel.setUserCash({
+                points: this.coinsToPoints(this._userCash),
+                kups: this.coinsToKups(this._userCash)
+            });
         }
 
         /**
@@ -10474,9 +10484,17 @@ var PointsController = function () {
     }, {
         key: "userCash",
         set: function set(cash) {
-            this._userCash = this.pointsToCoins(cash);
-            this.props.panel.setUserCash(this.coinsToPoints(this._userCash));
+            this._userCash = cash;
+            this.props.panel.setUserCash({
+                points: this.coinsToPoints(this._userCash),
+                kups: this.coinsToKups(this._userCash)
+            });
         },
+        get: function get() {
+            return this._userCash;
+        }
+    }, {
+        key: "userCashInPoints",
         get: function get() {
             return this.coinsToPoints(this._userCash);
         }
@@ -10484,7 +10502,10 @@ var PointsController = function () {
         key: "userWin",
         set: function set(win) {
             this._userWin = win;
-            this.props.panel.setUserWin(this._userWin);
+            this.props.panel.setUserWin({
+                points: this._userWin,
+                kups: this.pointsToKups(this._userWin)
+            });
         },
         get: function get() {
             return this._userWin;
@@ -11952,38 +11973,46 @@ var Panel = function () {
         addClickEffect(document.querySelector('#betperlineBtn'), 'bottom left');
         addClickEffect(document.querySelector('#denominationBtn'), 'bottom left');
 
+        this.notifier = new _Notifier2.default();
         this.linesAmountField = document.querySelector('#linesAmountField');
         this.betPerLineAmountField = document.querySelector('#betperlineAmountField');
         this.denominationAmountField = document.querySelector('#denominationAmountField');
-        this.notifier = new _Notifier2.default();
-
-        this.userCashNode = this._createPanelRowItem();
-        this.userWinNode = this._createPanelRowItem();
-        this.totalBetNode = this._createPanelRowItem();
+        this.userCashFields = {
+            points: document.querySelector('#userCashPointsField'),
+            kups: document.querySelector('#userCashKupsField')
+        };
+        this.totalBetFields = {
+            points: document.querySelector('#bet_points_field'),
+            kups: document.querySelector('#bet_kups_field')
+        };
+        this.userWinFields = {
+            points: document.querySelector('#win_points_field'),
+            kups: document.querySelector('#win_kups_field')
+        };
     }
 
     _createClass(Panel, [{
-        key: '_createPanelRowItem',
-        value: function _createPanelRowItem() {
-            var element = document.createElement('div');
-            element.classList = 'panel-row-item';
-
-            return element;
-        }
-    }, {
         key: 'setUserCash',
-        value: function setUserCash(cash) {
-            this.userCashNode.innerText = 'Cash: ' + cash;
+        value: function setUserCash(_ref) {
+            var points = _ref.points,
+                kups = _ref.kups;
+
+            this.userCashFields.points.innerText = points;
+            this.userCashFields.kups.innerText = kups + ' Kups';
         }
     }, {
         key: 'setUserWin',
-        value: function setUserWin(win) {
-            this.userWinNode.innerText = 'Win: ' + win;
+        value: function setUserWin(_ref2) {
+            var points = _ref2.points,
+                kups = _ref2.kups;
+
+            this.userWinFields.points.innerText = points;
+            this.userWinFields.kups.innerText = kups + ' Kup';
         }
     }, {
         key: 'setDenomination',
         value: function setDenomination(denom) {
-            this.denominationAmountField.innerText = denom / 100;
+            this.denominationAmountField.innerText = (denom / 100).toFixed(2);
         }
     }, {
         key: 'setLinesAmount',
@@ -11997,8 +12026,12 @@ var Panel = function () {
         }
     }, {
         key: 'setTotalBet',
-        value: function setTotalBet(bet) {
-            this.totalBetNode.innerText = 'Bet: ' + bet;
+        value: function setTotalBet(_ref3) {
+            var points = _ref3.points,
+                kups = _ref3.kups;
+
+            this.totalBetFields.points.innerText = points;
+            this.totalBetFields.kups.innerText = kups + ' Kup';
         }
     }]);
 

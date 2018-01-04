@@ -59,6 +59,7 @@ class PointsController {
         this.props.panel.setDenomination(this._denomination);
 
         this.updateUserCash();
+        this._updateTotalBet();
     }
 
     get lines() { return this._linesAmount };
@@ -90,7 +91,10 @@ class PointsController {
     get totalBet() { return this._linesAmount * this._betPerLine };
 
     _updateTotalBet() {
-        this.props.panel.setTotalBet(this._linesAmount * this._betPerLine);
+        this.props.panel.setTotalBet({
+            points: this.totalBet,
+            kups: this.pointsToKups(this.totalBet)
+        });
     }
 
     /**
@@ -120,7 +124,10 @@ class PointsController {
      */
     set userWin(win) {
         this._userWin = win;
-        this.props.panel.setUserWin(this._userWin);
+        this.props.panel.setUserWin({
+            points: this._userWin,
+            kups: this.pointsToKups(this._userWin)
+        });
     }
     get userWin() { return this._userWin; }
 }
