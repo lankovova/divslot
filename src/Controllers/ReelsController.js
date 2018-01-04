@@ -8,14 +8,12 @@ class ReelsContorller {
      * @param {Object} props Props from parent
      */
     constructor(containerNode, props) {
-        this.reels = [];
-        this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
-        this.shouldStopReels = false;
-
-        this.stoppedReelsCounter = 0;
-
         this.props = props;
+
         this.container = containerNode;
+        this.reels = [];
+        this.shouldStopReels = false;
+        this.stoppedReelsCounter = 0;
 
         this._initReels(this.container);
     }
@@ -93,8 +91,10 @@ class ReelsContorller {
     }
 
     onReelStop = reelIndex => {
+        this.stoppedReelsCounter++;
+
         // Check if last reel has stopped
-        if (this.stoppedReelsCounter === this.reels.length - 1) {
+        if (this.stoppedReelsCounter === this.reels.length) {
             // Set previous delay betwwen reels spin start
             this.shouldStopReels = false;
 
@@ -102,8 +102,6 @@ class ReelsContorller {
             this.stoppedReelsCounter = 0;
 
             this.props.reelsHasStopped();
-        } else {
-            this.stoppedReelsCounter++;
         }
     }
 
