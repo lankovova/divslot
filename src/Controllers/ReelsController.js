@@ -10,6 +10,9 @@ class ReelsContorller {
     constructor(containerNode, props) {
         this.reels = [];
         this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
+        this.shouldStopReels = false;
+
+        this.stoppedReelsCounter = 0;
 
         this.props = props;
         this.container = containerNode;
@@ -79,26 +82,33 @@ class ReelsContorller {
 
         // Resolve promise after delay between reels spin
         return new Promise(resolve => {
-            setTimeout(() => {
+            if (this.shouldStopReels) {
                 resolve();
-            }, this.delayBetweenReelsSpin);
+            } else {
+                setTimeout(() => {
+                    resolve();
+                }, settings.delayBetweenReelsSpin);
+            }
         });
     }
 
     onReelStop = reelIndex => {
         // Check if last reel has stopped
-        if (reelIndex === this.reels.length - 1) {
+        if (this.stoppedReelsCounter === this.reels.length - 1) {
             // Set previous delay betwwen reels spin start
-            this.delayBetweenReelsSpin = settings.delayBetweenReelsSpin;
+            this.shouldStopReels = false;
 
-            console.log('all reels has stopped');
+            // Reset counter
+            this.stoppedReelsCounter = 0;
 
             this.props.reelsHasStopped();
+        } else {
+            this.stoppedReelsCounter++;
         }
     }
 
     stopReels() {
-        this.delayBetweenReelsSpin = 0;
+        this.shouldStopReels = true;
     }
 
     /**
@@ -112,7 +122,6 @@ class ReelsContorller {
 
         for (let i = 0; i < symbolsMap.length; i++) {
             resultArray.push(symbolsMap[i][reelIndex]);
-            // resultArray.push(new Symbol(symbolsMap[i][reelIndex]));
         }
 
         return resultArray;

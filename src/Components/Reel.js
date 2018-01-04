@@ -49,7 +49,6 @@ class Reel {
     _initListeners() {
         // End spin animation event
         this.reelNode.addEventListener(transitionEnd, () => {
-            console.log('Reel stopped ' + this.reelIndex);
             // Reset reel symbols
             this.resetReel();
 
