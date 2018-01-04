@@ -34,12 +34,12 @@ class Panel {
 
     setUserCash({points, kups}) {
         this.userCashFields.points.innerText = points;
-        this.userCashFields.kups.innerText = `${kups} Kups`;
+        this.userCashFields.kups.innerText = `${kups.toFixed(2)} Kup`;
     }
 
     setUserWin({points, kups}) {
         this.userWinFields.points.innerText = points;
-        this.userWinFields.kups.innerText = `${kups} Kup`;
+        this.userWinFields.kups.innerText = `${kups.toFixed(2)} Kup`;
     }
 
     setDenomination(denom) {
@@ -56,7 +56,7 @@ class Panel {
 
     setTotalBet({points, kups}) {
         this.totalBetFields.points.innerText = points;
-        this.totalBetFields.kups.innerText = `${kups} Kup`;
+        this.totalBetFields.kups.innerText = `${kups.toFixed(2)} Kup`;
     }
 
 }
