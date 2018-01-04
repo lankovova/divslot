@@ -60,7 +60,7 @@ class Game {
 
     setMaxBet = () => {
         // Get lines and betPerLine values for max possible bet depending on user's cash
-        const maxBetVars = getMultiplyNearestLowerNumbers(this.pointsController.userCash, settings.lines, settings.betPerLine);
+        const maxBetVars = getMultiplyNearestLowerNumbers(this.pointsController.userCashInPoints, settings.lines, settings.betPerLine);
 
         this.setLines(maxBetVars.firstNumber);
         this.setBerPerLine(maxBetVars.secondNumber);
@@ -83,7 +83,7 @@ class Game {
 
     // Disables/enables spin possibility depending on user's bet/cash
     checkBetSpinPossibility = () => {
-        if (this.pointsController.totalBet > this.pointsController.userCash) {
+        if (this.pointsController.totalBet > this.pointsController.userCashInPoints) {
             this.interfaceController.panel.notifier.text = 'Not enough cash for this bet';
             this.interfaceController.state.spin = false;
         } else {
@@ -109,7 +109,7 @@ class Game {
     // Transfer win cash to user's cash
     transferUsersWin = () => {
         // Update user cash
-        this.pointsController.userCash = this.pointsController.coinsToPoints(this.spinResponse.player_coins);
+        this.pointsController.userCash = this.spinResponse.player_coins;
         // Reset user win
         this.pointsController.userWin = 0;
     }
@@ -160,7 +160,7 @@ class Game {
             this.spinResponse = result;
 
             // Decrease user cash
-            this.pointsController.userCash -= this.pointsController.totalBet;
+            this.pointsController.userCash -= this.pointsController.pointsToCoins(this.pointsController.totalBet);
 
             // Spin reels to given final symbols
             this.spin(this.spinResponse.final_symbols);

@@ -95,16 +95,17 @@ class PointsController {
 
     /**
      * Set user cash
-     * @param {String|Number} cash New cash to set
+     * @param {String|Number} cash New cash to set in coins
      */
     set userCash(cash) {
-        this._userCash = this.pointsToCoins(cash);
+        this._userCash = cash;
         this.props.panel.setUserCash({
             points: this.coinsToPoints(this._userCash),
             kups: this.coinsToKups(this._userCash)
         });
     }
-    get userCash() { return this.coinsToPoints(this._userCash); }
+    get userCash() { return this._userCash; }
+    get userCashInPoints() { return this.coinsToPoints(this._userCash); }
 
     updateUserCash() {
         this.props.panel.setUserCash({
