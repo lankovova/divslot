@@ -120,6 +120,8 @@ body {
     font-weight: 900;
     font-size: 20px;
     color: #222a54;
+
+    cursor: pointer;
 }
 .panel_row-top .menu_btn:hover {
     background-position: top right;
@@ -144,6 +146,8 @@ body {
     font-weight: 900;
     font-size: 18px;
     color: #222a54;
+
+    cursor: pointer;
 }
 .panel_row-top .lines_btn .title {
     height: 100%;
@@ -177,6 +181,8 @@ body {
     font-weight: 900;
     font-size: 18px;
     color: #222a54;
+
+    cursor: pointer;
 }
 .panel_row-top .betperline_btn .title {
     flex-direction: column;
@@ -266,7 +272,28 @@ body {
     font-weight: 900;
     text-transform: uppercase;
 }
+.panel_row-top .auto_btn {
+    margin: 0 10px;
 
+    background: url('./../assets/images/panel/auto_btn.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 186px 60px;
+    width: 93px;
+    height: 30px;
+
+    padding: 0 0 5px 0;
+    box-sizing: border-box;
+
+    text-transform: uppercase;
+    font-size: 14px;
+    color: white;
+
+    cursor: pointer;
+}
+.panel_row-top .auto_btn:hover {
+    background-position: top right;
+}
 .panel_row-bot .denomination_btn {
     flex-direction: column;
     justify-content: space-around;
@@ -282,6 +309,8 @@ body {
     box-sizing: border-box;
 
     font-weight: 900;
+
+    cursor: pointer;
 }
 .panel_row-bot .denomination_btn .text {
     color: #052d56;

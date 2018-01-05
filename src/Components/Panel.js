@@ -14,11 +14,12 @@ class Panel {
         addClickEffect(document.querySelector('#linesBtn'), 'bottom left');
         addClickEffect(document.querySelector('#betperlineBtn'), 'bottom left');
         addClickEffect(document.querySelector('#denominationBtn'), 'bottom left');
+        addClickEffect(document.querySelector('#autoBtn'), 'bottom left');
 
         this.notifier = new Notifier();
         this.jb = new JB(
-            document.querySelector('#jackpot_number'),
-            document.querySelector('#bonus_number'),
+            document.querySelector('#jackpotNumber'),
+            document.querySelector('#bonusNumber'),
             {jValue: 7765.90, bValue: 6403.83}
         );
         this.jb.run();
