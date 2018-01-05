@@ -434,7 +434,73 @@ body {
     font-size: 11px;
     font-weight: 900;
 }
+.panel_row-bot .lhh_panel_wrapper {
+    height: 100%;
 
+    display: flex;
+    align-items: flex-end;
+}
+.panel_row-bot .lhh_panel {
+    background: url('./../assets/images/panel/lhh_panel_bg.png');
+    background-size: 100% 100%;
+
+    height: 85%;
+
+    padding: 15px 15px 0 15px;
+    box-sizing: border-box;
+}
+.panel_row-bot .lhh_panel .buttons_line {
+    display: flex;
+    height: 35px;
+}
+.panel_row-bot .lhh_panel .buttons_line div {
+    margin: 0 3px;
+}
+.panel_row-bot .lhh_panel .buttons_line .language_btn {
+    background: url('./../assets/images/lang_btns/en.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 86px 71px;
+    width: 43px;
+    height: 100%;
+
+    cursor: pointer;
+}
+.panel_row-bot .lhh_panel .buttons_line .language_btn:hover {
+    background-position: top right;
+}
+.panel_row-bot .lhh_panel .buttons_line .help_btn {
+    background: url('./../assets/images/panel/help_btn.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 86px 71px;
+    width: 43px;
+    height: 100%;
+
+    cursor: pointer;
+}
+.panel_row-bot .lhh_panel .buttons_line .help_btn:hover {
+    background-position: top right;
+}
+.panel_row-bot .lhh_panel .buttons_line .history_btn {
+    background: url('./../assets/images/panel/history_btn.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 200px 71px;
+    width: 100px;
+    height: 100%;
+
+    padding-bottom: 5px;
+    box-sizing: border-box;
+
+    color: white;
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
+.panel_row-bot .lhh_panel .buttons_line .history_btn:hover {
+    background-position: top right;
+}
 
 
 

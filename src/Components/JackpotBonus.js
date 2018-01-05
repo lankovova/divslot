@@ -19,7 +19,7 @@ class JackpotBonus {
 	}
 
 	run() {
-		this.intervalId = setInterval(() => this.tick(), 50);
+		this.intervalId = setInterval(() => this.tick(), 100);
 	}
 
 	stop() {

@@ -15,6 +15,9 @@ class Panel {
         addClickEffect(document.querySelector('#betperlineBtn'), 'bottom left');
         addClickEffect(document.querySelector('#denominationBtn'), 'bottom left');
         addClickEffect(document.querySelector('#autoBtn'), 'bottom left');
+        addClickEffect(document.querySelector('#languageBtn'), 'bottom left');
+        addClickEffect(document.querySelector('#helpBtn'), 'bottom left');
+        addClickEffect(document.querySelector('#historyBtn'), 'bottom left');
 
         this.notifier = new Notifier();
         this.jb = new JB(
@@ -22,7 +25,8 @@ class Panel {
             document.querySelector('#bonusNumber'),
             {jValue: 7765.90, bValue: 6403.83}
         );
-        this.jb.run();
+        // TEMP: dev
+        // this.jb.run();
 
         this.linesAmountField = document.querySelector('#linesAmountField');
         this.betPerLineAmountField = document.querySelector('#betperlineAmountField');
