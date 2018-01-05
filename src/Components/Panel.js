@@ -1,4 +1,5 @@
 import Notifier from '../Components/Notifier';
+import JB from './JackpotBonus';
 
 class Panel {
     constructor(node) {
@@ -15,6 +16,12 @@ class Panel {
         addClickEffect(document.querySelector('#denominationBtn'), 'bottom left');
 
         this.notifier = new Notifier();
+        this.jb = new JB(
+            document.querySelector('#jackpot_number'),
+            document.querySelector('#bonus_number'),
+            {jValue: 7765.90, bValue: 6403.83}
+        );
+        this.jb.run();
 
         this.linesAmountField = document.querySelector('#linesAmountField');
         this.betPerLineAmountField = document.querySelector('#betperlineAmountField');

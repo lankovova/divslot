@@ -386,7 +386,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 var bind = __webpack_require__(127);
-var isBuffer = __webpack_require__(353);
+var isBuffer = __webpack_require__(354);
 
 /*global toString:true*/
 
@@ -3062,7 +3062,7 @@ module.exports = navigator && navigator.userAgent || '';
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(18);
-var normalizeHeaderName = __webpack_require__(355);
+var normalizeHeaderName = __webpack_require__(356);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -4332,12 +4332,12 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(18);
-var settle = __webpack_require__(356);
-var buildURL = __webpack_require__(358);
-var parseHeaders = __webpack_require__(359);
-var isURLSameOrigin = __webpack_require__(360);
+var settle = __webpack_require__(357);
+var buildURL = __webpack_require__(359);
+var parseHeaders = __webpack_require__(360);
+var isURLSameOrigin = __webpack_require__(361);
 var createError = __webpack_require__(130);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(361);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(362);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -4434,7 +4434,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(362);
+      var cookies = __webpack_require__(363);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -4519,7 +4519,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(357);
+var enhanceError = __webpack_require__(358);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -9935,7 +9935,7 @@ var _InterfaceController = __webpack_require__(346);
 
 var _InterfaceController2 = _interopRequireDefault(_InterfaceController);
 
-var _axios = __webpack_require__(351);
+var _axios = __webpack_require__(352);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -10430,9 +10430,6 @@ var PointsController = function () {
         value: function pointsToKups(points) {
             return points * this._denomination / 100;
         }
-
-        // FIXME: Separate changing and displaying values
-
     }, {
         key: "_updateTotalBet",
         value: function _updateTotalBet() {
@@ -11947,6 +11944,10 @@ var _Notifier = __webpack_require__(350);
 
 var _Notifier2 = _interopRequireDefault(_Notifier);
 
+var _JackpotBonus = __webpack_require__(351);
+
+var _JackpotBonus2 = _interopRequireDefault(_JackpotBonus);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11974,12 +11975,20 @@ var Panel = function () {
         addClickEffect(document.querySelector('#denominationBtn'), 'bottom left');
 
         this.notifier = new _Notifier2.default();
+        this.jb = new _JackpotBonus2.default(document.querySelector('#jackpot_number'), document.querySelector('#bonus_number'), { jValue: 7765.90, bValue: 6403.83 });
+        this.jb.run();
+
         this.linesAmountField = document.querySelector('#linesAmountField');
         this.betPerLineAmountField = document.querySelector('#betperlineAmountField');
         this.denominationAmountField = document.querySelector('#denominationAmountField');
+
         this.userCashFields = {
             points: document.querySelector('#userCashPointsField'),
             kups: document.querySelector('#userCashKupsField')
+        };
+        this.userInsuranceFields = {
+            points: document.querySelector('#userInsurancePointsField'),
+            kups: document.querySelector('#userInsuranceKupsField')
         };
         this.totalBetFields = {
             points: document.querySelector('#bet_points_field'),
@@ -11988,28 +11997,15 @@ var Panel = function () {
         this.userWinFields = {
             points: document.querySelector('#win_points_field'),
             kups: document.querySelector('#win_kups_field')
-        };
+
+            // TEMP
+        };this.setUserInsurance({
+            points: 1000,
+            kups: 10.00
+        });
     }
 
     _createClass(Panel, [{
-        key: 'setUserCash',
-        value: function setUserCash(_ref) {
-            var points = _ref.points,
-                kups = _ref.kups;
-
-            this.userCashFields.points.innerText = points;
-            this.userCashFields.kups.innerText = kups + ' Kups';
-        }
-    }, {
-        key: 'setUserWin',
-        value: function setUserWin(_ref2) {
-            var points = _ref2.points,
-                kups = _ref2.kups;
-
-            this.userWinFields.points.innerText = points;
-            this.userWinFields.kups.innerText = kups + ' Kup';
-        }
-    }, {
         key: 'setDenomination',
         value: function setDenomination(denom) {
             this.denominationAmountField.innerText = (denom / 100).toFixed(2);
@@ -12025,13 +12021,40 @@ var Panel = function () {
             this.betPerLineAmountField.innerText = betPerLine;
         }
     }, {
-        key: 'setTotalBet',
-        value: function setTotalBet(_ref3) {
+        key: 'setUserCash',
+        value: function setUserCash(_ref) {
+            var points = _ref.points,
+                kups = _ref.kups;
+
+            this.userCashFields.points.innerText = points;
+            this.userCashFields.kups.innerText = kups.toFixed(2) + ' Kup';
+        }
+    }, {
+        key: 'setUserInsurance',
+        value: function setUserInsurance(_ref2) {
+            var points = _ref2.points,
+                kups = _ref2.kups;
+
+            this.userInsuranceFields.points.innerText = points;
+            this.userInsuranceFields.kups.innerText = kups.toFixed(2) + ' Kup';
+        }
+    }, {
+        key: 'setUserWin',
+        value: function setUserWin(_ref3) {
             var points = _ref3.points,
                 kups = _ref3.kups;
 
+            this.userWinFields.points.innerText = points;
+            this.userWinFields.kups.innerText = kups.toFixed(2) + ' Kup';
+        }
+    }, {
+        key: 'setTotalBet',
+        value: function setTotalBet(_ref4) {
+            var points = _ref4.points,
+                kups = _ref4.kups;
+
             this.totalBetFields.points.innerText = points;
-            this.totalBetFields.kups.innerText = kups + ' Kup';
+            this.totalBetFields.kups.innerText = kups.toFixed(2) + ' Kup';
         }
     }]);
 
@@ -12090,10 +12113,94 @@ exports.default = Notifier;
 /* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(352);
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var JackpotBonus = function () {
+	function JackpotBonus(jElement, bElement) {
+		var initValues = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : { jValue: 2000, bValue: 1000 };
+
+		_classCallCheck(this, JackpotBonus);
+
+		if (!jElement || !bElement) {
+			console.error('Jackpot or bonus element is not defined in constructor');
+
+			return;
+		}
+
+		this.jNode = jElement;
+		this.bNode = bElement;
+
+		this.jValue = initValues.jValue;
+		this.bValue = initValues.bValue;
+
+		this.setJackpot(this.jValue);
+		this.setBonus(this.bValue);
+
+		this.intervalId;
+	}
+
+	_createClass(JackpotBonus, [{
+		key: 'run',
+		value: function run() {
+			var _this = this;
+
+			this.intervalId = setInterval(function () {
+				return _this.tick();
+			}, 50);
+		}
+	}, {
+		key: 'stop',
+		value: function stop() {
+			clearInterval(this.intervalId);
+		}
+	}, {
+		key: 'tick',
+		value: function tick() {
+			this.jValue += 0.04;
+			this.bValue += 0.03;
+
+			this.updateFields();
+		}
+	}, {
+		key: 'updateFields',
+		value: function updateFields() {
+			this.setJackpot(this.jValue);
+			this.setBonus(this.bValue);
+		}
+	}, {
+		key: 'setJackpot',
+		value: function setJackpot(value) {
+			this.jNode.innerText = value.toFixed(2);
+		}
+	}, {
+		key: 'setBonus',
+		value: function setBonus(value) {
+			this.bNode.innerText = value.toFixed(2);
+		}
+	}]);
+
+	return JackpotBonus;
+}();
+
+exports.default = JackpotBonus;
 
 /***/ }),
 /* 352 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(353);
+
+/***/ }),
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12101,7 +12208,7 @@ module.exports = __webpack_require__(352);
 
 var utils = __webpack_require__(18);
 var bind = __webpack_require__(127);
-var Axios = __webpack_require__(354);
+var Axios = __webpack_require__(355);
 var defaults = __webpack_require__(91);
 
 /**
@@ -12136,14 +12243,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(132);
-axios.CancelToken = __webpack_require__(368);
+axios.CancelToken = __webpack_require__(369);
 axios.isCancel = __webpack_require__(131);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(369);
+axios.spread = __webpack_require__(370);
 
 module.exports = axios;
 
@@ -12152,7 +12259,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 353 */
+/* 354 */
 /***/ (function(module, exports) {
 
 /*!
@@ -12179,7 +12286,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 354 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12187,8 +12294,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(91);
 var utils = __webpack_require__(18);
-var InterceptorManager = __webpack_require__(363);
-var dispatchRequest = __webpack_require__(364);
+var InterceptorManager = __webpack_require__(364);
+var dispatchRequest = __webpack_require__(365);
 
 /**
  * Create a new instance of Axios
@@ -12265,7 +12372,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 355 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12284,7 +12391,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 356 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12317,7 +12424,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 357 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12345,7 +12452,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 358 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12420,7 +12527,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 359 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12480,7 +12587,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 360 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12555,7 +12662,7 @@ module.exports = (
 
 
 /***/ }),
-/* 361 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12598,7 +12705,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 362 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12658,7 +12765,7 @@ module.exports = (
 
 
 /***/ }),
-/* 363 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12717,18 +12824,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 364 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(18);
-var transformData = __webpack_require__(365);
+var transformData = __webpack_require__(366);
 var isCancel = __webpack_require__(131);
 var defaults = __webpack_require__(91);
-var isAbsoluteURL = __webpack_require__(366);
-var combineURLs = __webpack_require__(367);
+var isAbsoluteURL = __webpack_require__(367);
+var combineURLs = __webpack_require__(368);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -12810,7 +12917,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 365 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12837,7 +12944,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 366 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12858,7 +12965,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 367 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12879,7 +12986,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 368 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12943,7 +13050,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 369 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
