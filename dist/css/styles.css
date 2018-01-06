@@ -311,6 +311,8 @@ body {
     font-weight: 900;
 
     cursor: pointer;
+
+    margin: 0 10px;
 }
 .panel_row-bot .denomination_btn .text {
     color: #052d56;
@@ -335,7 +337,7 @@ body {
     width: 200px;
     height: 100%;
 
-    margin: 0 10px;
+    margin: 0 5px;
 
     padding: 5px 10px 10px 10px;
     box-sizing: border-box;
@@ -515,7 +517,7 @@ body {
 
     margin: 0 3px;
 }
-.panel_row-bot .button {
+.button {
     background: url('./../assets/images/panel/button.png');
     background-position: top left;
     background-repeat: no-repeat;
@@ -531,7 +533,39 @@ body {
     font-weight: 900;
     font-size: 20px;
 }
-.panel_row-bot .button:hover {
+.button:hover {
+    background-position: top right;
+}
+
+.panel_row .start_btn_wrapper {
+    height: 100%;
+
+    margin: 0 10px;
+}
+
+.panel_row-bot .start_btn {
+    position: relative;
+    bottom: 20px;
+
+    background: url('./../assets/images/panel/start_btn.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 227.5px 208px;
+    width: 113px;
+    height: calc(100% + 20px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-top: 10px;
+    box-sizing: border-box;
+
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 24px;
+}
+.panel_row-bot .start_btn:hover {
     background-position: top right;
 }
 

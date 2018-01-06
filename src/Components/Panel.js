@@ -20,6 +20,7 @@ class Panel {
         addClickEffect(document.querySelector('#historyBtn'), 'bottom left');
         addClickEffect(document.querySelector('#gambleBtn'), 'bottom left');
         addClickEffect(document.querySelector('#maxBtn'), 'bottom left');
+        addClickEffect(document.querySelector('#startBtn'), 'bottom left');
 
         this.notifier = new Notifier();
         this.jb = new JB(
