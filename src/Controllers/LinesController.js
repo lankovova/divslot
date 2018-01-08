@@ -21,10 +21,6 @@ class LinesController {
         let winningLines = [];
 
         for (const res of gameResult) {
-            console.log(res);
-        }
-
-        for (const res of gameResult) {
             const line = new Line(this.gameWrapperNode, 'yellow', res.line_index, res.points, this.props.reels);
 
             let highlightedSymbols = [];
@@ -41,7 +37,7 @@ class LinesController {
                 line.addSymbolHighlite(symbol.x, symbol.y);
             }
 
-            // TODO: Handle case when it's scatters line
+            // Handle case when it is line of scatters
             // If there is physical line
             if (res.line_index !== undefined) {
                 line.connectHighlites();
@@ -73,7 +69,7 @@ class LinesController {
         }
 
         // Resolve promise when all lines has shown
-        Promise.resolve();
+        return new Promise(resolve => resolve());
     }
 
     // TODO: Cycle showing lines if no free spin
