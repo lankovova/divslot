@@ -35,7 +35,7 @@ body {
 
     line-height: 0;
 
-    object-fit: cover;
+    object-fit: fill;
 }
 
 .reels_wrapper {
@@ -178,7 +178,6 @@ body {
     text-transform: uppercase;
     font-weight: 900;
     font-size: 18px;
-
 }
 .panel_row-top .betperline_btn {
     margin: 5px 10px 0 10px;
@@ -193,6 +192,7 @@ body {
 .panel_row-top .betperline_btn .title {
     flex-direction: column;
 }
+
 .panel_row-top .jackpot_bonus_wrapper {
     height: 100%;
 }
