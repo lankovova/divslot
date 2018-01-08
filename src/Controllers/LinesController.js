@@ -20,12 +20,16 @@ class LinesController {
     createWinningLines(gameResult) {
         let winningLines = [];
 
-        for (const [key, res] of Object.entries(gameResult)) {
+        for (const res of gameResult) {
+            console.log(res);
+        }
+
+        for (const res of gameResult) {
             const line = new Line(this.gameWrapperNode, 'yellow', res.line_index, res.points, this.props.reels);
 
             let highlightedSymbols = [];
 
-            for (const [key, sCoor] of Object.entries(res.list)) {
+            for (const sCoor of res.list) {
                 // Get reel
                 const reel = this.props.reels[sCoor.col];
                 // Get winning symbol
