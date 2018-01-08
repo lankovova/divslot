@@ -1,5 +1,7 @@
 import Reel from '../Components/Reel';
 
+let stoppedReelsCounter = 0;
+
 class ReelsContorller {
     /**
      * Creates reel controller in specific node
@@ -12,7 +14,6 @@ class ReelsContorller {
         this.container = containerNode;
         this.reels = [];
         this.shouldStopReels = false;
-        this.stoppedReelsCounter = 0;
 
         this._initReels(this.container);
     }
@@ -104,15 +105,16 @@ class ReelsContorller {
     }
 
     onReelStop = reelIndex => {
-        this.stoppedReelsCounter++;
+        console.log(`Reel ${reelIndex} has stopped`);
+        stoppedReelsCounter++;
 
         // Check if last reel has stopped
-        if (this.stoppedReelsCounter === this.reels.length) {
+        if (stoppedReelsCounter === this.reels.length) {
             // Set previous delay betwwen reels spin start
             this.shouldStopReels = false;
 
             // Reset counter
-            this.stoppedReelsCounter = 0;
+            stoppedReelsCounter = 0;
 
             this.props.reelsHasStopped();
         }

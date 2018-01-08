@@ -195,6 +195,8 @@ class Game {
         if (this.spinResponse.won) { // Win case
             // Show all winning lines
             // and update user win line by line in callback
+            console.log('reels has stopped');
+
             await this.linesController.showWinningLines(this.spinResponse.spin_result, winCashInLine => {
                 this.pointsController.userWin += winCashInLine;
                 this.interfaceController.panel.notifier.text = `You won ${this.pointsController.userWin} points`;

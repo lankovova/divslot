@@ -15,7 +15,7 @@ export default class SymbolFallAnimation extends Symbol {
     initSymbol() {
         super.initSymbol();
         this.symbolNode.style.position = "absolute";
-        this.symbolNode.style.bottom = `${settings.numOfRows * settings.symbolSize}px`;
+        // this.symbolNode.style.bottom = `${settings.numOfRows * settings.symbolSize}px`;
         this.symbolNode.style.transition = `transform 300ms ${settings.fallAnimTimingFunc}`;
     }
 
