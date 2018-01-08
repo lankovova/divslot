@@ -30,14 +30,14 @@ class LinePresenters {
         this.container.appendChild(pRight);
         pRight.className += 'line_presenters_container right';
 
-        for (const lineIndex of settings.linePresenterLeftLines) {
-            const presenter = new LinePresenter(this.lines[lineIndex]);
+        for (const presenterInfo of settings.linePresenterLeftLines) {
+            const presenter = new LinePresenter(this.lines[presenterInfo.lineIndex], presenterInfo.color);
             pLeft.appendChild(presenter.node);
             this.linePresenters.push(presenter);
         }
 
-        for (const lineIndex of settings.linePresenterRightLines) {
-            const presenter = new LinePresenter(this.lines[lineIndex]);
+        for (const presenterInfo of settings.linePresenterRightLines) {
+            const presenter = new LinePresenter(this.lines[presenterInfo.lineIndex], presenterInfo.color);
             pRight.appendChild(presenter.node);
             this.linePresenters.push(presenter);
         }

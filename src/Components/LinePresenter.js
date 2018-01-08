@@ -3,11 +3,11 @@ class LinePresenter {
      * Show/hide line
      * @param {Line} line Line that will be show/hide
      */
-    constructor(line) {
+    constructor(line, color) {
         this.line = line;
         // Create node
         this.node = document.createElement('div');
-        this.node.style.background = 'white';
+        this.node.style.background = color;
         this.node.text = '';
         this.node.className += 'line_presenter';
         // Init listners

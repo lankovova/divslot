@@ -1,6 +1,6 @@
 var settings = {
+    // "symbolSize": 354,
     "symbolSize": 140,
-    "spaceBetweenReels": 26,
 
     "numOfRows": 3,
     "numOfReels": 5,
@@ -48,7 +48,7 @@ var settings = {
         [ [1, 0], [2, 1], [2, 2], [2, 3], [1, 4] ],
         [ [0, 0], [0, 1], [1, 2], [2, 3], [2, 4] ],
         [ [2, 0], [2, 1], [1, 2], [0, 3], [0, 4] ],
-        [ [1, 0], [0, 1], [1, 2], [2, 3], [2, 4] ],
+        [ [1, 0], [2, 1], [1, 2], [0, 3], [0, 4] ],
 
         [ [1, 0], [2, 1], [1, 2], [2, 3], [1, 4] ],
         [ [1, 0], [0, 1], [1, 2], [0, 3], [1, 4] ],
@@ -61,8 +61,28 @@ var settings = {
         [ [0, 0], [1, 1], [1, 2], [1, 3], [0, 4] ],
         [ [2, 0], [1, 1], [1, 2], [1, 3], [2, 4] ]
     ],
-    // "linePresenterLeftLines": [3, 1, 7, 5, 9, 0, 6, 8, 2, 4],
-    "linePresenterLeftLines": [4, 2, 8, 6, 9, 0, 5, 7, 1, 3],
-    // "linePresenterRightLines": [16, 12, 18, 14, 11, 10, 15, 19, 13, 17],
-    "linePresenterRightLines": [17, 13, 19, 15, 10, 11, 14, 18, 12, 16]
+    "linePresenterLeftLines": [
+        {lineIndex: 4, color: 'rgb(252, 252, 0)'},
+        {lineIndex: 2, color: 'rgb(255, 0, 0)'},
+        {lineIndex: 8, color: 'rgb(255, 181, 0)'},
+        {lineIndex: 6, color: 'rgb(139, 251, 155)'},
+        {lineIndex: 9, color: 'rgb(133, 213, 254)'},
+        {lineIndex: 0, color: 'rgb(252, 252, 252)'},
+        {lineIndex: 5, color: 'rgb(142, 252, 252)'},
+        {lineIndex: 7, color: 'rgb(0, 213, 0)'},
+        {lineIndex: 1, color: 'rgb(116, 89, 249)'},
+        {lineIndex: 3, color: 'rgb(231, 60, 204)'},
+    ],
+    "linePresenterRightLines" : [
+        {lineIndex: 17, color: 'rgb(248, 248, 219)'},
+        {lineIndex: 13, color: 'rgb(223, 170, 207)'},
+        {lineIndex: 19, color: 'rgb(0, 185, 226)'},
+        {lineIndex: 15, color: 'rgb(255, 91, 0)'},
+        {lineIndex: 10, color: 'rgb(0, 108, 4)'},
+        {lineIndex: 11, color: 'rgb(152, 152, 153)'},
+        {lineIndex: 14, color: 'rgb(255, 44, 58)'},
+        {lineIndex: 18, color: 'rgb(0, 244, 183)'},
+        {lineIndex: 12, color: 'rgb(144, 3, 225)'},
+        {lineIndex: 16, color: 'rgb(93, 113, 68)'},
+    ]
 }

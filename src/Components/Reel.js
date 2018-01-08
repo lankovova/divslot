@@ -38,7 +38,7 @@ class Reel {
         reelWrapperNode.className = 'reel_wrapper';
         reelWrapperNode.style.width = `${settings.symbolSize}px`;
         reelWrapperNode.style.height = `${settings.symbolSize * settings.numOfRows}px`;
-        reelWrapperNode.style.margin = `0 ${settings.spaceBetweenReels / 2}px`;
+        // reelWrapperNode.style.margin = `0 ${settings.spaceBetweenReels / 2}px`;
         reelWrapperNode.appendChild(this.reelNode);
 
         document.querySelector('#reels_container').appendChild(reelWrapperNode);

@@ -17,17 +17,36 @@ body {
 #game {
     width: 100%;
     height: 100%;
-    background: darkgoldenrod;
+    background: #080200;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.main {
+.main_wrapper {
     height: 100%;
+    width: 100%;
+}
+.main {
     position: relative;
+
+    /* transform: scale(1.3); */
 }
 .main .main_bg {
+    position: absolute;
+
+    background: url('./../assets/images/game_bg.png') center center;
+    background-size: contain;
+
+    background-repeat: no-repeat;
+
+    width: 1024px;
+    height: 444px;
+
+    /* width: 100%;
+    height: 100%; */
+}
+/* .main .main_bg {
     position: absolute;
 
     height: 100%;
@@ -36,7 +55,7 @@ body {
     line-height: 0;
 
     object-fit: fill;
-}
+} */
 
 .reels_wrapper {
     display: flex;
@@ -57,6 +76,11 @@ body {
     height: 30px;
 
     border-radius: 5px;
+
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+
     z-index: 2;
     cursor: pointer;
 
@@ -71,7 +95,7 @@ body {
 }
 
 .reels_wrapper {
-    padding: 10px 0;
+    padding-top: 11px;
 }
 
 .reel_wrapper {
@@ -79,6 +103,9 @@ body {
     background-size: cover;
     position: relative;
     overflow: hidden;
+
+    /* margin: 0 18px; */
+    margin: 0 8px;
 }
 
 .reel {
@@ -87,7 +114,7 @@ body {
     left: 0;
 }
 
-.header {
+/* .header {
     background: url('./../assets/images/header.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -95,6 +122,18 @@ body {
     height: 0;
     padding-top: 6.2465%;
     line-height: 0;
+} */
+.header {
+    width: 100%;
+    height: 80px;
+
+    line-height: 0;
+}
+.header .header_bg {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
 }
 
 .panel .panel_row {
