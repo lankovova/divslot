@@ -64,24 +64,24 @@ class Line {
         let coord = {};
         let sPrev, symbol, sNext, sMap, rMap;
 
-        for(let i = 0; i < settings.numOfReels; i++) {
+        for (let i = 0; i < settings.numOfReels; i++) {
             // Create DOM element
             lineNode = document.createElementNS(this.namespaceURI, 'line');
             this.svgNode.appendChild(lineNode);
             // Get previous symbol
             if (i !== 0) {
                 [sMap, rMap] = this.lineType[i - 1];
-                sPrev = this.reels[rMap].finalSymbols[sMap];
+                sPrev = this.reels[rMap].finalSymbols[this.reels[rMap].finalSymbols.length - 1 - sMap];
             } else {
                 sPrev = null;
             }
-            // Get symbol
             [sMap, rMap] = this.lineType[i];
-            symbol = this.reels[rMap].finalSymbols[sMap];
+            // Get symbol
+            symbol = this.reels[rMap].finalSymbols[this.reels[rMap].finalSymbols.length - 1 - sMap];
             // Get next symbol
             if (i !== (settings.numOfReels - 1)) {
                 [sMap, rMap] = this.lineType[i + 1];
-                sNext = this.reels[rMap].finalSymbols[sMap];
+                sNext = this.reels[rMap].finalSymbols[this.reels[rMap].finalSymbols.length - 1 - sMap];
             } else {
                 sNext = null;
             }
@@ -131,7 +131,6 @@ class Line {
     }
 
     _createConnection(lineNode, sPrev, symbol, sNext) {
-
         let start = {};
         let end = {};
 

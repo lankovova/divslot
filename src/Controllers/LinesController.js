@@ -10,7 +10,7 @@ class LinesController {
         this.gameWrapperNode = gameWrapperNode;
         this.props = props;
 
-        this._createLines();
+        this._createStaticLines();
     }
 
     /**
@@ -29,7 +29,7 @@ class LinesController {
                 // Get reel
                 const reel = this.props.reels[sCoor.col];
                 // Get winning symbol
-                const symbol = reel.finalSymbols[sCoor.row];
+                const symbol = reel.finalSymbols[reel.finalSymbols.length - sCoor.row - 1];
                 symbol.highlighted = true;
                 symbol.animate();
                 highlightedSymbols.push(symbol);
@@ -99,7 +99,7 @@ class LinesController {
         this.lines[lineIndex].show();
     }
 
-    _createLines() {
+    _createStaticLines() {
         for (let i = 0; i < settings.lineTypes.length; i++) {
             const line = new Line(this.gameWrapperNode, 'red', i, 0, this.props.reels);
             line.connectHighlites();
