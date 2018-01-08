@@ -1,4 +1,4 @@
-// import Reel from '../Components/ReelFallAnimation';
+// import Reel from '../Components/FallReel';
 import Reel from '../Components/Reel';
 
 class ReelsContorller {

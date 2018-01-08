@@ -5,8 +5,7 @@ class Notifier {
     }
 
     clear() {
-        this._node.innerText = '...';
-        // this._node.innerText = '';
+        this._node.innerText = '';
     }
 
     set text(text) {

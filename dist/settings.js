@@ -11,7 +11,7 @@ var settings = {
     "delayBetweenReelsSpin": 200,
     "delayBetweenFallingSymbols": 300,
     // Do not set this delay lower than 50 ms
-    // due to the slow browser perfomance
+    // due to the slow browsers perfomance
     "delayBeforeStartReelsSpin": 200,
     "spinAnimationTimeInMs": 1000,
     "spinAnimTimingFunc": "ease-in-out",
