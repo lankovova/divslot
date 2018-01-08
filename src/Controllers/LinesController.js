@@ -21,7 +21,8 @@ class LinesController {
         let winningLines = [];
 
         for (const res of gameResult) {
-            const line = new Line(this.gameWrapperNode, 'yellow', res.line_index, res.points, this.props.reels);
+            const lineColor = this._getLineColorBasedOnItsIndex(res.line_index);
+            const line = new Line(this.gameWrapperNode, lineColor, res.line_index, res.points, this.props.reels);
 
             let highlightedSymbols = [];
 
@@ -101,10 +102,28 @@ class LinesController {
 
     _createStaticLines() {
         for (let i = 0; i < settings.lineTypes.length; i++) {
-            const line = new Line(this.gameWrapperNode, 'red', i, 0, this.props.reels);
+            const lineColor = this._getLineColorBasedOnItsIndex(i);
+
+            const line = new Line(this.gameWrapperNode, lineColor, i, 0, this.props.reels);
             line.connectHighlites();
             this.lines.push(line);
         }
+    }
+
+    /**
+     * Get line color based on index in lineTypes array
+     * @param {Number} lineIndex Index of a line in lineTypes array
+     * @returns Returns line color in any available css format (rgb, rgba, hex, etc.)
+     */
+    _getLineColorBasedOnItsIndex(lineIndex) {
+        const presenterArr = lineIndex < 10 ? settings.linePresenterLeftLines : settings.linePresenterRightLines;
+
+        for (const presenter of presenterArr) {
+            if (presenter.lineIndex === lineIndex)
+                return presenter.color;
+        }
+
+        return 'rgb(255, 255, 255)';
     }
 }
 
