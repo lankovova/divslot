@@ -1,4 +1,3 @@
-// import Reel from '../Components/FallReel';
 import Reel from '../Components/Reel';
 
 class ReelsContorller {
@@ -19,14 +18,28 @@ class ReelsContorller {
     }
 
     _initReels() {
-        const reelsWrapper = document.createElement('div');
-        reelsWrapper.id = 'reels_container';
+        const reelsContainer = document.createElement('div');
+        reelsContainer.id = 'reels_container';
+        reelsContainer.className = 'reels_container';
+        reelsContainer.style.margin = `0 -${settings.spaceBetweenReels / 4}px`;
 
-        this.container.appendChild(reelsWrapper);
+        this.container.appendChild(reelsContainer);
 
         for (let i = 0; i < settings.numOfReels; i++) {
             // Fill created reel with random symbols
             this.reels.push(new Reel(i, this.onReelStop));
+        }
+    }
+
+    /**
+     * Start reels animation based on animationType
+     * @param {Number[]} finalSymbolsMap Map of final symbols
+     */
+    startReels(finalSymbolsMap) {
+        if (settings.animationType === 'fall') {
+            this.spinFallReels(finalSymbolsMap);
+        } else {
+            this.spinReels(finalSymbolsMap);
         }
     }
 
@@ -48,28 +61,28 @@ class ReelsContorller {
      * Spin all reels to final symbols
      * @param {Number[][]} finalSymbolsMap Map of final symbols
      */
-    // async spinFallReels(finalSymbolsMap) {
-    //     // For each reel
-    //     for (let i = 0; i < this.reels.length; i++) {
-    //         let finalSymbols = this.getReelSymbolsFromSymbolsMap(finalSymbolsMap, i);
+    async spinFallReels(finalSymbolsMap) {
+        // For each reel
+        for (let i = 0; i < this.reels.length; i++) {
+            let finalSymbols = this.getReelSymbolsFromSymbolsMap(finalSymbolsMap, i);
 
-    //         // Clear reel
-    //         this.reels[i].removeOldSymbols();
+            // Clear reel
+            this.reels[i].removeOldSymbols();
 
-    //         // Add final symbols to reel
-    //         this.reels[i].addFinalSymbols(finalSymbols);
-    //     }
+            // Add final symbols to reel
+            this.reels[i].addFinalSymbols(finalSymbols);
+        }
 
-    //     // Delay before start reels spin
-    //     await (() => new Promise(resolve => setTimeout(resolve, settings.delayBeforeStartReelsSpin)))();
+        // Delay before start reels spin
+        await (() => new Promise(resolve => setTimeout(resolve, settings.delayBeforeStartReelsSpin)))();
 
-    //     // For each reel
-    //     for (let i = 0; i < this.reels.length; i++) {
+        // For each reel
+        for (let i = 0; i < this.reels.length; i++) {
 
-    //         // Wait previous reel to resolve before spinning next
-    //         await this.spinReel(this.reels[i]);
-    //     }
-    // }
+            // Wait previous reel to resolve before spinning next
+            await this.spinReel(this.reels[i]);
+        }
+    }
 
     /**
      * Spins the given reel

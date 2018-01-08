@@ -1,9 +1,12 @@
 var settings = {
     // "symbolSize": 354,
     "symbolSize": 140,
+    "spaceBetweenReels": 16,
 
     "numOfRows": 3,
     "numOfReels": 5,
+
+    "animationType": 'fall',
 
     "numOfSpinsBeforeStop": 3,
 

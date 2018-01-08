@@ -143,7 +143,7 @@ class Game {
         this.interfaceController.panel.notifier.clear();
 
         // Spin reels
-        this.reelsController.spinReels(finalSymbols);
+        this.reelsController.startReels(finalSymbols);
     }
 
     getDataAndSpin = () => {

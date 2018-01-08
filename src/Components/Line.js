@@ -24,6 +24,7 @@ class Line {
         this.svgNode.style.height = "100%";
         this.svgNode.style.display = "none";
         this.svgNode.style.position = "absolute";
+        this.svgNode.style.opacity = '0.8';
         this.svgNode.style.zIndex = "1";
     }
 
