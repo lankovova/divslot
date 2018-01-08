@@ -1,6 +1,6 @@
 var settings = {
     "symbolSize": 140,
-    "spaceBetweenReels": 20,
+    "spaceBetweenReels": 26,
 
     "numOfRows": 3,
     "numOfReels": 5,
@@ -61,6 +61,8 @@ var settings = {
         [ [0, 0], [1, 1], [1, 2], [1, 3], [0, 4] ],
         [ [2, 0], [1, 1], [1, 2], [1, 3], [2, 4] ]
     ],
-    "linePresenterLeftLines": [3, 1, 7, 5, 9, 0, 6, 8, 2, 4],
-    "linePresenterRightLines": [16, 12, 18, 14, 11, 10, 15, 19, 13, 17]
+    // "linePresenterLeftLines": [3, 1, 7, 5, 9, 0, 6, 8, 2, 4],
+    "linePresenterLeftLines": [4, 2, 8, 6, 9, 0, 5, 7, 1, 3],
+    // "linePresenterRightLines": [16, 12, 18, 14, 11, 10, 15, 19, 13, 17],
+    "linePresenterRightLines": [17, 13, 19, 15, 10, 11, 14, 18, 12, 16]
 }

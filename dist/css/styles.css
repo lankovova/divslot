@@ -23,6 +23,21 @@ body {
     justify-content: space-between;
 }
 
+.main {
+    height: 100%;
+    position: relative;
+}
+.main .main_bg {
+    position: absolute;
+
+    height: 100%;
+    width: 100%;
+
+    line-height: 0;
+
+    object-fit: cover;
+}
+
 .reels_wrapper {
     display: flex;
     flex-direction: row;
@@ -56,7 +71,6 @@ body {
 }
 
 .reels_wrapper {
-    /* background: url('./../assets/images/game_bg.png'); */
     padding: 10px 0;
 }
 
@@ -80,12 +94,14 @@ body {
     width: 100%;
     height: 0;
     padding-top: 6.2465%;
+    line-height: 0;
 }
 
 .panel .panel_row {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
     width: 100%;
     background-size: 100% 100%;
 }
@@ -96,7 +112,6 @@ body {
 .panel_row-bot {
     height: 90px;
     padding: 6px 0 0 0;
-    box-sizing: border-box;
     background: url('./../assets/images/panel/panel_bot.png');
 }
 
@@ -112,7 +127,7 @@ body {
     background: url('./../assets/images/panel/menu_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
-    background-size: 186px 129px;
+    background-size: 200% 200%;
     width: 93px;
     height: 65px;
 
@@ -127,77 +142,57 @@ body {
     background-position: top right;
 }
 
+.text_number_button {
+    display: flex;
+
+    background: url('./../assets/images/panel/button_with_number.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 200% 200%;
+
+    padding-left: 5px;
+    box-sizing: border-box;
+
+    cursor: pointer;
+}
+.text_number_button .title {
+    height: 100%;
+    width: 65%;
+    color: #222a54;
+}
+.text_number_button .number {
+    height: 100%;
+    width: 35%;
+    color: white;
+}
+.text_number_button:hover {
+    background-position: top right;
+}
+
 .panel_row-top .lines_btn {
     margin: 5px 10px 0 10px;
 
-    display: flex;
-
-    background: url('./../assets/images/panel/button_with_number.png');
-    background-position: top left;
-    background-repeat: no-repeat;
-    background-size: 211px 107px;
     width: 105px;
     height: 53px;
-
-    padding-left: 5px;
-    box-sizing: border-box;
 
     text-transform: uppercase;
     font-weight: 900;
     font-size: 18px;
-    color: #222a54;
 
-    cursor: pointer;
 }
-.panel_row-top .lines_btn .title {
-    height: 100%;
-    width: 65%;
-}
-.panel_row-top .lines_btn .number {
-    height: 100%;
-    width: 35%;
-    color: white;
-}
-.panel_row-top .lines_btn:hover {
-    background-position: top right;
-}
-
 .panel_row-top .betperline_btn {
     margin: 5px 10px 0 10px;
 
-    display: flex;
-
-    background: url('./../assets/images/panel/button_with_number.png');
-    background-position: top left;
-    background-repeat: no-repeat;
-    background-size: 211px 107px;
     width: 105px;
     height: 53px;
-
-    padding-left: 5px;
-    box-sizing: border-box;
 
     text-transform: uppercase;
     font-weight: 900;
     font-size: 18px;
-    color: #222a54;
-
-    cursor: pointer;
 }
 .panel_row-top .betperline_btn .title {
     flex-direction: column;
-    height: 100%;
-    width: 65%;
 }
-.panel_row-top .betperline_btn .number {
-    height: 100%;
-    width: 35%;
-    color: white;
-}
-.panel_row-top .betperline_btn:hover {
-    background-position: top right;
-}
-
 .panel_row-top .jackpot_bonus_wrapper {
     height: 100%;
 }
@@ -278,7 +273,7 @@ body {
     background: url('./../assets/images/panel/auto_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
-    background-size: 186px 60px;
+    background-size: 200% 200%;
     width: 93px;
     height: 30px;
 
@@ -301,7 +296,7 @@ body {
     background: url('./../assets/images/panel/denomination_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
-    background-size: 160px 117px;
+    background-size: 200% 200%;
     width: 80px;
     height: 58px;
 
@@ -464,7 +459,7 @@ body {
     background: url('./../assets/images/lang_btns/en.png');
     background-position: top left;
     background-repeat: no-repeat;
-    background-size: 86px 71px;
+    background-size: 200% 200%;
     width: 43px;
     height: 100%;
 
@@ -477,7 +472,7 @@ body {
     background: url('./../assets/images/panel/help_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
-    background-size: 86px 71px;
+    background-size: 200% 200%;
     width: 43px;
     height: 100%;
 
@@ -490,7 +485,7 @@ body {
     background: url('./../assets/images/panel/history_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
-    background-size: 200px 71px;
+    background-size: 200% 200%;
     width: 100px;
     height: 100%;
 
@@ -521,7 +516,7 @@ body {
     background: url('./../assets/images/panel/button.png');
     background-position: top left;
     background-repeat: no-repeat;
-    background-size: 213px 136px;
+    background-size: 200% 200%;
     width: 106px;
     height: 67px;
 
@@ -550,7 +545,7 @@ body {
     background: url('./../assets/images/panel/start_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
-    background-size: 227.5px 208px;
+    background-size: 200% 200%;
     width: 113px;
     height: calc(100% + 20px);
 
