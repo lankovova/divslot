@@ -34,11 +34,9 @@ class ToggleBlock {
         });
 
         // Set block width depending on item width
-        if (options.items.length >= 10) {
-            this.node.style.width = `${10 + (options.itemParams.width + options.itemParams.margin * 2) * Math.ceil(options.items.length / 2)}px`;
-        } else {
-            this.node.style.width = `${10 + (options.itemParams.width + options.itemParams.margin * 2) * options.items.length}px`;
-        }
+        const itemRealWidth = options.itemParams.width + options.itemParams.margin * 2;
+        const maxItemsInRow = (options.items.length >= 10) ? Math.ceil(options.items.length / 2) : options.items.length;
+        this.node.style.width = `${10 + itemRealWidth * maxItemsInRow}px`;
 
         this._initListeners();
     }
