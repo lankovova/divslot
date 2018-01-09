@@ -41,70 +41,6 @@ class InterfaceController {
         this._initKeyboardListeners();
     }
 
-    enableGameStart() {
-        this.state.spin = true;
-        this.state.denomination = true;
-        this.state.lines = true;
-        this.state.betPerLine = true;
-    }
-
-    disableValuesChange() {
-        this.state.denomination = false;
-        this.state.lines = false;
-        this.state.betPerLine = false;
-    }
-    enableValuesChange() {
-        this.state.denomination = true;
-        this.state.lines = true;
-        this.state.betPerLine = true;
-    }
-
-    disableInterface = () => {
-        for (const stateKey of Object.keys(this.state)) {
-            this.state[stateKey] = false;
-        }
-    }
-    enableInterface = () => {
-        const bannedStates = ['spin', 'stop', 'takeWin'];
-
-        for (const stateKey of Object.keys(this.state)) {
-            // Skip if state is in bannedStates array
-            if (bannedStates.includes(stateKey)) continue;
-
-            this.state[stateKey] = true;
-        }
-    }
-
-    _initKeyboardListeners() {
-        window.onkeyup = (event) => {
-            var keyCode = event.which || event.keyCode;
-
-            switch (keyCode) {
-                // Space
-                case 32:
-                    this.spinStopTake();
-                    break;
-                // <
-                case 188:
-                    this.setLines();
-                    break;
-                // >
-                case 190:
-                    this.setBerPerLine();
-                    break;
-                // m
-                case 77:
-                    this.setMaxBet();
-                    break;
-                // d
-                case 68:
-                    this.setDenomination();
-                    break;
-                default: {}
-            }
-        }
-    }
-
     spinStopTake = () => {
         if (this.state.spin) {
             this.props.spinReels();
@@ -139,7 +75,6 @@ class InterfaceController {
         }
     }
 
-
     toggleLinesBlock = () => {
         if (this.state.lines) {
             this.linesBlock.toggle();
@@ -155,6 +90,66 @@ class InterfaceController {
     toggleDenominationBlock = () => {
         if (this.state.denomination) {
             this.denominationBlock.toggle();
+        }
+    }
+
+    enableGameStart() {
+        this.state.spin = true;
+        this.state.denomination = true;
+        this.state.lines = true;
+        this.state.betPerLine = true;
+    }
+
+    disableValuesChange() {
+        this.state.denomination = false;
+        this.state.lines = false;
+        this.state.betPerLine = false;
+    }
+    enableValuesChange() {
+        this.state.denomination = true;
+        this.state.lines = true;
+        this.state.betPerLine = true;
+    }
+
+    disableInterface = () => {
+        for (const stateKey of Object.keys(this.state)) {
+            this.state[stateKey] = false;
+        }
+    }
+
+    enableInterface = () => {
+        const bannedStates = ['spin', 'stop', 'takeWin'];
+
+        for (const stateKey of Object.keys(this.state)) {
+            // Skip if state is in bannedStates array
+            if (bannedStates.includes(stateKey)) continue;
+
+            this.state[stateKey] = true;
+        }
+    }
+
+    _initKeyboardListeners() {
+        window.onkeyup = (event) => {
+            var keyCode = event.which || event.keyCode;
+
+            switch (keyCode) {
+                case 32: // Space
+                    this.spinStopTake();
+                    break;
+                case 188: // <
+                    this.setLines();
+                    break;
+                case 190: // >
+                    this.setBerPerLine();
+                    break;
+                case 77: // m
+                    this.setMaxBet();
+                    break;
+                case 68: // d
+                    this.setDenomination();
+                    break;
+                default: {}
+            }
         }
     }
 
