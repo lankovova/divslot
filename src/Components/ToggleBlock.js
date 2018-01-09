@@ -45,17 +45,19 @@ class ToggleBlock {
 
     _initListeners() {
         this.node.addEventListener(transitionEnd, (event) => {
-            // If block is sparred
-            if (!this.isToggled) {
-                event.target.style.display = ``;
+            if (this.isToggled) {
+                this.props.disableInterface();
+                this.props.enableSelf();
+            } else {
+                // If block is sparred
+                event.target.style.display = '';
+                // After toggling enable interface
+                this.props.setInterfaceIdle();
             }
-
-            // After toggling enable interface
-            this.props.enableInterface();
         });
     }
 
-    toggle = () => {
+    toggle() {
         if (this.isToggled) {
             this.node.style.transform = ``;
             this.isToggled = false;
@@ -63,8 +65,8 @@ class ToggleBlock {
             this.node.style.display = `block`;
             this.node.style.transform = `translateY(-${this.node.getBoundingClientRect().height}px)`;
             this.isToggled = true;
-        }
 
+        }
         // Disable interface while toggling
         this.props.disableInterface();
     }

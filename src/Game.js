@@ -53,7 +53,7 @@ class Game {
             });
 
             // And enable game to play
-            this.interfaceController.enableGameStart();
+            this.interfaceController.setIdle();
             this.interfaceController.panel.notifier.text = 'Press start to spin';
         })();
     }

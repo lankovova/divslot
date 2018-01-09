@@ -93,13 +93,6 @@ class InterfaceController {
         }
     }
 
-    enableGameStart() {
-        this.state.spin = true;
-        this.state.denomination = true;
-        this.state.lines = true;
-        this.state.betPerLine = true;
-    }
-
     disableValuesChange() {
         this.state.denomination = false;
         this.state.lines = false;
@@ -109,6 +102,21 @@ class InterfaceController {
         this.state.denomination = true;
         this.state.lines = true;
         this.state.betPerLine = true;
+    }
+
+    enableLines = () => {
+        this.state.lines = true;
+    }
+    enableBetPerLines = () => {
+        this.state.betPerLine = true;
+    }
+    enableDenomination = () => {
+        this.state.denomination = true;
+    }
+
+    setIdle = () => {
+        this.enableInterface();
+        this.state.spin = true;
     }
 
     disableInterface = () => {
@@ -164,8 +172,9 @@ class InterfaceController {
             }
         }, {
             setValue: this.setLines,
+            enableSelf: this.enableLines,
+            setInterfaceIdle: this.setIdle,
             disableInterface: this.disableInterface,
-            enableInterface: this.enableInterface
         });
 
         this.betPerLineBlock = new ToggleBlock({
@@ -178,8 +187,9 @@ class InterfaceController {
             }
         }, {
             setValue: this.setBerPerLine,
+            enableSelf: this.enableBetPerLines,
+            setInterfaceIdle: this.setIdle,
             disableInterface: this.disableInterface,
-            enableInterface: this.enableInterface
         });
 
         this.denominationBlock = new ToggleBlock({
@@ -192,8 +202,9 @@ class InterfaceController {
             }
         }, {
             setValue: this.setDenomination,
+            enableSelf: this.enableDenomination,
+            setInterfaceIdle: this.setIdle,
             disableInterface: this.disableInterface,
-            enableInterface: this.enableInterface
         });
     }
 
