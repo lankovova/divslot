@@ -1,12 +1,12 @@
 var settings = {
     // "symbolSize": 354,
     "symbolSize": 140,
-    "spaceBetweenReels": 16,
+    "spaceBetweenReels": 15,
 
     "numOfRows": 3,
     "numOfReels": 5,
 
-    "animationType": 'fall',
+    "animationType": 'spin',
 
     "numOfSpinsBeforeStop": 3,
 
