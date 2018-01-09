@@ -13,8 +13,10 @@ class ToggleBlock {
     init(options) {
         const blockContent = this.node.querySelector('.content');
 
+        const reversedItems = options.items.slice().reverse();
+
         // Fill block content with appropriate items
-        options.items.forEach(value => {
+        reversedItems.forEach(value => {
             // Init element properties
             const item = document.createElement('div');
             item.className = 'item';
@@ -35,7 +37,7 @@ class ToggleBlock {
 
         // Set block width depending on item width
         const itemRealWidth = options.itemParams.width + options.itemParams.margin * 2;
-        const maxItemsInRow = (options.items.length >= 10) ? Math.ceil(options.items.length / 2) : options.items.length;
+        const maxItemsInRow = (reversedItems.length >= 10) ? Math.ceil(reversedItems.length / 2) : reversedItems.length;
         this.node.style.width = `${10 + itemRealWidth * maxItemsInRow}px`;
 
         this._initListeners();

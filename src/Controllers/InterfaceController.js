@@ -27,6 +27,22 @@ class InterfaceController {
             containerNode: this.props.containerNode
         });
 
+        // Init toggling blocks like lines, betPerLine and denomination
+        this._initTogglingBlocks();
+
+        this.panel = new Panel(document.querySelector('#panel'),
+        {
+            spinStopTake: this.spinStopTake,
+            setMaxBet: this.setMaxBet,
+            toggleLinesBlock: this.linesBlock.toggle,
+            toggleBetPerLineBlock: this.betPerLineBlock.toggle,
+            toggleDenominationBlock: this.denominationBlock.toggle,
+        });
+
+        this._initKeyboardListeners();
+    }
+
+    _initTogglingBlocks() {
         this.linesBlock = new ToggleBlock({
             node: document.querySelector('#linesBlock'),
             items: settings.lines,
@@ -59,8 +75,8 @@ class InterfaceController {
             node: document.querySelector('#denominationBlock'),
             items: settings.denominations,
             itemParams: {
-                width: 100,
-                height: 100,
+                width: 80,
+                height: 80,
                 margin: 5
             }
         }, {
@@ -68,17 +84,6 @@ class InterfaceController {
             disableInterface: this.disableInterface,
             enableInterface: this.enableInterface
         });
-
-        this.panel = new Panel(document.querySelector('#panel'),
-        {
-            spinStopTake: this.spinStopTake,
-            setMaxBet: this.setMaxBet,
-            toggleLinesBlock: this.linesBlock.toggle,
-            toggleBetPerLineBlock: this.betPerLineBlock.toggle,
-            toggleDenominationBlock: this.denominationBlock.toggle,
-        });
-
-        this._initKeyboardListeners();
     }
 
     enableGameStart() {

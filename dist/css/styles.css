@@ -63,7 +63,7 @@ body {
     flex-direction: row;
     justify-content: center;
 
-    padding-top: 11px;
+    padding-top: 10px;
     box-sizing: border-box;
 }
 
@@ -169,14 +169,14 @@ body {
 }
 .toggle_block .content {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-around;
-    /* flex-flow: row-reverse; */
+    flex-flow: row-reverse wrap-reverse;
 
     padding: 5px;
 }
 .toggle_block .content .item {
     background: lightgreen;
+    border-radius: 5px;
 
     display: flex;
     align-items: center;
