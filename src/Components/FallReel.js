@@ -89,7 +89,7 @@ class FallReel {
         }
     }
 
-    _symbolHasFelled = symbolIndexInReel => {
+    _symbolHasFelled = (symbolIndexInReel) => {
         if (symbolIndexInReel === settings.numOfRows - 1) {
             this.props.onStop(this.reelIndex);
         }

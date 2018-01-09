@@ -1,4 +1,4 @@
-import Reel from '../Components/Reel';
+import Reel from '../Components/ReelPicker';
 
 let stoppedReelsCounter = 0;
 
