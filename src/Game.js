@@ -148,8 +148,8 @@ class Game {
 
     getDataAndSpin = () => {
         this.interfaceController.panel.notifier.text = 'Fetching data...';
-        // Disable spin
-        this.interfaceController.state.spin = false;
+        // Disable whole interface
+        this.interfaceController.disableInterface();
         // Disable possibility to change betPerLine or linesAmount
         this.interfaceController.disableValuesChange();
         // Enable stop
@@ -201,6 +201,9 @@ class Game {
                 this.pointsController.userWin += winCashInLine;
                 this.interfaceController.panel.notifier.text = `You won ${this.pointsController.userWin} points`;
             });
+
+            // Enable whole interface after all lines has showed
+            this.interfaceController.enableInterface();
 
             console.log('All lines has showed');
 

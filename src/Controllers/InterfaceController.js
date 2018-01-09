@@ -30,60 +30,15 @@ class InterfaceController {
         // Init toggling blocks like lines, betPerLine and denomination
         this._initTogglingBlocks();
 
-        this.panel = new Panel(document.querySelector('#panel'),
-        {
+        this.panel = new Panel(document.querySelector('#panel'), {
             spinStopTake: this.spinStopTake,
             setMaxBet: this.setMaxBet,
-            toggleLinesBlock: this.linesBlock.toggle,
-            toggleBetPerLineBlock: this.betPerLineBlock.toggle,
-            toggleDenominationBlock: this.denominationBlock.toggle,
+            toggleLinesBlock: this.toggleLinesBlock,
+            toggleBetPerLineBlock: this.toggleBetPerLineBlock,
+            toggleDenominationBlock: this.toggleDenominationBlock,
         });
 
         this._initKeyboardListeners();
-    }
-
-    _initTogglingBlocks() {
-        this.linesBlock = new ToggleBlock({
-            node: document.querySelector('#linesBlock'),
-            items: settings.lines,
-            itemParams: {
-                width: 50,
-                height: 50,
-                margin: 5
-            }
-        }, {
-            setValue: this.setLines,
-            disableInterface: this.disableInterface,
-            enableInterface: this.enableInterface
-        });
-
-        this.betPerLineBlock = new ToggleBlock({
-            node: document.querySelector('#betPerLineBlock'),
-            items: settings.betPerLine,
-            itemParams: {
-                width: 50,
-                height: 50,
-                margin: 5
-            }
-        }, {
-            setValue: this.setBerPerLine,
-            disableInterface: this.disableInterface,
-            enableInterface: this.enableInterface
-        });
-
-        this.denominationBlock = new ToggleBlock({
-            node: document.querySelector('#denominationBlock'),
-            items: settings.denominations,
-            itemParams: {
-                width: 80,
-                height: 80,
-                margin: 5
-            }
-        }, {
-            setValue: this.setDenomination,
-            disableInterface: this.disableInterface,
-            enableInterface: this.enableInterface
-        });
     }
 
     enableGameStart() {
@@ -110,7 +65,12 @@ class InterfaceController {
         }
     }
     enableInterface = () => {
+        const bannedStates = ['spin', 'stop', 'takeWin'];
+
         for (const stateKey of Object.keys(this.state)) {
+            // Skip if state is in bannedStates array
+            if (bannedStates.includes(stateKey)) continue;
+
             this.state[stateKey] = true;
         }
     }
@@ -177,6 +137,69 @@ class InterfaceController {
         if (this.state.lines && this.state.betPerLine) {
             this.props.setMaxBet();
         }
+    }
+
+
+    toggleLinesBlock = () => {
+        if (this.state.lines) {
+            this.linesBlock.toggle();
+        }
+    }
+
+    toggleBetPerLineBlock = () => {
+        if (this.state.betPerLine) {
+            this.betPerLineBlock.toggle();
+        }
+    }
+
+    toggleDenominationBlock = () => {
+        if (this.state.denomination) {
+            this.denominationBlock.toggle();
+        }
+    }
+
+    _initTogglingBlocks() {
+        this.linesBlock = new ToggleBlock({
+            node: document.querySelector('#linesBlock'),
+            items: settings.lines,
+            itemParams: {
+                width: 50,
+                height: 50,
+                margin: 5
+            }
+        }, {
+            setValue: this.setLines,
+            disableInterface: this.disableInterface,
+            enableInterface: this.enableInterface
+        });
+
+        this.betPerLineBlock = new ToggleBlock({
+            node: document.querySelector('#betPerLineBlock'),
+            items: settings.betPerLine,
+            itemParams: {
+                width: 50,
+                height: 50,
+                margin: 5
+            }
+        }, {
+            setValue: this.setBerPerLine,
+            disableInterface: this.disableInterface,
+            enableInterface: this.enableInterface
+        });
+
+        this.denominationBlock = new ToggleBlock({
+            node: document.querySelector('#denominationBlock'),
+            items: settings.denominations,
+            itemParams: {
+                width: 80,
+                height: 80,
+                margin: 5
+            }
+        }, {
+            setValue: this.setDenomination,
+            disableInterface: this.disableInterface,
+            enableInterface: this.enableInterface
+        });
     }
 
 }
