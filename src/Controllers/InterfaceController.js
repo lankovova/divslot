@@ -14,12 +14,17 @@ class InterfaceController {
         this.props = props;
 
         this.state = {
-            spin: false,
+            _spin: false,
             stop: false,
             takeWin: false,
             denomination: false,
             lines: false,
-            betPerLine: false
+            betPerLine: false,
+            set spin(newState) {
+                // TODO:
+                this._spin = newState;
+            },
+            get spin() { return this._spin; }
         };
 
         this.linePresenters = new LinePresenters({
