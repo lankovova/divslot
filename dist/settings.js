@@ -6,7 +6,7 @@ var settings = {
     "numOfRows": 3,
     "numOfReels": 5,
 
-    "animationType": 'spin',
+    "animationType": 'fall',
 
     "numOfSpinsBeforeStop": 3,
 
@@ -20,8 +20,8 @@ var settings = {
     "spinAnimTimingFunc": "ease-in-out",
     "fallAnimTimingFunc": "cubic-bezier(.79,1.51,.74,.84)",
 
-    "symbolsImagesPath": "./assets/images/bookOfWinner/",
-    "symbolsAnimationsPath": "./assets/images/bookOfWinner/animations/",
+    "symbolsImagesPath": "./assets/images/symbols/",
+    "symbolsAnimationsPath": "./assets/images/symbols/animations/",
 
     "symbols": [
         {"image": "1.png"},
