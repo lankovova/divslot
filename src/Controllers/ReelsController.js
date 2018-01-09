@@ -105,7 +105,6 @@ class ReelsContorller {
     }
 
     onReelStop = reelIndex => {
-        console.log(`Reel ${reelIndex} has stopped`);
         stoppedReelsCounter++;
 
         // Check if last reel has stopped

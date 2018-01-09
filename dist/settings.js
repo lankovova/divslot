@@ -20,8 +20,8 @@ var settings = {
     "spinAnimTimingFunc": "ease-in-out",
     "fallAnimTimingFunc": "cubic-bezier(.79,1.51,.74,.84)",
 
-    "symbolsImagesPath": "./assets/images/bananasSymbols/",
-    "symbolsAnimationsPath": "./assets/images/bananasSymbols/animations/",
+    "symbolsImagesPath": "./assets/images/bookOfWinner/",
+    "symbolsAnimationsPath": "./assets/images/bookOfWinner/animations/",
 
     "symbols": [
         {"image": "1.png"},

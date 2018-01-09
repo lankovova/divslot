@@ -90,7 +90,6 @@ class FallReel {
     }
 
     _symbolHasFelled = symbolIndexInReel => {
-        console.log(`symbol ${symbolIndexInReel} stopped in reel ${this.reelIndex}`);
         if (symbolIndexInReel === settings.numOfRows - 1) {
             this.props.onStop(this.reelIndex);
         }
