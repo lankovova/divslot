@@ -7,6 +7,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
+    overflow: hidden;
 }
 
 .game_wrapper {
@@ -127,13 +128,20 @@ body {
     object-fit: cover;
 }
 
+.panel {
+    position: relative;
+}
 .panel .panel_row {
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
     width: 100%;
     background-size: 100% 100%;
+
+    z-index: 500;
 }
 .panel_row-top {
     height: 80px;
@@ -144,6 +152,39 @@ body {
     padding: 6px 0 0 0;
     background: url('./../assets/images/panel/panel_bot.png');
 }
+
+.toggle_block {
+    position: absolute;
+    top: 0;
+    left: 5%;
+
+    z-index: 100;
+
+    min-width: 300px;
+
+    display: none;
+    background: darkcyan;
+
+    transition: transform 200ms ease-in-out;
+}
+.toggle_block .content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /* flex-flow: row-reverse; */
+
+    padding: 5px;
+}
+.toggle_block .content .item {
+    background: lightgreen;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
 
 .flex_center {
     display: flex;

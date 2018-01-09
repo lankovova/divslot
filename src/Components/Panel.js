@@ -2,27 +2,14 @@ import Notifier from '../Components/Notifier';
 import JackpotBonus from './JackpotBonus';
 
 class Panel {
-    constructor(node) {
+    constructor(node, props) {
         this.node = node;
+        this.props = props;
 
-        const addClickEffect = (el, spriteClickPartPosition) => {
-            el.onmousedown = function() { this.style.backgroundPosition = spriteClickPartPosition; };
-            el.onmouseup = function() { this.style.backgroundPosition = ''; };
-            el.onmouseleave = function() { this.style.backgroundPosition = ''; };
-        }
-        addClickEffect(document.querySelector('#menuBtn'), 'bottom left');
-        addClickEffect(document.querySelector('#linesBtn'), 'bottom left');
-        addClickEffect(document.querySelector('#betperlineBtn'), 'bottom left');
-        addClickEffect(document.querySelector('#denominationBtn'), 'bottom left');
-        addClickEffect(document.querySelector('#autoBtn'), 'bottom left');
-        addClickEffect(document.querySelector('#languageBtn'), 'bottom left');
-        addClickEffect(document.querySelector('#helpBtn'), 'bottom left');
-        addClickEffect(document.querySelector('#historyBtn'), 'bottom left');
-        addClickEffect(document.querySelector('#gambleBtn'), 'bottom left');
-        addClickEffect(document.querySelector('#maxBtn'), 'bottom left');
-        addClickEffect(document.querySelector('#startBtn'), 'bottom left');
+        this._initButtonsEffect();
 
         this.notifier = new Notifier();
+
         this.jb = new JackpotBonus(
             document.querySelector('#jackpotNumber'),
             document.querySelector('#bonusNumber'),
@@ -55,6 +42,41 @@ class Panel {
         this.setUserInsurance({
             points: 1000,
             kups: 10.00
+        });
+
+        this._initListeners();
+    }
+
+    _initListeners() {
+        document.querySelector('#linesBtn').onclick = () => this.props.toggleLinesBlock();
+        document.querySelector('#betPerLineBtn').onclick = () => this.props.toggleBetPerLineBlock();
+        document.querySelector('#denominationBtn').onclick = () => this.props.toggleDenominationBlock();
+    }
+
+    _initButtonsEffect() {
+        const addClickEffect = (el, spriteClickPartPosition) => {
+            el.onmousedown = function() { this.style.backgroundPosition = spriteClickPartPosition; };
+            el.onmouseup = function() { this.style.backgroundPosition = ''; };
+            el.onmouseleave = function() { this.style.backgroundPosition = ''; };
+        }
+
+        const buttonsSelectors = [
+            '#menuBtn',
+            '#linesBtn',
+            '#betPerLineBtn',
+            '#denominationBtn',
+            '#autoBtn',
+            '#languageBtn',
+            '#helpBtn',
+            '#historyBtn',
+            '#gambleBtn',
+            '#maxBtn',
+            '#startBtn',
+        ]
+
+        buttonsSelectors.forEach(buttonSelector => {
+            const button = document.querySelector(buttonSelector);
+            addClickEffect(button, 'bottom left');
         });
     }
 
