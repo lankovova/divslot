@@ -11,21 +11,9 @@ class InterfaceController {
         d - Increase denomination
         m - Set max bet`);
 
-        this.props = props;
+        const that = this;
 
-        this.state = {
-            _spin: false,
-            stop: false,
-            takeWin: false,
-            denomination: false,
-            lines: false,
-            betPerLine: false,
-            set spin(newState) {
-                // TODO:
-                this._spin = newState;
-            },
-            get spin() { return this._spin; }
-        };
+        this.props = props;
 
         this.linePresenters = new LinePresenters({
             lines: this.props.lines,
@@ -42,6 +30,26 @@ class InterfaceController {
             toggleBetPerLineBlock: this.toggleBetPerLineBlock,
             toggleDenominationBlock: this.toggleDenominationBlock,
         });
+
+        this.state = {
+            _spin: false,
+            stop: false,
+            takeWin: false,
+            denomination: false,
+            lines: false,
+            betPerLine: false,
+
+            set spin(newState) {
+                if (newState) {
+                    that.panel.startBtn.enable();
+                } else {
+                    that.panel.startBtn.disable();
+                }
+
+                this._spin = newState;
+            },
+            get spin() { return this._spin; }
+        };
 
         this._initKeyboardListeners();
     }
@@ -126,6 +134,9 @@ class InterfaceController {
 
     disableInterface = () => {
         for (const stateKey of Object.keys(this.state)) {
+            // Skip private properties
+            if (stateKey.charAt(0) === '_') continue;
+
             this.state[stateKey] = false;
         }
     }
@@ -134,6 +145,9 @@ class InterfaceController {
         const bannedStates = ['spin', 'stop', 'takeWin'];
 
         for (const stateKey of Object.keys(this.state)) {
+            // Skip private properties
+            if (stateKey.charAt(0) === '_') continue;
+
             // Skip if state is in bannedStates array
             if (bannedStates.includes(stateKey)) continue;
 

@@ -1,12 +1,26 @@
 import Notifier from '../Components/Notifier';
 import JackpotBonus from './JackpotBonus';
+import {StartBtn, MaxBetBtn} from './buttons';
 
 class Panel {
     constructor(node, props) {
         this.node = node;
         this.props = props;
 
-        this._initButtonsEffect();
+        // this.buttons = new Buttons({
+        //     toggleLinesBlock: this.props.toggleLinesBlock,
+        //     toggleBetPerLineBlock: this.props.toggleBetPerLineBlock,
+        //     toggleDenominationBlock: this.props.toggleDenominationBlock,
+        // });
+
+        this.startBtn = new StartBtn({
+            node: document.querySelector('#startBtn'),
+            spinStopTake: this.props.spinStopTake
+        });
+        this.maxBetBtn = new MaxBetBtn({
+            node: document.querySelector('#maxBetBtn'),
+            setMaxBet: this.props.setMaxBet
+        });
 
         this.notifier = new Notifier();
 
@@ -42,41 +56,6 @@ class Panel {
         this.setUserInsurance({
             points: 1000,
             kups: 10.00
-        });
-
-        this._initListeners();
-    }
-
-    _initListeners() {
-        document.querySelector('#linesBtn').onclick = () => this.props.toggleLinesBlock();
-        document.querySelector('#betPerLineBtn').onclick = () => this.props.toggleBetPerLineBlock();
-        document.querySelector('#denominationBtn').onclick = () => this.props.toggleDenominationBlock();
-    }
-
-    _initButtonsEffect() {
-        const addClickEffect = (el, spriteClickPartPosition) => {
-            el.onmousedown = function() { this.style.backgroundPosition = spriteClickPartPosition; };
-            el.onmouseup = function() { this.style.backgroundPosition = ''; };
-            el.onmouseleave = function() { this.style.backgroundPosition = ''; };
-        }
-
-        const buttonsSelectors = [
-            '#menuBtn',
-            '#linesBtn',
-            '#betPerLineBtn',
-            '#denominationBtn',
-            '#autoBtn',
-            '#languageBtn',
-            '#helpBtn',
-            '#historyBtn',
-            '#gambleBtn',
-            '#maxBtn',
-            '#startBtn',
-        ]
-
-        buttonsSelectors.forEach(buttonSelector => {
-            const button = document.querySelector(buttonSelector);
-            addClickEffect(button, 'bottom left');
         });
     }
 

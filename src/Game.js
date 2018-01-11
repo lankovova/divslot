@@ -99,7 +99,6 @@ class Game {
         this.transferUsersWin();
 
         // TODO: Enable after transfering win
-        // FIXME: Code duplicate
         this.interfaceController.state.spin = true;
         // Enable possibility to change values
         this.interfaceController.enableValuesChange();
@@ -195,14 +194,12 @@ class Game {
         if (this.spinResponse.won) { // Win case
             // Show all winning lines
             // and update user win line by line in callback
-            console.log('reels has stopped');
-
             await this.linesController.showWinningLines(this.spinResponse.spin_result, winCashInLine => {
                 this.pointsController.userWin += winCashInLine;
                 this.interfaceController.panel.notifier.text = `You won ${this.pointsController.userWin} points`;
             });
 
-            // Enable whole interface after all lines has showed
+            // Enable whole interface except sst btn after all lines has showed
             this.interfaceController.enableInterface();
 
             console.log('All lines has showed');
@@ -212,8 +209,8 @@ class Game {
             this.interfaceController.panel.notifier.text = 'Take win or gamble';
         } else { // Lose case
             // In no win then allow spin
-            // FIXME: Code duplicate
             this.interfaceController.state.spin = true;
+
             // Enable possibility to change betPerLine or linesAmount
             this.interfaceController.enableValuesChange();
             this.checkBetSpinPossibility();

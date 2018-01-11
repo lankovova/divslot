@@ -631,9 +631,6 @@ body {
     font-weight: 900;
     font-size: 24px;
 }
-.panel_row-bot .start_btn:hover {
-    background-position: top right;
-}
 
 #preloader {
     background: url('./../assets/images/symbols/1.png'),
