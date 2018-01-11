@@ -2,6 +2,8 @@ import LinePresenters from '../Components/LinePresenters';
 import Panel from '../Components/Panel';
 import ToggleBlock from './../Components/ToggleBlock';
 
+const SSTButtonStates = ['spin', 'stop', 'takeWin', 'speedUpTakeWin'];
+
 class InterfaceController {
     constructor(props) {
         this.props = props;
@@ -30,6 +32,7 @@ class InterfaceController {
             _spin: false,
             _stop: false,
             _takeWin: false,
+            _speedUpTakeWin: false,
             _denomination: false,
             _lines: false,
             _betPerLine: false,
@@ -63,6 +66,11 @@ class InterfaceController {
                 that._handleDisablingSSTBtn();
             },
             get takeWin() { return this._takeWin; },
+            set speedUpTakeWin(newState) {
+                this._speedUpTakeWin = newState;
+                that._handleDisablingSSTBtn();
+            },
+            get speedUpTakeWin() { return this._speedUpTakeWin; },
 
             set denomination(newState) {
                 if (newState)
@@ -135,7 +143,7 @@ class InterfaceController {
     // Disables sst button if all of its states is set to false
     _handleDisablingSSTBtn() {
         let noAvailableState = true;
-        ['spin', 'stop', 'takeWin'].forEach(SSTBtnState => {
+        SSTButtonStates.forEach(SSTBtnState => {
             if (this.state[SSTBtnState]) noAvailableState = false;
         });
 
@@ -163,6 +171,8 @@ class InterfaceController {
             this.props.stopReels();
         } else if (this.state.takeWin) {
             this.props.takeWin();
+        } else if (this.state.speedUpTakeWin) {
+            this.props.speedUpTakeWin();
         }
     }
 
@@ -216,6 +226,9 @@ class InterfaceController {
     enableTakeWin = () => this.state.takeWin = true;
     disableTakeWin = () => this.state.takeWin = false;
 
+    enableSpeedUpTransferWin = () => this.state.speedUpTakeWin = true;
+    disableSpeedUpTransferWin = () => this.state.speedUpTakeWin = false;
+
     enableLines = () => this.state.lines = true;
     enableBetPerLines = () => this.state.betPerLine = true;
     enableDenomination = () => this.state.denomination = true;
@@ -240,21 +253,19 @@ class InterfaceController {
     }
 
     enableInterface = () => {
-        const bannedStates = ['spin', 'stop', 'takeWin'];
-
         for (const stateKey of Object.keys(this.state)) {
             // Skip private properties
             if (stateKey.charAt(0) === '_') continue;
 
-            // Skip if state is in bannedStates array
-            if (bannedStates.includes(stateKey)) continue;
+            // Skip if state is in SSTButtonStates array
+            if (SSTButtonStates.includes(stateKey)) continue;
 
             this.state[stateKey] = true;
         }
     }
 
     _initKeyboardListeners() {
-        window.onkeyup = (event) => {
+        window.onkeydown = (event) => {
             var keyCode = event.which || event.keyCode;
 
             switch (keyCode) {

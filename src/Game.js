@@ -6,6 +6,8 @@ import InterfaceController from './Controllers/InterfaceController';
 
 import axios from 'axios';
 
+let userWinTransferDelta;
+
 class Game {
     constructor(gameName) {
         this.gameName = gameName;
@@ -30,6 +32,7 @@ class Game {
             spinReels: this.getDataAndSpin,
             stopReels: this.stop,
             takeWin: this.takeWin,
+            speedUpTakeWin: this.speedUpTakeWin,
             setDenomination: this.setDenomination,
             setLines: this.setLines,
             setBerPerLine: this.setBerPerLine,
@@ -94,10 +97,12 @@ class Game {
     // Make this func async for iterative win transfering
     takeWin = async () => {
         this.interfaceController.disableInterface();
+        this.interfaceController.enableSpeedUpTransferWin();
 
         // Wait transfering win
         await this.transferUserWin();
 
+        this.interfaceController.disableSpeedUpTransferWin();
         // After transfering win enable interface
         this.interfaceController.enableInterface();
         this.setSpinPossibility();
@@ -107,19 +112,19 @@ class Game {
     transferUserWin = () => {
         return new Promise(resolve => {
             // Transfer duration in ms
-            const transferDuration = 1000;
+            const transferDuration = 2000;
             // Delay between each iteration in ms
-            const delayBetweenIteration = 70;
+            const delayBetweenIteration = 50;
 
             // Amount of iterations
             const iterationsAmount = transferDuration / delayBetweenIteration;
 
             // Delta of user cash between iterations
-            const transferDelta = Math.ceil(this.spinResponse.won_points / iterationsAmount);
+            userWinTransferDelta = Math.ceil(this.spinResponse.won_points / iterationsAmount);
 
             const intervalId = setInterval(() => {
                 // If last transfer iteration
-                if (this.pointsController.userWin - transferDelta <= 0) {
+                if (this.pointsController.userWin - userWinTransferDelta <= 0) {
                     // Set user cash to final value
                     this.pointsController.userCash = this.spinResponse.player_coins;
                     // Reset user win
@@ -131,11 +136,16 @@ class Game {
                     resolve();
                 } else {
                     // Change values on delta
-                    this.pointsController.userCash += transferDelta;
-                    this.pointsController.userWin -= transferDelta;
+                    this.pointsController.userCash += userWinTransferDelta;
+                    this.pointsController.userWin -= userWinTransferDelta;
                 }
             }, delayBetweenIteration);
         });
+    }
+
+    speedUpTakeWin = () => {
+        userWinTransferDelta *= 2;
+        this.interfaceController.disableSpeedUpTransferWin();
     }
 
     getPlayerData = async () => {
