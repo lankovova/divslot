@@ -167,56 +167,58 @@ class InterfaceController {
     }
 
     setLines = (lines) => {
-        if (this.state.lines) {
+        if (this.state.lines)
             this.props.setLines(lines);
-        }
     }
 
     setBerPerLine = (betPerLine) => {
-        if (this.state.betPerLine) {
+        if (this.state.betPerLine)
             this.props.setBerPerLine(betPerLine);
-        }
     }
 
     setDenomination = (denomination) => {
-        if (this.state.denomination) {
+        if (this.state.denomination)
             this.props.setDenomination(denomination);
-        }
     }
 
     setMaxBet = () => {
-        if (this.state.maxBet) {
+        if (this.state.maxBet)
             this.props.setMaxBet();
-        }
     }
 
     toggleLinesBlock = () => {
-        if (this.state.lines) {
+        if (this.state.lines)
             this.linesBlock.toggle();
-        }
     }
 
     toggleBetPerLineBlock = () => {
-        if (this.state.betPerLine) {
+        if (this.state.betPerLine)
             this.betPerLineBlock.toggle();
-        }
     }
 
     toggleDenominationBlock = () => {
-        if (this.state.denomination) {
+        if (this.state.denomination)
             this.denominationBlock.toggle();
-        }
     }
 
-    enableLines = () => {
-        this.state.lines = true;
+    enableSpin = () => {
+        this.state.spin = true;
+        this.state.auto = true;
     }
-    enableBetPerLines = () => {
-        this.state.betPerLine = true;
+    disableSpin = () => {
+        this.state.spin = false;
+        this.state.auto = false;
     }
-    enableDenomination = () => {
-        this.state.denomination = true;
-    }
+
+    enableStop = () => this.state.stop = true;
+    disableStop = () => this.state.stop = false;
+
+    enableTakeWin = () => this.state.takeWin = true;
+    disableTakeWin = () => this.state.takeWin = false;
+
+    enableLines = () => this.state.lines = true;
+    enableBetPerLines = () => this.state.betPerLine = true;
+    enableDenomination = () => this.state.denomination = true;
 
     setIdle = () => {
         this.enableInterface();

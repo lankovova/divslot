@@ -77,18 +77,18 @@ class Game {
             const newValue = value ? value : getNextArrayItem(array, currentValue);
             // setNewValue(newValue);
             setNewValue.call(null, newValue);
-            this.checkBetSpinPossibility();
+            this.setSpinPossibility();
         }
     }
 
     // Disables/enables spin possibility depending on user's bet/cash
-    checkBetSpinPossibility = () => {
+    setSpinPossibility = () => {
         if (this.pointsController.totalBet > this.pointsController.userCashInPoints) {
             this.interfaceController.panel.notifier.text = 'Not enough cash for this bet';
-            this.interfaceController.state.spin = false;
+            this.interfaceController.disableSpin();
         } else {
             this.interfaceController.panel.notifier.text = 'Press start to spin';
-            this.interfaceController.state.spin = true;
+            this.interfaceController.enableSpin();
         }
     }
 
@@ -100,8 +100,7 @@ class Game {
 
         // TODO: Enable after transfering win
         this.interfaceController.enableInterface();
-        this.interfaceController.state.spin = true;
-        this.checkBetSpinPossibility();
+        this.setSpinPossibility();
     }
 
     // Transfer win cash to user's cash
@@ -149,7 +148,7 @@ class Game {
         // Disable whole interface
         this.interfaceController.disableInterface();
         // Enable stop
-        this.interfaceController.state.stop = true;
+        this.interfaceController.enableStop();
 
         this.getSpinResponse().then(result => {
             console.log(result);
@@ -172,14 +171,14 @@ class Game {
     }
 
     stop = () => {
-        this.interfaceController.state.stop = false;
+        this.interfaceController.disableStop();
 
         this.reelsController.stopReels();
     }
 
     // All reels has stopped event
     reelsHasStopped = async () => {
-        this.interfaceController.state.stop = false;
+        this.interfaceController.disableStop();
 
         // Checking for free spins
         // if (this.spinResponse.bonus_spins) {
@@ -206,8 +205,7 @@ class Game {
             this.interfaceController.enableInterface();
 
             // In no win then allow spin
-            this.interfaceController.state.spin = true;
-            this.checkBetSpinPossibility();
+            this.setSpinPossibility();
         }
 
     }
