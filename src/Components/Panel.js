@@ -1,17 +1,11 @@
 import Notifier from '../Components/Notifier';
 import JackpotBonus from './JackpotBonus';
-import {StartBtn, MaxBetBtn} from './buttons';
+import {StartBtn, MaxBetBtn, LinesBtn, BetPerLineBtn, DenominationBtn} from './buttons';
 
 class Panel {
     constructor(node, props) {
         this.node = node;
         this.props = props;
-
-        // this.buttons = new Buttons({
-        //     toggleLinesBlock: this.props.toggleLinesBlock,
-        //     toggleBetPerLineBlock: this.props.toggleBetPerLineBlock,
-        //     toggleDenominationBlock: this.props.toggleDenominationBlock,
-        // });
 
         this.startBtn = new StartBtn({
             node: document.querySelector('#startBtn'),
@@ -20,6 +14,18 @@ class Panel {
         this.maxBetBtn = new MaxBetBtn({
             node: document.querySelector('#maxBetBtn'),
             setMaxBet: this.props.setMaxBet
+        });
+        this.linesBtn = new LinesBtn({
+            node: document.querySelector('#linesBtn'),
+            toggleLinesBlock: this.props.toggleLinesBlock
+        });
+        this.betPerLineBtn = new BetPerLineBtn({
+            node: document.querySelector('#betPerLineBtn'),
+            toggleBetPerLineBlock: this.props.toggleBetPerLineBlock
+        });
+        this.denominationBtn = new DenominationBtn({
+            node: document.querySelector('#denominationBtn'),
+            toggleDenominationBlock: this.props.toggleDenominationBlock
         });
 
         this.notifier = new Notifier();

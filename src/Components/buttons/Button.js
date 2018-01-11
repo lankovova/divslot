@@ -1,39 +1,46 @@
+const spriteParts = {
+    enabled: 'left top',
+    hovered: 'right top',
+    pressed: 'left bottom',
+    disabled: 'right bottom',
+}
+
 export default class Button {
     constructor(props) {
         this.node = props.node;
 
-        this._initPressEffect();
+        this._initEffects();
     }
 
-    _initPressEffect() {
+    _initEffects() {
         this.node.onmouseenter = function() {
-            if (this.style.backgroundPosition !== 'right bottom') {
-                this.style.backgroundPosition = 'right top';
+            if (this.style.backgroundPosition !== spriteParts.disabled) {
+                this.style.backgroundPosition = spriteParts.hovered;
             }
-        }
+        };
         this.node.onmousedown = function() {
-            if (this.style.backgroundPosition !== 'right bottom') {
-                this.style.backgroundPosition = 'left bottom';
+            if (this.style.backgroundPosition !== spriteParts.disabled) {
+                this.style.backgroundPosition = spriteParts.pressed;
             }
         };
         this.node.onmouseup = function() {
-            if (this.style.backgroundPosition !== 'right bottom') {
-                this.style.backgroundPosition = 'left top';
+            if (this.style.backgroundPosition !== spriteParts.disabled) {
+                this.style.backgroundPosition = spriteParts.enabled;
             }
         };
         this.node.onmouseleave = function() {
-            if (this.style.backgroundPosition !== 'right bottom') {
-                this.style.backgroundPosition = 'left top';
+            if (this.style.backgroundPosition !== spriteParts.disabled) {
+                this.style.backgroundPosition = spriteParts.enabled;
             }
         };
     }
 
     disable() {
-        this.node.style.backgroundPosition = 'bottom right';
+        this.node.style.backgroundPosition = spriteParts.disabled;
     }
 
     enable() {
-        this.node.style.backgroundPosition = 'top left';
+        this.node.style.backgroundPosition = spriteParts.enabled;
     }
 
     set text(newText) {

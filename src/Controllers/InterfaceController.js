@@ -4,16 +4,11 @@ import ToggleBlock from './../Components/ToggleBlock';
 
 class InterfaceController {
     constructor(props) {
-        console.log(`Controls:
-        space - Spin
-        < - Increase lines
-        > - Increase bet per line
-        d - Increase denomination
-        m - Set max bet`);
-
+        this.props = props;
         const that = this;
 
-        this.props = props;
+        // DEV TEMP
+        this._showControls();
 
         this.linePresenters = new LinePresenters({
             lines: this.props.lines,
@@ -33,25 +28,87 @@ class InterfaceController {
 
         this.state = {
             _spin: false,
-            stop: false,
-            takeWin: false,
-            denomination: false,
-            lines: false,
-            betPerLine: false,
+            _stop: false,
+            _takeWin: false,
+            _denomination: false,
+            _lines: false,
+            _betPerLine: false,
+            _maxBet: false,
 
+            // TODO: Maybe segregate this states into buttons components
+            // TODO: Disable start btn if all of its states are disabled
             set spin(newState) {
-                if (newState) {
-                    that.panel.startBtn.enable();
-                } else {
-                    that.panel.startBtn.disable();
-                }
+                if (newState)
+                    that.panel.startBtn.text = 'Start';
 
                 this._spin = newState;
             },
-            get spin() { return this._spin; }
+            get spin() { return this._spin; },
+            set stop(newState) {
+                if (newState)
+                    that.panel.startBtn.text = 'Stop';
+
+                this._stop = newState;
+            },
+            get stop() { return this._stop; },
+            set takeWin(newState) {
+                if (newState)
+                    that.panel.startBtn.text = 'Take';
+
+                this._takeWin = newState;
+            },
+            get takeWin() { return this._takeWin; },
+
+            set denomination(newState) {
+                if (newState)
+                    that.panel.denominationBtn.enable();
+                else
+                    that.panel.denominationBtn.disable();
+
+                this._denomination = newState;
+            },
+            get denomination() { return this._denomination; },
+            set lines(newState) {
+                if (newState)
+                    that.panel.linesBtn.enable();
+                else
+                    that.panel.linesBtn.disable();
+
+                this._lines = newState;
+            },
+            get lines() { return this._lines; },
+            set betPerLine(newState) {
+                if (newState)
+                    that.panel.betPerLineBtn.enable();
+                else
+                    that.panel.betPerLineBtn.disable();
+
+                this._betPerLine = newState;
+            },
+            get betPerLine() { return this._betPerLine; },
+            set maxBet(newState) {
+                if (newState)
+                    that.panel.maxBetBtn.enable();
+                else
+                    that.panel.maxBetBtn.disable();
+
+                this._maxBet = newState;
+            },
+            get maxBet() { return this._maxBet; },
         };
 
         this._initKeyboardListeners();
+    }
+
+    _showControls() {
+        console.log(
+        `Controls:
+            space - Spin
+            < - Increase lines
+            > - Increase bet per line
+            d - Increase denomination
+            m - Set max bet`
+        );
     }
 
     spinStopTake = () => {
