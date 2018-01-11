@@ -7,7 +7,7 @@ class LinePresenter {
         this.line = line;
         // Create node
         this.node = document.createElement('div');
-        this.node.style.background = color;
+        this.node.style.backgroundColor = color;
         this.node.text = '';
         this.node.className += 'line_presenter';
         // Init listners

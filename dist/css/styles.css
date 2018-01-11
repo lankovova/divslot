@@ -43,20 +43,7 @@ body {
 
     width: 1017px;
     height: 444px;
-
-    /* width: 100%;
-    height: 100%; */
 }
-/* .main .main_bg {
-    position: absolute;
-
-    height: 100%;
-    width: 100%;
-
-    line-height: 0;
-
-    object-fit: fill;
-} */
 
 .reels_wrapper {
     display: flex;
@@ -72,11 +59,13 @@ body {
     flex-direction: column;
     justify-content: space-between;
 
-    /* TEMP -2px for fit */
     margin: -2px 7px 0;
 }
 
 .line_presenter {
+    background-image: url('./../assets/images/line_presenter_glare.png');
+    background-size: 100% 100%;
+
     font-size: 18px;
 
     width: 34px;
