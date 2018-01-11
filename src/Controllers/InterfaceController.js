@@ -42,26 +42,26 @@ class InterfaceController {
             // TODO: Disable start btn if all of its states are disabled
             set spin(newState) {
                 if (newState)
-                    that.panel.startBtn.text = 'Start';
+                    that.panel.SSTBtn.text = 'Start';
 
                 this._spin = newState;
-                that._handleDisablingStartBtn();
+                that._handleDisablingSSTBtn();
             },
             get spin() { return this._spin; },
             set stop(newState) {
                 if (newState)
-                    that.panel.startBtn.text = 'Stop';
+                    that.panel.SSTBtn.text = 'Stop';
 
                 this._stop = newState;
-                that._handleDisablingStartBtn();
+                that._handleDisablingSSTBtn();
             },
             get stop() { return this._stop; },
             set takeWin(newState) {
                 if (newState)
-                    that.panel.startBtn.text = 'Take';
+                    that.panel.SSTBtn.text = 'Take';
 
                 this._takeWin = newState;
-                that._handleDisablingStartBtn();
+                that._handleDisablingSSTBtn();
             },
             get takeWin() { return this._takeWin; },
 
@@ -133,16 +133,17 @@ class InterfaceController {
         this._initKeyboardListeners();
     }
 
-    _handleDisablingStartBtn() {
+    // Disables sst button if all of its states is set to false
+    _handleDisablingSSTBtn() {
         let noAvailableState = true;
-        ['spin', 'stop', 'takeWin'].forEach(startBtnState => {
-            if (this.state[startBtnState]) noAvailableState = false;
+        ['spin', 'stop', 'takeWin'].forEach(SSTBtnState => {
+            if (this.state[SSTBtnState]) noAvailableState = false;
         });
 
         if (noAvailableState)
-            this.panel.startBtn.disable();
+            this.panel.SSTBtn.disable();
         else
-            this.panel.startBtn.enable();
+            this.panel.SSTBtn.enable();
     }
 
     _showControls() {

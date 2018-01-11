@@ -1,14 +1,14 @@
 import Notifier from '../Components/Notifier';
 import JackpotBonus from './JackpotBonus';
-import {StartBtn, MaxBetBtn, LinesBtn, BetPerLineBtn, DenominationBtn, MenuBtn, GambleBtn, AutoBtn} from './buttons';
+import {SSTBtn, MaxBetBtn, LinesBtn, BetPerLineBtn, DenominationBtn, MenuBtn, GambleBtn, AutoBtn} from './buttons';
 
 class Panel {
     constructor(node, props) {
         this.node = node;
         this.props = props;
 
-        this.startBtn = new StartBtn({
-            node: document.querySelector('#startBtn'),
+        this.SSTBtn = new SSTBtn({
+            node: document.querySelector('#SSTBtn'),
             spinStopTake: this.props.spinStopTake
         });
         this.maxBetBtn = new MaxBetBtn({

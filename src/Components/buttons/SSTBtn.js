@@ -1,6 +1,6 @@
 import Button from './Button';
 
-export default class StartBtn extends Button {
+export default class SSTBtn extends Button {
     constructor(props) {
         super(props);
 
