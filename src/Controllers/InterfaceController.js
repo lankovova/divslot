@@ -26,9 +26,6 @@ class InterfaceController {
             toggleDenominationBlock: this.toggleDenominationBlock,
         });
 
-        // TEMP
-        this.startBtnStates = ['spin', 'stop', 'takeWin'];
-
         this.state = {
             _spin: false,
             _stop: false,
@@ -138,7 +135,7 @@ class InterfaceController {
 
     _handleDisablingStartBtn() {
         let noAvailableState = true;
-        this.startBtnStates.forEach(startBtnState => {
+        ['spin', 'stop', 'takeWin'].forEach(startBtnState => {
             if (this.state[startBtnState]) noAvailableState = false;
         });
 

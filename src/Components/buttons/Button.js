@@ -37,10 +37,12 @@ export default class Button {
 
     disable() {
         this.node.style.backgroundPosition = spriteParts.disabled;
+        this.node.style.cursor = 'default';
     }
 
     enable() {
         this.node.style.backgroundPosition = spriteParts.enabled;
+        this.node.style.cursor = '';
     }
 
     set text(newText) {

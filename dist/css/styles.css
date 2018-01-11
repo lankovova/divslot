@@ -577,6 +577,8 @@ body {
     text-transform: uppercase;
     font-weight: 900;
     font-size: 20px;
+
+    cursor: pointer;
 }
 .panel_row .start_btn_wrapper {
     height: 100%;
@@ -605,6 +607,8 @@ body {
     text-transform: uppercase;
     font-weight: 900;
     font-size: 24px;
+
+    cursor: pointer;
 }
 
 #preloader {
