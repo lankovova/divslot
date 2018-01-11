@@ -75,13 +75,13 @@ class Panel {
     }
 
     setDenomination(denom) {
-        this.denominationAmountField.innerText = (denom / 100).toFixed(2);
+        this.denominationBtn.number = (denom / 100).toFixed(2);
     }
     setLinesAmount(lines) {
-        this.linesAmountField.innerText = lines;
+        this.linesBtn.number = lines;
     }
     setBetPerLine(betPerLine) {
-        this.betPerLineAmountField.innerText = betPerLine;
+        this.betPerLineBtn.number = betPerLine;
     }
 
     setUserCash({points, kups}) {

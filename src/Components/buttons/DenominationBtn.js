@@ -6,6 +6,11 @@ export default class DenominationBtn extends Button {
 
         this.props = props;
 
+        this.numberField = this.node.querySelector('.number');
         this.node.onclick = () => this.props.toggleDenominationBlock();
+    }
+
+    set number(newNumber) {
+        this.numberField.innerText = newNumber;
     }
 }

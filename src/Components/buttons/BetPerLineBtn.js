@@ -6,6 +6,11 @@ export default class BetPerLineBtn extends Button {
 
         this.props = props;
 
+        this.numberField = this.node.querySelector('.number');
         this.node.onclick = () => this.props.toggleBetPerLineBlock();
+    }
+
+    set number(newNumber) {
+        this.numberField.innerText = newNumber;
     }
 }

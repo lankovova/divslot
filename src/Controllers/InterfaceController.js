@@ -39,7 +39,6 @@ class InterfaceController {
             _auto: false,
 
             // TODO: Maybe segregate this states into buttons components
-            // TODO: Disable start btn if all of its states are disabled
             set spin(newState) {
                 if (newState)
                     that.panel.SSTBtn.text = 'Start';

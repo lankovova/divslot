@@ -6,6 +6,11 @@ export default class LinesBtn extends Button {
 
         this.props = props;
 
+        this.numberField = this.node.querySelector('.number');
         this.node.onclick = () => this.props.toggleLinesBlock();
+    }
+
+    set number(newNumber) {
+        this.numberField.innerText = newNumber;
     }
 }
