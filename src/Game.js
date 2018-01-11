@@ -75,7 +75,6 @@ class Game {
     setBetRelatedValue = (array, currentValue, setNewValue) => {
         return value => {
             const newValue = value ? value : getNextArrayItem(array, currentValue);
-            // setNewValue(newValue);
             setNewValue.call(null, newValue);
             this.setSpinPossibility();
         }
@@ -96,7 +95,7 @@ class Game {
     takeWin = () => {
         this.interfaceController.state.takeWin = false;
 
-        this.transferUsersWin();
+        this.transferUserWin();
 
         // TODO: Enable after transfering win
         this.interfaceController.enableInterface();
@@ -104,7 +103,7 @@ class Game {
     }
 
     // Transfer win cash to user's cash
-    transferUsersWin = () => {
+    transferUserWin = () => {
         // Update user cash
         this.pointsController.userCash = this.spinResponse.player_coins;
         // Reset user win
