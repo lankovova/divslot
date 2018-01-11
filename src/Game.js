@@ -91,23 +91,51 @@ class Game {
         }
     }
 
-    // TODO: Make this func async for iterative win transfering
-    takeWin = () => {
-        this.interfaceController.state.takeWin = false;
+    // Make this func async for iterative win transfering
+    takeWin = async () => {
+        this.interfaceController.disableInterface();
 
-        this.transferUserWin();
+        // Wait transfering win
+        await this.transferUserWin();
 
-        // TODO: Enable after transfering win
+        // After transfering win enable interface
         this.interfaceController.enableInterface();
         this.setSpinPossibility();
     }
 
     // Transfer win cash to user's cash
     transferUserWin = () => {
-        // Update user cash
-        this.pointsController.userCash = this.spinResponse.player_coins;
-        // Reset user win
-        this.pointsController.userWin = 0;
+        return new Promise(resolve => {
+            // Transfer duration in ms
+            const transferDuration = 1000;
+            // Delay between each iteration in ms
+            const delayBetweenIteration = 70;
+
+            // Amount of iterations
+            const iterationsAmount = transferDuration / delayBetweenIteration;
+
+            // Delta of user cash between iterations
+            const transferDelta = Math.ceil(this.spinResponse.won_points / iterationsAmount);
+
+            const intervalId = setInterval(() => {
+                // If last transfer iteration
+                if (this.pointsController.userWin - transferDelta <= 0) {
+                    // Set user cash to final value
+                    this.pointsController.userCash = this.spinResponse.player_coins;
+                    // Reset user win
+                    this.pointsController.userWin = 0;
+
+                    clearInterval(intervalId);
+
+                    // Resolve promise when transfering is done
+                    resolve();
+                } else {
+                    // Change values on delta
+                    this.pointsController.userCash += transferDelta;
+                    this.pointsController.userWin -= transferDelta;
+                }
+            }, delayBetweenIteration);
+        });
     }
 
     getPlayerData = async () => {
