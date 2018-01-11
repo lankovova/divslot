@@ -99,9 +99,8 @@ class Game {
         this.transferUsersWin();
 
         // TODO: Enable after transfering win
+        this.interfaceController.enableInterface();
         this.interfaceController.state.spin = true;
-        // Enable possibility to change values
-        this.interfaceController.enableValuesChange();
         this.checkBetSpinPossibility();
     }
 
@@ -149,8 +148,6 @@ class Game {
         this.interfaceController.panel.notifier.text = 'Fetching data...';
         // Disable whole interface
         this.interfaceController.disableInterface();
-        // Disable possibility to change betPerLine or linesAmount
-        this.interfaceController.disableValuesChange();
         // Enable stop
         this.interfaceController.state.stop = true;
 
@@ -199,20 +196,17 @@ class Game {
                 this.interfaceController.panel.notifier.text = `You won ${this.pointsController.userWin} points`;
             });
 
-            // Enable whole interface except sst btn after all lines has showed
-            this.interfaceController.enableInterface();
-
             console.log('All lines has showed');
 
-            // Enable possibility to take win
-            this.interfaceController.state.takeWin = true;
+            // Enable possibility to take win or gamble
+            this.interfaceController.setTakeWin();
             this.interfaceController.panel.notifier.text = 'Take win or gamble';
         } else { // Lose case
+            // Enable possibility to change betPerLine or linesAmount
+            this.interfaceController.enableInterface();
+
             // In no win then allow spin
             this.interfaceController.state.spin = true;
-
-            // Enable possibility to change betPerLine or linesAmount
-            this.interfaceController.enableValuesChange();
             this.checkBetSpinPossibility();
         }
 

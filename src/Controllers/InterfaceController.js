@@ -26,6 +26,9 @@ class InterfaceController {
             toggleDenominationBlock: this.toggleDenominationBlock,
         });
 
+        // TEMP
+        this.startBtnStates = ['spin', 'stop', 'takeWin'];
+
         this.state = {
             _spin: false,
             _stop: false,
@@ -34,6 +37,9 @@ class InterfaceController {
             _lines: false,
             _betPerLine: false,
             _maxBet: false,
+            _menu: false,
+            _gamble: false,
+            _auto: false,
 
             // TODO: Maybe segregate this states into buttons components
             // TODO: Disable start btn if all of its states are disabled
@@ -42,6 +48,7 @@ class InterfaceController {
                     that.panel.startBtn.text = 'Start';
 
                 this._spin = newState;
+                that._handleDisablingStartBtn();
             },
             get spin() { return this._spin; },
             set stop(newState) {
@@ -49,6 +56,7 @@ class InterfaceController {
                     that.panel.startBtn.text = 'Stop';
 
                 this._stop = newState;
+                that._handleDisablingStartBtn();
             },
             get stop() { return this._stop; },
             set takeWin(newState) {
@@ -56,6 +64,7 @@ class InterfaceController {
                     that.panel.startBtn.text = 'Take';
 
                 this._takeWin = newState;
+                that._handleDisablingStartBtn();
             },
             get takeWin() { return this._takeWin; },
 
@@ -95,9 +104,48 @@ class InterfaceController {
                 this._maxBet = newState;
             },
             get maxBet() { return this._maxBet; },
+            set menu(newState) {
+                if (newState)
+                    that.panel.menuBtn.enable();
+                else
+                    that.panel.menuBtn.disable();
+
+                this._menu = newState;
+            },
+            get menu() { return this._menu; },
+            set gamble(newState) {
+                if (newState)
+                    that.panel.gambleBtn.enable();
+                else
+                    that.panel.gambleBtn.disable();
+
+                this._gamble = newState;
+            },
+            get gamble() { return this._gamble; },
+            set auto(newState) {
+                if (newState)
+                    that.panel.autoBtn.enable();
+                else
+                    that.panel.autoBtn.disable();
+
+                this._auto = newState;
+            },
+            get auto() { return this._auto; },
         };
 
         this._initKeyboardListeners();
+    }
+
+    _handleDisablingStartBtn() {
+        let noAvailableState = true;
+        this.startBtnStates.forEach(startBtnState => {
+            if (this.state[startBtnState]) noAvailableState = false;
+        });
+
+        if (noAvailableState)
+            this.panel.startBtn.disable();
+        else
+            this.panel.startBtn.enable();
     }
 
     _showControls() {
@@ -140,7 +188,7 @@ class InterfaceController {
     }
 
     setMaxBet = () => {
-        if (this.state.lines && this.state.betPerLine) {
+        if (this.state.maxBet) {
             this.props.setMaxBet();
         }
     }
@@ -163,17 +211,6 @@ class InterfaceController {
         }
     }
 
-    disableValuesChange() {
-        this.state.denomination = false;
-        this.state.lines = false;
-        this.state.betPerLine = false;
-    }
-    enableValuesChange() {
-        this.state.denomination = true;
-        this.state.lines = true;
-        this.state.betPerLine = true;
-    }
-
     enableLines = () => {
         this.state.lines = true;
     }
@@ -187,6 +224,11 @@ class InterfaceController {
     setIdle = () => {
         this.enableInterface();
         this.state.spin = true;
+    }
+
+    setTakeWin = () => {
+        this.state.gamble = true;
+        this.state.takeWin = true;
     }
 
     disableInterface = () => {
