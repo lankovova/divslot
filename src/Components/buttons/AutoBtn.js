@@ -6,6 +6,6 @@ export default class AutoBtn extends Button {
 
         this.props = props;
 
-        this.node.onclick = () => console.log('Auto');
+        this.node.onclick = () => console.log('Auto clicked');
     }
 }

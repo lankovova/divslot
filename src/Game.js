@@ -4,6 +4,8 @@ import ReelsController from './Controllers/ReelsController';
 import LinesController from './Controllers/LinesController';
 import InterfaceController from './Controllers/InterfaceController';
 
+import {mockResponse} from './spinMockup';
+
 import axios from 'axios';
 
 let userWinTransferDelta;
@@ -15,6 +17,9 @@ class Game {
         this.gameNode = document.querySelector('#game');
         // Store for spin response data
         this.spinResponse = {};
+
+        this.bonusSpinsNow = false;
+        this.bonusSpinsToPlay = 0;
 
         this.reelsController = new ReelsController(
             document.querySelector('#reels_wrapper'),
@@ -29,7 +34,7 @@ class Game {
         this.interfaceController = new InterfaceController({
             containerNode: document.querySelector('#reels_wrapper'),
             lines: this.linesController.lines,
-            spinReels: this.getDataAndSpin,
+            spinReels: this.spin,
             stopReels: this.stop,
             takeWin: this.takeWin,
             speedUpTakeWin: this.speedUpTakeWin,
@@ -87,20 +92,32 @@ class Game {
     setSpinPossibility = () => {
         if (this.pointsController.totalBet > this.pointsController.userCashInPoints) {
             this.interfaceController.panel.notifier.text = 'Not enough cash for this bet';
-            this.interfaceController.disableSpin();
+            this.interfaceController.disableSpinAndAuto();
         } else {
             this.interfaceController.panel.notifier.text = 'Press start to spin';
-            this.interfaceController.enableSpin();
+            this.interfaceController.enableSpinAndAuto();
         }
     }
 
-    // Make this func async for iterative win transfering
     takeWin = async () => {
         this.interfaceController.disableInterface();
         this.interfaceController.enableSpeedUpTransferWin();
 
         // Wait transfering win
-        await this.transferUserWin();
+        await this.transferUserWin(this.spinResponse.won_points, this.spinResponse.player_coins);
+
+        this.interfaceController.disableSpeedUpTransferWin();
+        // After transfering win enable interface
+        this.interfaceController.enableInterface();
+        this.setSpinPossibility();
+    }
+
+    takeBonusSpinsWin = async () => {
+        this.interfaceController.disableInterface();
+        this.interfaceController.enableSpeedUpTransferWin();
+
+        // Wait transfering win
+        await this.transferUserWin(this.spinResponse.bonus_spins.won_points, this.spinResponse.bonus_spins.player_coins);
 
         this.interfaceController.disableSpeedUpTransferWin();
         // After transfering win enable interface
@@ -109,7 +126,7 @@ class Game {
     }
 
     // Transfer win cash to user's cash
-    transferUserWin = () => {
+    transferUserWin = (wonPoints, playerCoins) => {
         return new Promise(resolve => {
             // Transfer duration in ms
             const transferDuration = 2000;
@@ -120,13 +137,14 @@ class Game {
             const iterationsAmount = transferDuration / delayBetweenIteration;
 
             // Delta of user cash between iterations
-            userWinTransferDelta = Math.ceil(this.spinResponse.won_points / iterationsAmount);
+            userWinTransferDelta = Math.ceil(wonPoints / iterationsAmount);
 
             const intervalId = setInterval(() => {
                 // If last transfer iteration
                 if (this.pointsController.userWin - userWinTransferDelta <= 0) {
                     // Set user cash to final value
-                    this.pointsController.userCash = this.spinResponse.player_coins;
+                    this.pointsController.userCash = playerCoins;
+
                     // Reset user win
                     this.pointsController.userWin = 0;
 
@@ -150,9 +168,13 @@ class Game {
 
     getPlayerData = async () => {
         try {
-            return (await axios.post('http://admin.chcgreen.org/getplayerdata')).data;
+            return (await axios.post('http://admin.chcgreen.org/getplayerinfo')).data;
         } catch(err) {
             console.log(err);
+
+            return {
+                cash: '15.27'
+            };
         }
     }
 
@@ -166,26 +188,26 @@ class Game {
                 game: this.gameName
             });
 
-            return response.data;
+            // return response.data;
+            return mockResponse;
         } catch(err) {
             console.log(err);
         }
     }
 
-    spin = finalSymbols => {
-        // Clear notifier
-        this.interfaceController.panel.notifier.clear();
-
-        // Spin reels
-        this.reelsController.startReels(finalSymbols);
+    spin = () => {
+        if (this.bonusSpinsNow) {
+            console.log('Start bonus spins');
+            this.bonusSpin(0);
+        } else {
+            this.getDataAndSpin();
+        }
     }
 
     getDataAndSpin = () => {
         this.interfaceController.panel.notifier.text = 'Fetching data...';
         // Disable whole interface
         this.interfaceController.disableInterface();
-        // Enable stop
-        this.interfaceController.enableStop();
 
         this.getSpinResponse().then(result => {
             console.log(result);
@@ -194,17 +216,20 @@ class Game {
             // Decrease user cash
             this.pointsController.userCash -= this.pointsController.pointsToCoins(this.pointsController.totalBet);
 
+            // Enable stop
+            this.interfaceController.enableStop();
+
+            // Clear notifier
+            this.interfaceController.panel.notifier.clear();
+
             // Spin reels to given final symbols
-            this.spin(this.spinResponse.final_symbols);
+            this.reelsController.startReels(this.spinResponse.final_symbols);
         });
     }
 
-    // TODO: Add free spins functionallity
-    freeSpin = () => {
-        console.log('Free spins won');
-        console.log( this.spinResponse.bonus_spins );
-
-        // this.spin(this.spinResponse.bonus_spins.spins[0]);
+    bonusSpin = (bonusSpinIndex) => {
+        this.interfaceController.panel.notifier.text = `Free spin #${bonusSpinIndex + 1}`;
+        this.reelsController.startReels(this.spinResponse.bonus_spins.spins[bonusSpinIndex].final_symbols);
     }
 
     stop = () => {
@@ -217,13 +242,54 @@ class Game {
     reelsHasStopped = async () => {
         this.interfaceController.disableStop();
 
-        // Checking for free spins
-        // if (this.spinResponse.bonus_spins) {
-        //     // Start free spins
-        //     this.freeSpin();
-        //     return;
-        // }
+        // Checking is there bonus spins
+        if (this.spinResponse.bonus_spins) {
+            // If bonus spins just started
+            if (!this.bonusSpinsNow) {
+                this.bonusSpinsNow = true;
+                this.bonusSpinsToPlay = this.spinResponse.bonus_spins.spins.length - 1;
 
+                // Show win lines and transfer win from regular spin
+                await this.linesController.showWinningLines(this.spinResponse.spin_result, winCashInLine => {
+                    this.pointsController.userWin += winCashInLine;
+                    this.interfaceController.panel.notifier.text = `You won ${this.pointsController.userWin} points`;
+                });
+
+                // Show alert and wait for user to press start btn
+                this.interfaceController.showBonusSpinsAlert();
+
+                // Transfer user regular spin win
+                const userCashBeforeBonusSpins = this.spinResponse.player_coins - this.spinResponse.bonus_spins.won_coins;
+                await this.transferUserWin(this.spinResponse.won_points, userCashBeforeBonusSpins);
+
+                // Enable spin btn to start bonus spins
+                this.interfaceController.enableSpin();
+
+                return;
+            }
+
+            // If no more bonus spins
+            if (this.bonusSpinsToPlay === 0) {
+                console.log(`Bonus spins end, user won ${this.spinResponse.bonus_spins.won_points}`);
+
+                this.bonusSpinsNow = false;
+
+                // TODO: Enable taking win if user won something
+                console.log('Enable take bonus spins win');
+
+                return;
+            }
+
+            // Start bonus spin
+            const bonusSpinIndex = this.spinResponse.bonus_spins.spins.length - this.bonusSpinsToPlay;
+            this.bonusSpin(bonusSpinIndex);
+
+            // Decrease left bonus spins amount
+            this.bonusSpinsToPlay--;
+            return;
+        }
+
+        // TODO: Handle case when its bonus spin
         if (this.spinResponse.won) { // Win case
             // Show all winning lines
             // and update user win line by line in callback

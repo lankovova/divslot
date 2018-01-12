@@ -211,11 +211,19 @@ class InterfaceController {
             this.denominationBlock.toggle();
     }
 
-    enableSpin = () => {
+    showBonusSpinsAlert = () => {
+        // TODO: Show real alert
+        console.log('Bonus spins alert has showed');
+    }
+
+    enableSpin = () => this.state.spin = true;
+    disableSpin = () => this.state.spin = false;
+
+    enableSpinAndAuto = () => {
         this.state.spin = true;
         this.state.auto = true;
     }
-    disableSpin = () => {
+    disableSpinAndAuto = () => {
         this.state.spin = false;
         this.state.auto = false;
     }

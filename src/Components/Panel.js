@@ -61,11 +61,11 @@ class Panel {
         this.totalBetFields = {
             points: document.querySelector('#bet_points_field'),
             kups: document.querySelector('#bet_kups_field'),
-        }
+        };
         this.userWinFields = {
             points: document.querySelector('#win_points_field'),
             kups: document.querySelector('#win_kups_field'),
-        }
+        };
 
         // TEMP
         this.setUserInsurance({

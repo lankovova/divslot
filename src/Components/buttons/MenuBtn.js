@@ -6,6 +6,6 @@ export default class MenuBtn extends Button {
 
         this.props = props;
 
-        this.node.onclick = () => console.log('Relocate to main page');
+        this.node.onclick = () => console.log('Menu clicked');
     }
 }
