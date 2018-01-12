@@ -59,7 +59,7 @@ class ToggleBlock {
 
     toggle() {
         if (this.isToggled) {
-            this.node.style.transform = ``;
+            this.node.style.transform = `translateY(50px)`;
             this.isToggled = false;
         } else {
             this.node.style.display = `block`;
