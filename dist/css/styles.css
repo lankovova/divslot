@@ -22,6 +22,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
+    position: relative;
 }
 
 .main_wrapper {
@@ -53,28 +55,19 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     margin: -2px 7px 0;
 }
 
 .line_presenter {
     background-image: url('./../assets/images/line_presenter_glare.png');
     background-size: 100% 100%;
-
     font-size: 18px;
-
     width: 34px;
     height: 34px;
-
     border-radius: 5px;
-
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-
     z-index: 2;
     cursor: pointer;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,7 +83,6 @@ body {
     background-size: cover;
     position: relative;
     overflow: hidden;
-    /* padding-top: 11px; */
 }
 
 .reel {
@@ -102,53 +94,54 @@ body {
 .header {
     width: 100%;
     height: 80px;
-
     line-height: 0;
 }
 .header .header_bg {
     width: 100%;
     height: 100%;
-
     object-fit: cover;
 }
 
 .panel {
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    width: 1680px;
 }
 .panel .panel_row {
     position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
     box-sizing: border-box;
     width: 100%;
     background-size: 100% 100%;
-
-    z-index: 500;
+    z-index: 1;
 }
 .panel_row-top {
-    height: 80px;
+    height: 98px;
     background: url('./../assets/images/panel/panel_top.png');
+    position: relative;
 }
 .panel_row-bot {
-    height: 90px;
-    padding: 6px 0 0 0;
+    height: 115px;
     background: url('./../assets/images/panel/panel_bot.png');
+    position: relative;
+}
+.panel-bottom__container,
+.panel-top__container {
+    position: relative;
+    width: 1417px;
+    right: 0;
+    left: 0;
+    height: 100%;
+    margin: auto;
 }
 
 .toggle_block {
     position: absolute;
     top: 0;
     left: 5%;
-
     z-index: 100;
-
     min-width: 300px;
-
     display: none;
     background: darkcyan;
-
     transition: transform 200ms ease-in-out;
 }
 .toggle_block .content {
@@ -161,50 +154,42 @@ body {
 .toggle_block .content .item {
     background: lightgreen;
     border-radius: 5px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     cursor: pointer;
 }
-
-
 .flex_center {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 .panel_row-top .menu_btn {
-    margin: 5px 10px 0 10px;
-
     background: url('./../assets/images/panel/menu_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
     background-size: 200% 200%;
-    width: 93px;
-    height: 65px;
-
     text-transform: uppercase;
-    font-weight: 900;
-    font-size: 20px;
-    color: #222a54;
-
     cursor: pointer;
+    position: absolute;
+    top: 11px;
+    width: 113px;
+    height: 84px;
+    line-height: 84px;
+    font-size: 28px;
+    text-align: center;
+    text-shadow: 0.5px 0.5px 0.5px #def, 0 0 0 #000, 0px 0px 0px #def;
+    color: rgba(5, 4, 36, 0.8);
 }
 
 .text_number_button {
     display: flex;
-
     background: url('./../assets/images/panel/button_with_number.png');
     background-position: top left;
     background-repeat: no-repeat;
     background-size: 200% 200%;
-
     padding-left: 5px;
     box-sizing: border-box;
-
     cursor: pointer;
 }
 .text_number_button .title {
@@ -219,73 +204,68 @@ body {
 }
 
 .panel_row-top .lines_btn {
-    margin: 5px 10px 0 10px;
-
-    width: 105px;
-    height: 53px;
-
     text-transform: uppercase;
-    font-weight: 900;
-    font-size: 18px;
+    position: absolute;
+    left: 129px;
+    top: 15px;
+    margin: auto;
+    width: 143px;
+    height: 75px;
+    line-height: 75px;
+    font-size: 28px;
+    text-align: center;
+    text-shadow: 0.5px 0.5px 0.5px #def, 0 0 0 #000, 0px 0px 0px #def;
+    color: rgba(5, 4, 36, 0.8);
 }
 .panel_row-top .betperline_btn {
-    margin: 5px 10px 0 10px;
-
-    width: 105px;
-    height: 53px;
-
     text-transform: uppercase;
-    font-weight: 900;
-    font-size: 18px;
+    position: absolute;
+    left: 281px;
+    top: 15px;
+    width: 143px;
+    height: 75px;
+    line-height: 75px;
+    font-size: 28px;
+    text-align: center;
+    text-shadow: 0.5px 0.5px 0.5px #def, 0 0 0 #000, 0px 0px 0px #def;
+    color: rgba(5, 4, 36, 0.8);
 }
 .panel_row-top .betperline_btn .title {
     flex-direction: column;
 }
-
-.panel_row-top .jackpot_bonus_wrapper {
-    height: 100%;
-}
 .panel_row-top .jackpot_bonus {
-    width: 500px;
-    height: 100%;
-
+    width: 809px;
+    height: 98px;
     background: url('./../assets/images/panel/jackpot_bg.png');
     background-size: 100% 100%;
-
-    position: relative;
-    top: -5px;
-
+    position: absolute;
+    right: 148px;
+    top: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     padding: 0 10px;
 }
 .panel_row-top .jackpot_bonus .text_block {
     display: flex;
     justify-content: space-between;
     flex-grow: 1;
-
     position: relative;
     top: 5px;
 }
 .panel_row-top .jackpot_bonus .text_block .text_part {
     font-size: 24px;
     font-weight: 900;
-
     display: flex;
     align-items: center;
-
     letter-spacing: 1px;
 }
 .panel_row-top .jackpot_bonus .text_block .grid {
     position: absolute;
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100%;
-
     background: url('./../assets/images/panel/jackpot_grid.png');
     background-size: 100% 100%;
 }
@@ -301,59 +281,50 @@ body {
 .panel_row-top .jackpot_bonus .notifier {
     margin: 0 auto;
     position: relative;
-    top: 5px;
-
+    top: 1px;
     width: 100%;
     height: 44%;
-
     background: url('./../assets/images/panel/notifier.png');
     background-size: 100% 100%;
-
     border-radius: 5px;
-
     color: #d4e7f0;
     font-size: 16px;
     font-weight: 900;
     text-transform: uppercase;
 }
 .panel_row-top .auto_btn {
-    margin: 0 10px;
-
     background: url('./../assets/images/panel/auto_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
     background-size: 200% 200%;
-    width: 93px;
-    height: 30px;
-
-    padding: 0 0 5px 0;
     box-sizing: border-box;
-
     text-transform: uppercase;
     font-size: 14px;
+    line-height: 47px;
     color: white;
-
     cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    width: 115px;
+    height: 47px;
 }
 .panel_row-bot .denomination_btn {
     flex-direction: column;
     justify-content: space-around;
-
     background: url('./../assets/images/panel/denomination_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
     background-size: 200% 200%;
-    width: 80px;
-    height: 58px;
-
     padding: 5px 0 10px 0;
     box-sizing: border-box;
-
     font-weight: 900;
-
     cursor: pointer;
-
-    margin: 0 10px;
+    position: absolute;
+    left: 5px;
+    top: 24px;
+    width: 90px;
+    height: 77px;
 }
 .panel_row-bot .denomination_btn .text {
     color: #052d56;
@@ -371,13 +342,12 @@ body {
 .panel_row-bot .user_cash {
     background: url('./../assets/images/panel/user_cash_bg.png');
     background-size: 100% 100%;
-
-    width: 200px;
-    height: 100%;
-
-    margin: 0 5px;
-
-    padding: 5px 10px 10px 10px;
+    position: absolute;
+    left: 117px;
+    top: 6px;
+    width: 307px;
+    height: 109px;
+    padding: 10px 10px 5px 10px;
     box-sizing: border-box;
 }
 .panel_row-bot .fields_wrapper {
@@ -425,134 +395,111 @@ body {
 
     font-size: 11px;
 }
-
-.tnblock_wrapper {
-    height: 100%;
-    padding: 10px 0 10px 0;
-    margin: 0 5px;
-    box-sizing: border-box;
+.tnblock {
+    position: absolute;
+    height: 89px;
+    top: 19px;
 }
 .tnblock_bet {
     background: url('./../assets/images/panel/bet_field.png');
     background-size: 100% 100%;
+    width: 91px;
+    left: 442px;
 }
 .tnblock_bet .numbers .points { color: #75cdff; }
 .tnblock_bet .numbers .kups { color: #7994a2; }
 .tnblock_win {
     background: url('./../assets/images/panel/win_field.png');
     background-size: 100% 100%;
+    width: 112px;
+    left: 560px;
 }
 .tnblock_win .numbers .points { color: #448604; }
 .tnblock_win .numbers .kups { color: #39472a; }
-.tnblock_wrapper .tnblock {
+.tnblock {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
-    min-width: 60px;
-
     padding: 0 10px;
 }
-.tnblock_wrapper .tnblock .title_wrapper {
+.tnblock .title_wrapper {
     height: 45%;
 }
-.tnblock_wrapper .tnblock .title {
+.tnblock .title {
     color: white;
     text-transform: uppercase;
 }
-.tnblock_wrapper .tnblock .numbers {
+.tnblock .numbers {
     color: white;
     height: 55%;
     flex-direction: column;
     justify-content: flex-start;
 }
-.tnblock_wrapper .tnblock .numbers .points {
+.tnblock .numbers .points {
     font-size: 22px;
     font-weight: 900;
 }
-.tnblock_wrapper .tnblock .numbers .kups {
+.tnblock .numbers .kups {
     font-size: 11px;
     font-weight: 900;
 }
-.panel_row-bot .lhh_panel_wrapper {
-    display: flex;
-    align-items: flex-end;
-
-    height: 100%;
-
-    margin-right: 10px;
-}
 .panel_row-bot .lhh_panel {
+    position: absolute;
     background: url('./../assets/images/panel/lhh_panel_bg.png');
     background-size: 100% 100%;
-
-    height: 85%;
-
-    padding: 15px 15px 0 15px;
+    left: 701px;
+    bottom: 0;
+    height: 91px;
+    width: 276px;
+    padding-top: 16px;
     box-sizing: border-box;
 }
-.panel_row-bot .lhh_panel .buttons_line {
-    display: flex;
-    height: 35px;
-}
-.panel_row-bot .lhh_panel .buttons_line div {
-    margin: 0 3px;
-}
-.panel_row-bot .lhh_panel .buttons_line .language_btn {
+.panel_row-bot .lhh_panel  .language_btn {
     background: url('./../assets/images/lang_btns/en.png');
     background-position: top left;
     background-repeat: no-repeat;
     background-size: 200% 200%;
-    width: 43px;
-    height: 100%;
-
+    position: absolute;
+    left: 18px;
+    height: 47px;
+    width: 54px;
     cursor: pointer;
 }
-.panel_row-bot .lhh_panel .buttons_line .help_btn {
+.panel_row-bot .lhh_panel  .help_btn {
     background: url('./../assets/images/panel/help_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
     background-size: 200% 200%;
-    width: 43px;
-    height: 100%;
-
+    position: absolute;
+    left: 76px;
+    height: 46px;
+    width: 59px;
     cursor: pointer;
 }
-.panel_row-bot .lhh_panel .buttons_line .history_btn {
+.panel_row-bot .lhh_panel  .history_btn {
     background: url('./../assets/images/panel/history_btn.png');
-    background-position: top left;
+    background-position: bottom right;
     background-repeat: no-repeat;
     background-size: 200% 200%;
-    width: 100px;
-    height: 100%;
-
-    padding-bottom: 5px;
+    position: absolute;
+    right: 16px;
+    width: 116px;
+    height: 49px;
     box-sizing: border-box;
-
     color: white;
     text-transform: uppercase;
-
     cursor: pointer;
 }
 
-.panel_row-bot .bot_panel_btn_wrapper {
-    display: flex;
-    align-items: flex-end;
-
-    height: 100%;
-
-    padding-bottom: 5px;
-    box-sizing: border-box;
-
-    margin: 0 3px;
-}
 .button {
+    position: absolute;
     background: url('./../assets/images/panel/button.png');
     background-position: top left;
     background-repeat: no-repeat;
     background-size: 200% 200%;
-    width: 106px;
-    height: 67px;
+    top: 22px;
+    width: 134px;
+    height: 91px;
 
     display: flex;
     justify-content: center;
@@ -564,33 +511,30 @@ body {
 
     cursor: pointer;
 }
-.panel_row .start_btn_wrapper {
-    height: 100%;
-
-    margin: 0 10px;
+.button--gamble {
+    right: 296px;
+}
+.button--max {
+    right: 164px;
 }
 
 .panel_row-bot .start_btn {
-    position: relative;
-    bottom: 20px;
-
+    position: absolute;
+    right: 0;
+    width: 156px;
+    height: 144px;
+    bottom: 0;
     background: url('./../assets/images/panel/start_btn.png');
     background-position: top left;
     background-repeat: no-repeat;
     background-size: 200% 200%;
-    width: 113px;
-    height: calc(100% + 20px);
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     padding-top: 10px;
     box-sizing: border-box;
-
     text-transform: uppercase;
     font-weight: 900;
     font-size: 24px;
-
     cursor: pointer;
 }

@@ -50,26 +50,25 @@
 				</div>
 
 				<div class="panel_row panel_row-top">
-					<!-- Menu btn -->
-					<div class="menu_btn flex_center" id="menuBtn">Menu</div>
+					<div class="panel-top__container">
+						<!-- Menu btn -->
+						<div class="menu_btn flex_center" id="menuBtn">Menu</div>
 
-					<!-- Lines btn -->
-					<div class="text_number_button lines_btn" id="linesBtn">
-						<div class="title flex_center">Lines</div>
-						<div class="number flex_center" id="linesAmountField"></div>
-					</div>
-
-					<!-- Bet per line btn -->
-					<div class="text_number_button betperline_btn" id="betPerLineBtn">
-						<div class="title flex_center">
-							<div>Bet/</div>
-							<div>Line</div>
+						<!-- Lines btn -->
+						<div class="text_number_button lines_btn" id="linesBtn">
+							<div class="title flex_center">Lines</div>
+							<div class="number flex_center" id="linesAmountField"></div>
 						</div>
-						<div class="number flex_center" id="betperlineAmountField"></div>
-					</div>
 
-					<!-- Jackpot, bonus and notifier -->
-					<div class="jackpot_bonus_wrapper">
+						<!-- Bet per line btn -->
+						<div class="text_number_button betperline_btn" id="betPerLineBtn">
+							<div class="title flex_center">
+								Bet/Line
+							</div>
+							<div class="number flex_center" id="betperlineAmountField"></div>
+						</div>
+
+						<!-- Jackpot, bonus and notifier -->
 						<div class="jackpot_bonus">
 							<div class="text_block">
 								<div class="grid"></div>
@@ -84,46 +83,45 @@
 							</div>
 							<div class="notifier flex_center" id="notifier"></div>
 						</div>
-					</div>
 
-					<!-- Auto btn -->
-					<div class="auto_btn flex_center" id="autoBtn">Auto</div>
+						<!-- Auto btn -->
+						<div class="auto_btn flex_center" id="autoBtn">Auto</div>
+					</div>
 				</div>
 
 				<div class="panel_row panel_row-bot">
-					<!-- Denomination btn -->
-					<div class="denomination_btn flex_center" id="denominationBtn">
-						<div class="text">1 credit=</div>
-						<div class="number" id="denominationAmountField"></div>
-						<div class="currency">Kup</div>
-					</div>
+					<div class="panel-bottom__container">
+						<!-- Denomination btn -->
+						<div class="denomination_btn flex_center" id="denominationBtn">
+							<div class="text">1 credit=</div>
+							<div class="number" id="denominationAmountField"></div>
+							<div class="currency">Kup</div>
+						</div>
 
-					<!-- User cash & insurance field -->
-					<div class="user_cash">
-						<div class="fields_wrapper">
-							<div class="field credit">
-								<div class="title_wrapper flex_center">
-									<div class="title">Credit</div>
-								</div>
-								<div class="numbers">
-									<div class="points" id="userCashPointsField"></div>
-									<div class="kups" id="userCashKupsField"></div>
-								</div>
-							</div>
-							<div class="field insurance">
-								<div class="title_wrapper flex_center">
-										<div class="title">Insurance</div>
+						<!-- User cash & insurance field -->
+						<div class="user_cash">
+							<div class="fields_wrapper">
+								<div class="field credit">
+									<div class="title_wrapper flex_center">
+										<div class="title">Credit</div>
 									</div>
-								<div class="numbers">
-									<div class="points" id="userInsurancePointsField">1000</div>
-									<div class="kups" id="userInsuranceKupsField">10.15 Kup</div>
+									<div class="numbers">
+										<div class="points" id="userCashPointsField"></div>
+										<div class="kups" id="userCashKupsField"></div>
+									</div>
+								</div>
+								<div class="field insurance">
+									<div class="title_wrapper flex_center">
+											<div class="title">Insurance</div>
+										</div>
+									<div class="numbers">
+										<div class="points" id="userInsurancePointsField">1000</div>
+										<div class="kups" id="userInsuranceKupsField">10.15 Kup</div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<!-- Bet field -->
-					<div class="tnblock_wrapper">
 						<div class="tnblock tnblock_bet">
 							<div class="title_wrapper flex_center">
 								<div class="title">Bet</div>
@@ -133,10 +131,8 @@
 								<div class="kups" id="bet_kups_field"></div>
 							</div>
 						</div>
-					</div>
 
-					<!-- User win field -->
-					<div class="tnblock_wrapper">
+						<!-- User win field -->
 						<div class="tnblock tnblock_win">
 							<div class="title_wrapper flex_center">
 								<div class="title">Win</div>
@@ -146,31 +142,21 @@
 								<div class="kups" id="win_kups_field"></div>
 							</div>
 						</div>
-					</div>
 
-					<!-- Lang, help and history btns -->
-					<div class="lhh_panel_wrapper">
+						<!-- Lang, help and history btns -->
 						<div class="lhh_panel">
-							<div class="buttons_line">
-								<div class="language_btn" id="languageBtn"></div>
-								<div class="help_btn" id="helpBtn"></div>
-								<div class="history_btn flex_center" id="historyBtn">History</div>
-							</div>
+							<div class="language_btn" id="languageBtn"></div>
+							<div class="help_btn" id="helpBtn"></div>
+							<div class="history_btn flex_center" id="historyBtn">Service</div>
 						</div>
-					</div>
 
-					<!-- Gamble btn -->
-					<div class="bot_panel_btn_wrapper">
-						<div class="button" id="gambleBtn">Gamble</div>
-					</div>
+						<!-- Gamble btn -->
+						<div class="button button--gamble" id="gambleBtn">Gamble</div>
 
-					<!-- Max bet btn -->
-					<div class="bot_panel_btn_wrapper">
-						<div class="button" id="maxBetBtn">Max</div>
-					</div>
+						<!-- Max bet btn -->
+						<div class="button button--max" id="maxBetBtn">Max</div>
 
-					<!-- Start btn -->
-					<div class="start_btn_wrapper">
+						<!-- Start btn -->
 						<div class="start_btn" id="SSTBtn">Start</div>
 					</div>
 				</div>
