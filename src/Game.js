@@ -108,6 +108,7 @@ class Game {
         this.interfaceController.disableInterface();
         this.interfaceController.enableSpeedUpTransferWin();
 
+        // FIXME: Rethink about it
         if (this.interfaceController.alertWindow.isOn) {
             this.interfaceController.hideAlert();
         }
@@ -297,7 +298,6 @@ class Game {
 
                 // Show alert
                 this.interfaceController.showAlert(`Free spins ended, you won ${this.pointsController.userWin} points in ${this.bonusSpins.totalSpins} spins`);
-                // TODO: Hide this alert after user took his win
 
                 this.bonusSpins.on = false;
 
