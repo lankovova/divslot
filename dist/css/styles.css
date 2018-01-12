@@ -30,17 +30,12 @@ body {
 }
 .main {
     position: relative;
-
-    /* transform: scale(1.2); */
 }
 .main .main_bg {
     position: absolute;
-
     background: url('./../assets/images/game_bg.png') center center;
     background-size: contain;
-
     background-repeat: no-repeat;
-
     width: 1017px;
     height: 444px;
 }
