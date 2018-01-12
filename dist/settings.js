@@ -1,7 +1,7 @@
 var settings = {
     // "symbolSize": 354,
-    "symbolSize": 140,
-    "spaceBetweenReels": 15,
+    "symbolSize": 233,
+    "spaceBetweenReels": 23,
 
     "numOfRows": 3,
     "numOfReels": 5,

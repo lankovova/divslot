@@ -11,35 +11,24 @@ body {
 }
 
 .game_wrapper {
-    width: 100vw;
-    height: 100vh;
+    position: fixed;
+    width: 1680px;
+    height: 1050px;
 }
 
 #game {
-    width: 100%;
-    height: 100%;
+    width: 1680px;
+    height: 1050px;
     background: #080200;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     overflow: hidden;
-    position: relative;
-}
-
-.main_wrapper {
-    height: 100%;
-    width: 100%;
+    position: absolute;
 }
 .main {
-    position: relative;
-}
-.main .main_bg {
-    position: absolute;
+    width: 1680px;
+    height: 731px;
     background: url('./../assets/images/game_bg.png') center center;
     background-size: contain;
-    background-repeat: no-repeat;
-    width: 1017px;
-    height: 444px;
+    position: absolute;
 }
 
 .reels_wrapper {
@@ -55,15 +44,16 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin: -2px 7px 0;
+    margin: 4px 13px 0;
+    height: 692px;
 }
 
 .line_presenter {
     background-image: url('./../assets/images/line_presenter_glare.png');
     background-size: 100% 100%;
     font-size: 18px;
-    width: 34px;
-    height: 34px;
+    width: 54px;
+    height: 54px;
     border-radius: 5px;
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
     cursor: pointer;
@@ -92,7 +82,7 @@ body {
 
 .header {
     width: 100%;
-    height: 80px;
+    height: 105px;
     line-height: 0;
 }
 .header .header_bg {
@@ -127,11 +117,20 @@ body {
 .panel-bottom__container,
 .panel-top__container {
     position: relative;
-    width: 1417px;
+    width: 1370px;
     right: 0;
     left: 0;
     height: 100%;
     margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.panel-top__container {
+    padding-right: 25px;
+}
+.panel-bottom__container {
+    padding-left: 25px;
 }
 
 .toggle_block {
@@ -148,7 +147,6 @@ body {
     display: flex;
     justify-content: space-around;
     flex-flow: row-reverse wrap-reverse;
-
     padding: 5px;
 }
 .toggle_block .content .item {
@@ -171,10 +169,9 @@ body {
     background-size: 200% 200%;
     text-transform: uppercase;
     cursor: pointer;
-    position: absolute;
-    top: 11px;
     width: 113px;
     height: 84px;
+    margin-top: 11px;
     line-height: 84px;
     font-size: 28px;
     text-align: center;
@@ -183,6 +180,7 @@ body {
 }
 
 .text_number_button {
+    margin-top: 15px;
     display: flex;
     background: url('./../assets/images/panel/button_with_number.png');
     background-position: top left;
@@ -205,10 +203,6 @@ body {
 
 .panel_row-top .lines_btn {
     text-transform: uppercase;
-    position: absolute;
-    left: 129px;
-    top: 15px;
-    margin: auto;
     width: 143px;
     height: 75px;
     line-height: 75px;
@@ -219,9 +213,6 @@ body {
 }
 .panel_row-top .betperline_btn {
     text-transform: uppercase;
-    position: absolute;
-    left: 281px;
-    top: 15px;
     width: 143px;
     height: 75px;
     line-height: 75px;
@@ -238,9 +229,6 @@ body {
     height: 98px;
     background: url('./../assets/images/panel/jackpot_bg.png');
     background-size: 100% 100%;
-    position: absolute;
-    right: 148px;
-    top: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -300,14 +288,14 @@ body {
     box-sizing: border-box;
     text-transform: uppercase;
     font-size: 14px;
-    line-height: 47px;
+    line-height: 43px;
     color: white;
     cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 15px;
     width: 115px;
     height: 47px;
+    height: 43px;
+    margin-top: 10px;
+
 }
 .panel_row-bot .denomination_btn {
     flex-direction: column;
@@ -320,9 +308,7 @@ body {
     box-sizing: border-box;
     font-weight: 900;
     cursor: pointer;
-    position: absolute;
-    left: 5px;
-    top: 24px;
+    margin-top: 20px;
     width: 90px;
     height: 77px;
 }
@@ -342,9 +328,7 @@ body {
 .panel_row-bot .user_cash {
     background: url('./../assets/images/panel/user_cash_bg.png');
     background-size: 100% 100%;
-    position: absolute;
-    left: 117px;
-    top: 6px;
+    margin-top: 6px;
     width: 307px;
     height: 109px;
     padding: 10px 10px 5px 10px;
@@ -353,7 +337,6 @@ body {
 .panel_row-bot .fields_wrapper {
     height: 100%;
     width: 100%;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -396,9 +379,8 @@ body {
     font-size: 11px;
 }
 .tnblock {
-    position: absolute;
     height: 89px;
-    top: 19px;
+    margin-top: 17px;
 }
 .tnblock_bet {
     background: url('./../assets/images/panel/bet_field.png');
@@ -444,15 +426,14 @@ body {
     font-weight: 900;
 }
 .panel_row-bot .lhh_panel {
-    position: absolute;
     background: url('./../assets/images/panel/lhh_panel_bg.png');
     background-size: 100% 100%;
-    left: 701px;
-    bottom: 0;
     height: 91px;
     width: 276px;
+    margin-top: 24px;
     padding-top: 16px;
     box-sizing: border-box;
+    position: relative;
 }
 .panel_row-bot .lhh_panel  .language_btn {
     background: url('./../assets/images/lang_btns/en.png');
@@ -492,7 +473,7 @@ body {
 }
 
 .button {
-    position: absolute;
+    margin-top: 16px;
     background: url('./../assets/images/panel/button.png');
     background-position: top left;
     background-repeat: no-repeat;
@@ -512,18 +493,16 @@ body {
     cursor: pointer;
 }
 .button--gamble {
-    right: 296px;
+  
 }
 .button--max {
-    right: 164px;
+
 }
 
 .panel_row-bot .start_btn {
-    position: absolute;
-    right: 0;
+    margin-top: -30px;
     width: 156px;
     height: 144px;
-    bottom: 0;
     background: url('./../assets/images/panel/start_btn.png');
     background-position: top left;
     background-repeat: no-repeat;

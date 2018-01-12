@@ -1,13 +1,12 @@
 @media(width: 1600px) and (height: 1200px) {
-    .panel {
-        transform: scale(1.12);
-        bottom: 13px;
-        left: -40px;
+    .game_wrapper {
+        transform: scale(1.143);
+        transform-origin: 67% 0%;
     }
 }
 
 @media(width: 1440px) and (height: 900px) {
-    .panel {
+    .game_wrapper {
         transform: scale(0.86);
         bottom: -16px;
         left: -119px;
