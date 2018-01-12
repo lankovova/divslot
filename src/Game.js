@@ -189,6 +189,13 @@ class Game {
     }
 
     spin = () => {
+        // FIXME: Rethink about it
+        if (this.interfaceController.alertWindow.isOn) {
+            this.interfaceController.hideAlert();
+
+            return;
+        }
+
         if (this.bonusSpins.on) {
             console.log('Start bonus spins');
 
