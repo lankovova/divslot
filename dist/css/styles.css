@@ -137,7 +137,7 @@ body {
 .toggle_block {
     position: absolute;
     top: 0;
-    left: 5%;
+    left: 0;
     z-index: 1;
     min-width: 300px;
     display: none;
