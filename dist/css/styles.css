@@ -33,6 +33,26 @@ body {
 .main {
     position: relative;
 }
+.alert {
+    display: none;
+
+    position: absolute;
+    z-index: 600;
+    width: 100%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: center;
+}
+.alert .content {
+    width: 50%;
+    min-width: 300px;
+    height: 50%;
+    min-height: 200px;
+    background: lightseagreen;
+    border-radius: 10px;
+}
+
 .main .main_bg {
     position: absolute;
     background: url('./../assets/images/game_bg.png') center center;

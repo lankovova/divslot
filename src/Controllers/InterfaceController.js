@@ -1,6 +1,7 @@
 import LinePresenters from '../Components/LinePresenters';
 import Panel from '../Components/Panel';
 import ToggleBlock from './../Components/ToggleBlock';
+import Alert from './../Components/Alert';
 
 const SSTButtonStates = ['spin', 'stop', 'takeWin', 'speedUpTakeWin'];
 
@@ -16,6 +17,8 @@ class InterfaceController {
             lines: this.props.lines,
             containerNode: this.props.containerNode
         });
+
+        this.alertWindow = new Alert({ node: document.querySelector('#alert') });
 
         // Init toggling blocks like lines, betPerLine and denomination
         this._initTogglingBlocks();
@@ -211,9 +214,13 @@ class InterfaceController {
             this.denominationBlock.toggle();
     }
 
-    showBonusSpinsAlert = () => {
-        // TODO: Show real alert
-        console.log('Bonus spins alert has showed');
+    showAlert = (alertText) => {
+        this.alertWindow.text = alertText;
+        this.alertWindow.show();
+    }
+
+    hideAlert = (bonusSpinsAmount) => {
+        this.alertWindow.hide();
     }
 
     enableSpin = () => this.state.spin = true;
