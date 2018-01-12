@@ -142,7 +142,7 @@ body {
     min-width: 300px;
     display: none;
     background: darkcyan;
-    transition: transform 200ms ease-in-out;
+    transition: .3s cubic-bezier(.79,1.51,.74,.84);
 }
 .toggle_block .content {
     display: flex;
