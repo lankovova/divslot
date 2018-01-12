@@ -1,2 +1,5 @@
 /node_modules/
 .DS_Store
+.gitignore
+/dist/css/_panel_fix.css
+/dist/index.html

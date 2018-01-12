@@ -108,6 +108,11 @@ class Game {
         this.interfaceController.disableInterface();
         this.interfaceController.enableSpeedUpTransferWin();
 
+        // FIXME: Rethink about it
+        if (this.interfaceController.alertWindow.isOn) {
+            this.interfaceController.hideAlert();
+        }
+
         // Wait transfering win
         await this.transferUserWin(this.pointsController.userWin);
 
@@ -176,8 +181,8 @@ class Game {
                 game: this.gameName
             });
 
-            // return response.data;
-            return mockResponseFreeSpin;
+            return response.data;
+            // return mockResponseFreeSpin;
         } catch(err) {
             console.log(err);
         }
@@ -186,9 +191,12 @@ class Game {
     spin = () => {
         if (this.bonusSpins.on) {
             console.log('Start bonus spins');
+
+            // Hide alert when bonus spins starts
+            this.interfaceController.hideAlert();
+
             this.interfaceController.disableInterface();
 
-            // FIXME: Change currentSpinIndex values
             this.bonusSpin();
         } else {
             this.getDataAndSpin();
@@ -260,7 +268,7 @@ class Game {
                 });
 
                 // Show alert and wait for user to press start btn
-                this.interfaceController.showBonusSpinsAlert();
+                this.interfaceController.showAlert(`You won ${this.bonusSpins.totalSpins} bonus spins`);
 
                 this.interfaceController.enableSpeedUpTransferWin();
                 // Transfer user regular spin win
@@ -287,6 +295,9 @@ class Game {
             // If no more bonus spins
             if (this.bonusSpins.currentSpinIndex === this.bonusSpins.totalSpins) {
                 this.interfaceController.panel.notifier.text = `Free spins ended. You won ${this.pointsController.userWin} points`;
+
+                // Show alert
+                this.interfaceController.showAlert(`Free spins ended, you won ${this.pointsController.userWin} points in ${this.bonusSpins.totalSpins} spins`);
 
                 this.bonusSpins.on = false;
 
