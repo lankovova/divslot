@@ -20,10 +20,13 @@ class Line {
         this.svgNode = document.createElementNS(this.namespaceURI, 'svg');
         this.container.appendChild(this.svgNode);
 
-        this.svgNode.style.width = "100%";
+        this.svgNode.style.width = `calc(100% - ${settings.spaceBetweenReels}px)`;
         this.svgNode.style.height = "100%";
         this.svgNode.style.display = "none";
         this.svgNode.style.position = "absolute";
+        this.svgNode.style.right = 0;
+        this.svgNode.style.left = 0;
+        this.svgNode.style.margin = "auto";
         this.svgNode.style.opacity = '0.8';
         this.svgNode.style.zIndex = "1";
     }
@@ -44,15 +47,15 @@ class Line {
      * @param {Number} x symbols` position x
      * @param {Number} y symbols` position y
      */
-    addSymbolHighlite(x, y) {
+    addSymbolHighlite(reel, symbol) {
         let rectNode = document.createElementNS(this.namespaceURI, 'rect');
         this.svgNode.appendChild(rectNode);
         this.rectNodes.push(rectNode);
 
         rectNode.setAttributeNS(null, "width", settings.symbolSize - this.strokeWidth);
         rectNode.setAttributeNS(null, "height", settings.symbolSize - this.strokeWidth);
-        rectNode.setAttributeNS(null, "x", x + (this.strokeWidth / 2));
-        rectNode.setAttributeNS(null, "y", y + (this.strokeWidth / 2));
+        rectNode.setAttributeNS(null, "x", reel * (settings.symbolSize + settings.spaceBetweenReels) + (this.strokeWidth / 2));
+        rectNode.setAttributeNS(null, "y", (symbol * settings.symbolSize ) + (this.strokeWidth / 2));
         rectNode.setAttributeNS(null, "stroke", this.strokeColor);
         rectNode.setAttributeNS(null, "fill", 'transparent');
         rectNode.setAttributeNS(null, "stroke-width", this.strokeWidth);

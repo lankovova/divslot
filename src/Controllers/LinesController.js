@@ -35,7 +35,7 @@ class LinesController {
                 symbol.animate();
                 highlightedSymbols.push(symbol);
                 // Add symbol highlite to line
-                line.addSymbolHighlite(symbol.x, symbol.y);
+                line.addSymbolHighlite(sCoor.col, sCoor.row);
             }
 
             // Handle case when it is line of scatters
