@@ -135,21 +135,23 @@ class Line {
 
         if (symbol.highlighted) {
             // symbol below prev
-            end.y -= symbol.symbolIndex > sPrev.symbolIndex ? 
-                settings.symbolSize / 4 : 0;
+            if (symbol.symbolIndex > sPrev.symbolIndex) {
+                end.y -= settings.symbolSize / 4;
             // symbol under prev
-            end.y += symbol.symbolIndex < sPrev.symbolIndex ? 
-                settings.symbolSize / 4 : 0;
+            } else if (symbol.symbolIndex < sPrev.symbolIndex) {
+                end.y += settings.symbolSize / 4;
+            }
             // fix so lines cross pretty
             end.x += 3;
-
-        } else if (sPrev.highlighted) {
+        }
+        if (sPrev.highlighted) {
             // symbol below prev
-            start.y += symbol.symbolIndex > sPrev.symbolIndex ? 
-                settings.symbolSize / 4 : 0;
+            if (symbol.symbolIndex > sPrev.symbolIndex) {
+                start.y += settings.symbolSize / 4;
             // symbol under prev
-            start.y -= symbol.symbolIndex < sPrev.symbolIndex ? 
-                settings.symbolSize / 4 : 0;
+            } else if (symbol.symbolIndex < sPrev.symbolIndex) {
+                start.y -= settings.symbolSize / 4;
+            }
             // fix so lines cross pretty
             start.x -= 3;
         }
