@@ -122,11 +122,11 @@ class Line {
         let start = {};
         let end = {};
 
-        start.x = (sPrev.highlighted) ? 
+        start.x = sPrev.highlighted ? 
             ((sPrev.reelIndex + 1) * (settings.symbolSize + settings.spaceBetweenReels)) - settings.spaceBetweenReels : 
             ((sPrev.reelIndex + 1) * (settings.symbolSize + settings.spaceBetweenReels)) - settings.spaceBetweenReels - settings.symbolSize / 2;
 
-        end.x = (symbol.highlighted) ? 
+        end.x = symbol.highlighted ? 
             ((symbol.reelIndex + 1) * (settings.symbolSize + settings.spaceBetweenReels)) - settings.spaceBetweenReels - settings.symbolSize: 
             ((symbol.reelIndex + 1) * (settings.symbolSize + settings.spaceBetweenReels)) - settings.spaceBetweenReels - settings.symbolSize / 2;
 

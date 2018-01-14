@@ -10,7 +10,7 @@ var settings = {
 
     "numOfSpinsBeforeStop": 3,
 
-    "delayBetweenShowingWinningLines": 700,
+    "delayBetweenShowingWinningLines": 2000,
     "delayBetweenReelsSpin": 200,
     "delayBetweenFallingSymbols": 300,
     // Do not set this delay lower than 50 ms
