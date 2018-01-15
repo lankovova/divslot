@@ -171,6 +171,10 @@
 	<script src="./settings.js"></script>
 	<!-- Js bundle from webpack -->
 	<script src="./bundle.js"></script>
-	<script src="./index.js"></script>
+	<script>
+		(function() {
+			var game = new divSlot.Game('Bananas');
+		})();
+	</script>
 </body>
 </html>
