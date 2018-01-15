@@ -109,14 +109,15 @@ class Game {
         this.interfaceController.enableSpeedUpTransferWin();
 
         // FIXME: Rethink about it
-        if (this.interfaceController.alertWindow.isOn) {
+        if (this.interfaceController.alertWindow.isOn)
             this.interfaceController.hideAlert();
-        }
 
         // Wait transfering win
         await this.transferUserWin(this.pointsController.userWin);
 
+        // Disable transfer speed up if money already transfered
         this.interfaceController.disableSpeedUpTransferWin();
+
         // After transfering win enable interface
         this.interfaceController.enableInterface();
         this.setSpinPossibility();
@@ -191,6 +192,7 @@ class Game {
     spin = () => {
         // FIXME: Rethink about it
         if (this.interfaceController.alertWindow.isOn) {
+            console.log('hide alert');
             this.interfaceController.hideAlert();
 
             return;
@@ -206,6 +208,7 @@ class Game {
 
             this.bonusSpin();
         } else {
+            console.log('normal spin');
             this.getDataAndSpin();
         }
     }
@@ -308,11 +311,12 @@ class Game {
 
                 this.bonusSpins.on = false;
 
-                // If user won something
+                // Check if user won
                 if (this.pointsController.userWin > 0) {
+                    // If user won something
                     this.interfaceController.setTakeWin();
                 } else {
-                    // If no win
+                    // If no win at all
                     this.interfaceController.enableInterface();
                     this.setSpinPossibility();
                 }

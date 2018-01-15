@@ -386,7 +386,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 var bind = __webpack_require__(130);
-var isBuffer = __webpack_require__(368);
+var isBuffer = __webpack_require__(370);
 
 /*global toString:true*/
 
@@ -3172,7 +3172,7 @@ exports.transitionEnd = transitionEnd;
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(18);
-var normalizeHeaderName = __webpack_require__(370);
+var normalizeHeaderName = __webpack_require__(372);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -4508,12 +4508,12 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(18);
-var settle = __webpack_require__(371);
-var buildURL = __webpack_require__(373);
-var parseHeaders = __webpack_require__(374);
-var isURLSameOrigin = __webpack_require__(375);
+var settle = __webpack_require__(373);
+var buildURL = __webpack_require__(375);
+var parseHeaders = __webpack_require__(376);
+var isURLSameOrigin = __webpack_require__(377);
 var createError = __webpack_require__(133);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(376);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(378);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -4610,7 +4610,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(377);
+      var cookies = __webpack_require__(379);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -4695,7 +4695,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(372);
+var enhanceError = __webpack_require__(374);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -10078,9 +10078,7 @@ var _Game2 = _interopRequireDefault(_Game);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(function () {
-    var game = new _Game2.default('Bananas');
-})();
+window.divSlot = { Game: _Game2.default };
 
 /***/ }),
 /* 340 */
@@ -10111,7 +10109,9 @@ var _InterfaceController = __webpack_require__(350);
 
 var _InterfaceController2 = _interopRequireDefault(_InterfaceController);
 
-var _axios = __webpack_require__(366);
+var _spinMockup = __webpack_require__(367);
+
+var _axios = __webpack_require__(368);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -10120,6 +10120,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var userWinTransferDelta = void 0;
 
 var Game = function Game(gameName) {
     var _this = this;
@@ -10149,7 +10151,6 @@ var Game = function Game(gameName) {
     this.setBetRelatedValue = function (array, currentValue, setNewValue) {
         return function (value) {
             var newValue = value ? value : (0, _ArrayMethods.getNextArrayItem)(array, currentValue);
-            // setNewValue(newValue);
             setNewValue.call(null, newValue);
             _this.setSpinPossibility();
         };
@@ -10158,63 +10159,118 @@ var Game = function Game(gameName) {
     this.setSpinPossibility = function () {
         if (_this.pointsController.totalBet > _this.pointsController.userCashInPoints) {
             _this.interfaceController.panel.notifier.text = 'Not enough cash for this bet';
-            _this.interfaceController.disableSpin();
+            _this.interfaceController.disableSpinAndAuto();
         } else {
             _this.interfaceController.panel.notifier.text = 'Press start to spin';
-            _this.interfaceController.enableSpin();
+            _this.interfaceController.enableSpinAndAuto();
         }
     };
 
-    this.takeWin = function () {
-        _this.interfaceController.state.takeWin = false;
-
-        _this.transferUsersWin();
-
-        // TODO: Enable after transfering win
-        _this.interfaceController.enableInterface();
-        _this.setSpinPossibility();
-    };
-
-    this.transferUsersWin = function () {
-        // Update user cash
-        _this.pointsController.userCash = _this.spinResponse.player_coins;
-        // Reset user win
-        _this.pointsController.userWin = 0;
-    };
-
-    this.getPlayerData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    this.takeWin = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
-                        _context.prev = 0;
-                        _context.next = 3;
-                        return _axios2.default.post('http://admin.chcgreen.org/getplayerdata');
+                        _this.interfaceController.disableInterface();
+                        _this.interfaceController.enableSpeedUpTransferWin();
 
-                    case 3:
-                        return _context.abrupt('return', _context.sent.data);
+                        // FIXME: Rethink about it
+                        if (_this.interfaceController.alertWindow.isOn) {
+                            _this.interfaceController.hideAlert();
+                        }
 
-                    case 6:
-                        _context.prev = 6;
-                        _context.t0 = _context['catch'](0);
+                        // Wait transfering win
+                        _context.next = 5;
+                        return _this.transferUserWin(_this.pointsController.userWin);
 
-                        console.log(_context.t0);
+                    case 5:
 
-                    case 9:
+                        _this.interfaceController.disableSpeedUpTransferWin();
+                        // After transfering win enable interface
+                        _this.interfaceController.enableInterface();
+                        _this.setSpinPossibility();
+
+                    case 8:
                     case 'end':
                         return _context.stop();
                 }
             }
-        }, _callee, _this, [[0, 6]]);
+        }, _callee, _this);
     }));
-    this.getSpinResponse = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var response;
+
+    this.transferUserWin = function (wonPoints) {
+        return new Promise(function (resolve) {
+            // Transfer duration in ms
+            var transferDuration = 2000;
+            // Delay between each iteration in ms
+            var delayBetweenIteration = 50;
+
+            // Amount of iterations
+            var iterationsAmount = transferDuration / delayBetweenIteration;
+
+            // Delta of user cash between iterations
+            userWinTransferDelta = Math.ceil(wonPoints / iterationsAmount);
+
+            var intervalId = setInterval(function () {
+                // If last transfer iteration
+                if (_this.pointsController.userWin - userWinTransferDelta <= 0) {
+                    // Transfer rest userWin pooint to userCash
+                    _this.pointsController.userCash += _this.pointsController.userWin;
+
+                    // Reset user win
+                    _this.pointsController.userWin = 0;
+
+                    clearInterval(intervalId);
+
+                    // Resolve promise when transfering is done
+                    resolve();
+                } else {
+                    // Change values on delta
+                    _this.pointsController.userCash += userWinTransferDelta;
+                    _this.pointsController.userWin -= userWinTransferDelta;
+                }
+            }, delayBetweenIteration);
+        });
+    };
+
+    this.speedUpTakeWin = function () {
+        userWinTransferDelta *= 2;
+        _this.interfaceController.disableSpeedUpTransferWin();
+    };
+
+    this.getPlayerData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
             while (1) {
                 switch (_context2.prev = _context2.next) {
                     case 0:
                         _context2.prev = 0;
                         _context2.next = 3;
+                        return _axios2.default.post('http://admin.chcgreen.org/getplayerinfo');
+
+                    case 3:
+                        return _context2.abrupt('return', _context2.sent.data);
+
+                    case 6:
+                        _context2.prev = 6;
+                        _context2.t0 = _context2['catch'](0);
+
+                        console.log(_context2.t0);
+
+                    case 9:
+                    case 'end':
+                        return _context2.stop();
+                }
+            }
+        }, _callee2, _this, [[0, 6]]);
+    }));
+    this.getSpinResponse = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+            while (1) {
+                switch (_context3.prev = _context3.next) {
+                    case 0:
+                        _context3.prev = 0;
+                        _context3.next = 3;
                         return _axios2.default.post('http://admin.chcgreen.org/spin', {
                             lines_amount: _this.pointsController.lines,
                             bet_per_line: _this.pointsController.betPerLine,
@@ -10223,55 +10279,85 @@ var Game = function Game(gameName) {
                         });
 
                     case 3:
-                        response = _context2.sent;
-                        return _context2.abrupt('return', response.data);
+                        response = _context3.sent;
+                        return _context3.abrupt('return', response.data);
 
                     case 7:
-                        _context2.prev = 7;
-                        _context2.t0 = _context2['catch'](0);
+                        _context3.prev = 7;
+                        _context3.t0 = _context3['catch'](0);
 
-                        console.log(_context2.t0);
+                        console.log(_context3.t0);
 
                     case 10:
                     case 'end':
-                        return _context2.stop();
+                        return _context3.stop();
                 }
             }
-        }, _callee2, _this, [[0, 7]]);
+        }, _callee3, _this, [[0, 7]]);
     }));
 
-    this.spin = function (finalSymbols) {
-        // Clear notifier
-        _this.interfaceController.panel.notifier.clear();
+    this.spin = function () {
+        // FIXME: Rethink about it
+        if (_this.interfaceController.alertWindow.isOn) {
+            _this.interfaceController.hideAlert();
 
-        // Spin reels
-        _this.reelsController.startReels(finalSymbols);
+            return;
+        }
+
+        if (_this.bonusSpins.on) {
+            console.log('Start bonus spins');
+
+            // Hide alert when bonus spins starts
+            _this.interfaceController.hideAlert();
+
+            _this.interfaceController.disableInterface();
+
+            _this.bonusSpin();
+        } else {
+            _this.getDataAndSpin();
+        }
     };
 
     this.getDataAndSpin = function () {
         _this.interfaceController.panel.notifier.text = 'Fetching data...';
         // Disable whole interface
         _this.interfaceController.disableInterface();
-        // Enable stop
-        _this.interfaceController.enableStop();
 
         _this.getSpinResponse().then(function (result) {
             console.log(result);
             _this.spinResponse = result;
 
+            if (_this.spinResponse.bonus_spins) {
+                _this.bonusSpins.on = true;
+                _this.bonusSpins.spins = _this.spinResponse.bonus_spins.spins;
+                _this.bonusSpins.currentSpinIndex = 0;
+                _this.bonusSpins.totalSpins = _this.spinResponse.bonus_spins.spins.length;
+            }
+
             // Decrease user cash
             _this.pointsController.userCash -= _this.pointsController.pointsToCoins(_this.pointsController.totalBet);
 
+            // Clear notifier
+            _this.interfaceController.panel.notifier.clear();
+
             // Spin reels to given final symbols
-            _this.spin(_this.spinResponse.final_symbols);
+            _this.reelsController.startReels(_this.spinResponse.final_symbols);
+
+            // Enable stop
+            _this.interfaceController.enableStop();
         });
     };
 
-    this.freeSpin = function () {
-        console.log('Free spins won');
-        console.log(_this.spinResponse.bonus_spins);
+    this.bonusSpin = function () {
+        _this.bonusSpins.currentSpinIndex++;
 
-        // this.spin(this.spinResponse.bonus_spins.spins[0]);
+        _this.interfaceController.panel.notifier.text = 'Free spin #' + _this.bonusSpins.currentSpinIndex;
+
+        // Spin reels to given final symbols
+        _this.reelsController.startReels(_this.bonusSpins.spins[_this.bonusSpins.currentSpinIndex - 1].final_symbols);
+
+        // Enable stop
+        _this.interfaceController.enableStop();
     };
 
     this.stop = function () {
@@ -10280,55 +10366,131 @@ var Game = function Game(gameName) {
         _this.reelsController.stopReels();
     };
 
-    this.reelsHasStopped = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+    this.reelsHasStopped = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+        var previousBonusSpin;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
             while (1) {
-                switch (_context3.prev = _context3.next) {
+                switch (_context4.prev = _context4.next) {
                     case 0:
                         _this.interfaceController.disableStop();
 
-                        // Checking for free spins
-                        // if (this.spinResponse.bonus_spins) {
-                        //     // Start free spins
-                        //     this.freeSpin();
-                        //     return;
-                        // }
+                        // Checking is there bonus spins
 
-                        if (!_this.spinResponse.won) {
-                            _context3.next = 9;
+                        if (!_this.bonusSpins.on) {
+                            _context4.next = 25;
                             break;
                         }
 
-                        _context3.next = 4;
+                        if (!(_this.bonusSpins.currentSpinIndex === 0)) {
+                            _context4.next = 13;
+                            break;
+                        }
+
+                        _this.bonusSpins.on = true;
+
+                        // Show win lines and transfer win from regular spin
+                        _context4.next = 6;
                         return _this.linesController.showWinningLines(_this.spinResponse.spin_result, function (winCashInLine) {
                             _this.pointsController.userWin += winCashInLine;
                             _this.interfaceController.panel.notifier.text = 'You won ' + _this.pointsController.userWin + ' points';
                         });
 
-                    case 4:
+                    case 6:
 
-                        console.log('All lines has showed');
+                        // Show alert and wait for user to press start btn
+                        _this.interfaceController.showAlert('You won ' + _this.bonusSpins.totalSpins + ' bonus spins');
+
+                        _this.interfaceController.enableSpeedUpTransferWin();
+                        // Transfer user regular spin win
+                        _context4.next = 10;
+                        return _this.transferUserWin(_this.pointsController.userWin);
+
+                    case 10:
+
+                        _this.interfaceController.panel.notifier.text = 'You won ' + _this.bonusSpins.totalSpins + ' free spins';
+
+                        // Enable spin btn to start bonus spins
+                        _this.interfaceController.enableSpin();
+
+                        return _context4.abrupt('return');
+
+                    case 13:
+                        previousBonusSpin = _this.bonusSpins.spins[_this.bonusSpins.currentSpinIndex - 1];
+                        // If user won on bonus spin
+
+                        if (!previousBonusSpin.won) {
+                            _context4.next = 17;
+                            break;
+                        }
+
+                        _context4.next = 17;
+                        return _this.linesController.showWinningLines(previousBonusSpin.spin_result, function (winCashInLine) {
+                            _this.pointsController.userWin += winCashInLine;
+                            _this.interfaceController.panel.notifier.text = 'You won ' + _this.pointsController.userWin + ' points';
+                        });
+
+                    case 17:
+                        if (!(_this.bonusSpins.currentSpinIndex === _this.bonusSpins.totalSpins)) {
+                            _context4.next = 23;
+                            break;
+                        }
+
+                        _this.interfaceController.panel.notifier.text = 'Free spins ended. You won ' + _this.pointsController.userWin + ' points';
+
+                        // Show alert
+                        _this.interfaceController.showAlert('Free spins ended, you won ' + _this.pointsController.userWin + ' points in ' + _this.bonusSpins.totalSpins + ' spins');
+
+                        _this.bonusSpins.on = false;
+
+                        // If user won something
+                        if (_this.pointsController.userWin > 0) {
+                            _this.interfaceController.setTakeWin();
+                        } else {
+                            // If no win
+                            _this.interfaceController.enableInterface();
+                            _this.setSpinPossibility();
+                        }
+
+                        return _context4.abrupt('return');
+
+                    case 23:
+
+                        // Spin bonus spin
+                        _this.bonusSpin();
+
+                        return _context4.abrupt('return');
+
+                    case 25:
+                        if (!_this.spinResponse.won) {
+                            _context4.next = 32;
+                            break;
+                        }
+
+                        _context4.next = 28;
+                        return _this.linesController.showWinningLines(_this.spinResponse.spin_result, function (winCashInLine) {
+                            _this.pointsController.userWin += winCashInLine;
+                            _this.interfaceController.panel.notifier.text = 'You won ' + _this.pointsController.userWin + ' points';
+                        });
+
+                    case 28:
 
                         // Enable possibility to take win or gamble
                         _this.interfaceController.setTakeWin();
                         _this.interfaceController.panel.notifier.text = 'Take win or gamble';
-                        _context3.next = 11;
+                        _context4.next = 34;
                         break;
 
-                    case 9:
+                    case 32:
                         // Lose case
-                        // Enable possibility to change betPerLine or linesAmount
                         _this.interfaceController.enableInterface();
-
-                        // In no win then allow spin
                         _this.setSpinPossibility();
 
-                    case 11:
+                    case 34:
                     case 'end':
-                        return _context3.stop();
+                        return _context4.stop();
                 }
             }
-        }, _callee3, _this);
+        }, _callee4, _this);
     }));
 
     this.gameName = gameName;
@@ -10337,6 +10499,14 @@ var Game = function Game(gameName) {
     // Store for spin response data
     this.spinResponse = {};
 
+    // Store for bonus spins
+    this.bonusSpins = {
+        on: false,
+        spins: [],
+        currentSpinIndex: 0,
+        totalSpins: 0
+    };
+
     this.reelsController = new _ReelsController2.default(document.querySelector('#reels_wrapper'), { reelsHasStopped: this.reelsHasStopped });
 
     this.linesController = new _LinesController2.default(document.querySelector('#reels_container'), { reels: this.reelsController.reels });
@@ -10344,9 +10514,10 @@ var Game = function Game(gameName) {
     this.interfaceController = new _InterfaceController2.default({
         containerNode: document.querySelector('#reels_wrapper'),
         lines: this.linesController.lines,
-        spinReels: this.getDataAndSpin,
+        spinReels: this.spin,
         stopReels: this.stop,
         takeWin: this.takeWin,
+        speedUpTakeWin: this.speedUpTakeWin,
         setDenomination: this.setDenomination,
         setLines: this.setLines,
         setBerPerLine: this.setBerPerLine,
@@ -10354,17 +10525,17 @@ var Game = function Game(gameName) {
     });
 
     this.interfaceController.panel.notifier.text = 'Loading...';
-    _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+    _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
         var playerData, userCash;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
             while (1) {
-                switch (_context4.prev = _context4.next) {
+                switch (_context5.prev = _context5.next) {
                     case 0:
-                        _context4.next = 2;
+                        _context5.next = 2;
                         return _this.getPlayerData();
 
                     case 2:
-                        playerData = _context4.sent;
+                        playerData = _context5.sent;
                         userCash = +playerData.cash;
 
 
@@ -10384,26 +10555,20 @@ var Game = function Game(gameName) {
 
                     case 7:
                     case 'end':
-                        return _context4.stop();
+                        return _context5.stop();
                 }
             }
-        }, _callee4, _this);
+        }, _callee5, _this);
     }))();
 }
 
 // Disables/enables spin possibility depending on user's bet/cash
 
 
-// TODO: Make this func async for iterative win transfering
-
-
 // Transfer win cash to user's cash
 
 
 // Getting spin data
-
-
-// TODO: Add free spins functionallity
 
 
 // All reels has stopped event
@@ -11473,7 +11638,7 @@ var LinesController = function () {
                             symbol.animate();
                             highlightedSymbols.push(symbol);
                             // Add symbol highlite to line
-                            line.addSymbolHighlite(symbol.x, symbol.y);
+                            line.addSymbolHighlite(sCoor.col, sCoor.row);
                         }
 
                         // Handle case when it is line of scatters
@@ -11777,7 +11942,7 @@ var Line = function () {
         _classCallCheck(this, Line);
 
         this.namespaceURI = "http://www.w3.org/2000/svg";
-        this.strokeWidth = 5;
+        this.strokeWidth = 7;
         this.strokeColor = strokeColor;
         this.rectNodes = [];
         this.container = containerNode;
@@ -11790,10 +11955,13 @@ var Line = function () {
         this.svgNode = document.createElementNS(this.namespaceURI, 'svg');
         this.container.appendChild(this.svgNode);
 
-        this.svgNode.style.width = "100%";
+        this.svgNode.style.width = "calc(100% - " + settings.spaceBetweenReels + "px)";
         this.svgNode.style.height = "100%";
         this.svgNode.style.display = "none";
         this.svgNode.style.position = "absolute";
+        this.svgNode.style.right = 0;
+        this.svgNode.style.left = 0;
+        this.svgNode.style.margin = "auto";
         this.svgNode.style.opacity = '0.8';
         this.svgNode.style.zIndex = "1";
     }
@@ -11821,15 +11989,15 @@ var Line = function () {
 
     }, {
         key: "addSymbolHighlite",
-        value: function addSymbolHighlite(x, y) {
+        value: function addSymbolHighlite(reel, symbol) {
             var rectNode = document.createElementNS(this.namespaceURI, 'rect');
             this.svgNode.appendChild(rectNode);
             this.rectNodes.push(rectNode);
 
             rectNode.setAttributeNS(null, "width", settings.symbolSize - this.strokeWidth);
             rectNode.setAttributeNS(null, "height", settings.symbolSize - this.strokeWidth);
-            rectNode.setAttributeNS(null, "x", x + this.strokeWidth / 2);
-            rectNode.setAttributeNS(null, "y", y + this.strokeWidth / 2);
+            rectNode.setAttributeNS(null, "x", reel * (settings.symbolSize + settings.spaceBetweenReels) + this.strokeWidth / 2);
+            rectNode.setAttributeNS(null, "y", symbol * settings.symbolSize + this.strokeWidth / 2);
             rectNode.setAttributeNS(null, "stroke", this.strokeColor);
             rectNode.setAttributeNS(null, "fill", 'transparent');
             rectNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
@@ -11841,144 +12009,121 @@ var Line = function () {
     }, {
         key: "connectHighlites",
         value: function connectHighlites() {
-            var lineNode = void 0;
-            var coord = {};
             var sPrev = void 0,
                 symbol = void 0,
-                sNext = void 0,
                 sMap = void 0,
                 rMap = void 0;
 
             for (var i = 0; i < settings.numOfReels; i++) {
-                // Create DOM element
-                lineNode = document.createElementNS(this.namespaceURI, 'line');
-                this.svgNode.appendChild(lineNode);
-                // Get previous symbol
+                var _lineType$i = _slicedToArray(this.lineType[i], 2);
+                // Get symbol
+
+
+                sMap = _lineType$i[0];
+                rMap = _lineType$i[1];
+
+                symbol = this.reels[rMap].finalSymbols[this.reels[rMap].finalSymbols.length - 1 - sMap];
+                symbol.reelIndex = rMap;
+                symbol.symbolIndex = sMap;
+
+                if (!symbol.highlighted && i === settings.numOfReels - 1) {
+                    this._createLastConnection();
+                } else if (!symbol.highlighted && i === 0) {
+                    this._createFirstConnection();
+                }
                 if (i !== 0) {
                     var _lineType = _slicedToArray(this.lineType[i - 1], 2);
+                    // Get previous symbol
+
 
                     sMap = _lineType[0];
                     rMap = _lineType[1];
 
                     sPrev = this.reels[rMap].finalSymbols[this.reels[rMap].finalSymbols.length - 1 - sMap];
-                } else {
-                    sPrev = null;
-                }
+                    sPrev.reelIndex = rMap;
+                    sPrev.symbolIndex = sMap;
+                    symbol;
 
-                // Get symbol
-                var _lineType$i = _slicedToArray(this.lineType[i], 2);
-
-                sMap = _lineType$i[0];
-                rMap = _lineType$i[1];
-                symbol = this.reels[rMap].finalSymbols[this.reels[rMap].finalSymbols.length - 1 - sMap];
-                // Get next symbol
-                if (i !== settings.numOfReels - 1) {
-                    var _lineType2 = _slicedToArray(this.lineType[i + 1], 2);
-
-                    sMap = _lineType2[0];
-                    rMap = _lineType2[1];
-
-                    sNext = this.reels[rMap].finalSymbols[this.reels[rMap].finalSymbols.length - 1 - sMap];
-                } else {
-                    sNext = null;
-                }
-
-                this._createConnection(lineNode, sPrev, symbol, sNext);
-
-                if (!symbol.highlighted && i === settings.numOfReels - 1) {
-                    this._createLastConnection(symbol);
-                }
-                if (!symbol.highlighted && i === 0) {
-                    this._createFirstConnection(symbol);
+                    this._createConnection(sPrev, symbol);
                 }
             }
         }
     }, {
         key: "_createFirstConnection",
-        value: function _createFirstConnection(symbol) {
-            var lineNode = document.createElementNS(this.namespaceURI, 'line');
-            this.svgNode.appendChild(lineNode);
-
+        value: function _createFirstConnection() {
             var start = {
-                x: symbol.x,
-                y: symbol.y + settings.symbolSize / 2
+                x: 0,
+                y: this.lineType[0][0] * settings.symbolSize + settings.symbolSize / 2
             };
             var end = {
-                x: symbol.x + settings.symbolSize / 2,
-                y: symbol.y + settings.symbolSize / 2
+                x: settings.symbolSize / 2,
+                y: this.lineType[0][0] * settings.symbolSize + settings.symbolSize / 2
             };
 
-            this._setLineAttrs(lineNode, start, end);
+            this._setLineAttrs(start, end);
         }
     }, {
         key: "_createLastConnection",
-        value: function _createLastConnection(symbol) {
-            var lineNode = document.createElementNS(this.namespaceURI, 'line');
-            this.svgNode.appendChild(lineNode);
-
+        value: function _createLastConnection() {
             var start = {
-                x: symbol.x + settings.symbolSize / 2,
-                y: symbol.y + settings.symbolSize / 2
+                x: (settings.symbolSize + settings.spaceBetweenReels) * settings.numOfReels - settings.symbolSize / 2 - settings.spaceBetweenReels,
+                y: this.lineType[settings.numOfReels - 1][0] * settings.symbolSize + settings.symbolSize / 2
             };
             var end = {
-                x: symbol.x + settings.symbolSize,
-                y: symbol.y + settings.symbolSize / 2
+                x: (settings.symbolSize + settings.spaceBetweenReels) * settings.numOfReels - settings.spaceBetweenReels,
+                y: this.lineType[settings.numOfReels - 1][0] * settings.symbolSize + settings.symbolSize / 2
             };
 
-            this._setLineAttrs(lineNode, start, end);
+            this._setLineAttrs(start, end);
         }
     }, {
         key: "_createConnection",
-        value: function _createConnection(lineNode, sPrev, symbol, sNext) {
+        value: function _createConnection(sPrev, symbol) {
             var start = {};
             var end = {};
 
-            if (!sPrev) {
-                // symbol is first
-                start.x = symbol.highlighted ? symbol.x + settings.symbolSize : symbol.x + settings.symbolSize / 2;
-                end.x = sNext.highlighted ? sNext.x : sNext.x + settings.symbolSize / 2;
-                if (symbol.y === sNext.y) {
-                    // symbols in line
-                    start.y = symbol.y + settings.symbolSize / 2;
-                    end.y = sNext.y + settings.symbolSize / 2;
-                } else if (symbol.y > sNext.y) {
-                    // symbol below next
-                    start.y = symbol.highlighted ? symbol.y : symbol.y + settings.symbolSize / 2;
-                    end.y = sNext.highlighted ? sNext.y + settings.symbolSize : sNext.y + settings.symbolSize / 2;
-                } else if (symbol.y < sNext.y) {
-                    // symbol under next
-                    start.y = symbol.highlighted ? symbol.y + settings.symbolSize : symbol.y + settings.symbolSize / 2;
-                    end.y = sNext.highlighted ? sNext.y : sNext.y + settings.symbolSize / 2;
-                }
-            } else {
-                // symbol is last
-                start.x = sPrev.highlighted ? sPrev.x + settings.symbolSize : sPrev.x + settings.symbolSize / 2;
-                end.x = symbol.highlighted ? symbol.x : symbol.x + settings.symbolSize / 2;
-                if (symbol.y === sPrev.y) {
-                    // symbols in line
-                    start.y = symbol.y + settings.symbolSize / 2;
-                    end.y = symbol.y + settings.symbolSize / 2;
-                } else if (symbol.y > sPrev.y) {
-                    // symbol below prev
-                    start.y = sPrev.highlighted ? sPrev.y + settings.symbolSize : sPrev.y + settings.symbolSize / 2;
-                    end.y = symbol.highlighted ? symbol.y : symbol.y + settings.symbolSize / 2;
-                } else if (symbol.y < sPrev.y) {
+            start.x = sPrev.highlighted ? (sPrev.reelIndex + 1) * (settings.symbolSize + settings.spaceBetweenReels) - settings.spaceBetweenReels : (sPrev.reelIndex + 1) * (settings.symbolSize + settings.spaceBetweenReels) - settings.spaceBetweenReels - settings.symbolSize / 2;
+
+            end.x = symbol.highlighted ? (symbol.reelIndex + 1) * (settings.symbolSize + settings.spaceBetweenReels) - settings.spaceBetweenReels - settings.symbolSize : (symbol.reelIndex + 1) * (settings.symbolSize + settings.spaceBetweenReels) - settings.spaceBetweenReels - settings.symbolSize / 2;
+
+            start.y = sPrev.symbolIndex * settings.symbolSize + settings.symbolSize / 2;
+            end.y = symbol.symbolIndex * settings.symbolSize + settings.symbolSize / 2;
+
+            if (symbol.highlighted) {
+                // symbol below prev
+                if (symbol.symbolIndex > sPrev.symbolIndex) {
+                    end.y -= settings.symbolSize / 4;
                     // symbol under prev
-                    start.y = sPrev.highlighted ? sPrev.y : sPrev.y + settings.symbolSize / 2;
-                    end.y = symbol.highlighted ? symbol.y + settings.symbolSize : symbol.y + settings.symbolSize / 2;
+                } else if (symbol.symbolIndex < sPrev.symbolIndex) {
+                    end.y += settings.symbolSize / 4;
                 }
+                // fix so lines cross pretty
+                end.x += 3;
+            }
+            if (sPrev.highlighted) {
+                // symbol below prev
+                if (symbol.symbolIndex > sPrev.symbolIndex) {
+                    start.y += settings.symbolSize / 4;
+                    // symbol under prev
+                } else if (symbol.symbolIndex < sPrev.symbolIndex) {
+                    start.y -= settings.symbolSize / 4;
+                }
+                // fix so lines cross pretty
+                start.x -= 3;
             }
 
-            this._setLineAttrs(lineNode, start, end);
+            this._setLineAttrs(start, end);
         }
     }, {
         key: "_setLineAttrs",
-        value: function _setLineAttrs(lineNode, start, end) {
-            // 1 - fix for nice line connection
-            lineNode.setAttributeNS(null, "x1", start.x + 1);
-            lineNode.setAttributeNS(null, "y1", start.y + 1);
-            lineNode.setAttributeNS(null, "x2", end.x + 1);
-            lineNode.setAttributeNS(null, "y2", end.y + 1);
+        value: function _setLineAttrs(start, end) {
+            var lineNode = document.createElementNS(this.namespaceURI, 'line');
+            this.svgNode.appendChild(lineNode);
+
+            lineNode.setAttributeNS(null, "x1", start.x);
+            lineNode.setAttributeNS(null, "y1", start.y);
+            lineNode.setAttributeNS(null, "x2", end.x);
+            lineNode.setAttributeNS(null, "y2", end.y);
             lineNode.setAttributeNS(null, "stroke", this.strokeColor);
             lineNode.setAttributeNS(null, "stroke-width", this.strokeWidth);
             lineNode.setAttributeNS(null, "stroke-linecap", 'round');
@@ -12025,9 +12170,15 @@ var _ToggleBlock = __webpack_require__(365);
 
 var _ToggleBlock2 = _interopRequireDefault(_ToggleBlock);
 
+var _Alert = __webpack_require__(366);
+
+var _Alert2 = _interopRequireDefault(_Alert);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var SSTButtonStates = ['spin', 'stop', 'takeWin', 'speedUpTakeWin'];
 
 var InterfaceController = function () {
     function InterfaceController(props) {
@@ -12042,6 +12193,8 @@ var InterfaceController = function () {
                 _this.props.stopReels();
             } else if (_this.state.takeWin) {
                 _this.props.takeWin();
+            } else if (_this.state.speedUpTakeWin) {
+                _this.props.speedUpTakeWin();
             }
         };
 
@@ -12073,12 +12226,29 @@ var InterfaceController = function () {
             if (_this.state.denomination) _this.denominationBlock.toggle();
         };
 
+        this.showAlert = function (alertText) {
+            _this.alertWindow.text = alertText;
+            _this.alertWindow.show();
+        };
+
+        this.hideAlert = function (bonusSpinsAmount) {
+            _this.alertWindow.hide();
+        };
+
         this.enableSpin = function () {
+            return _this.state.spin = true;
+        };
+
+        this.disableSpin = function () {
+            return _this.state.spin = false;
+        };
+
+        this.enableSpinAndAuto = function () {
             _this.state.spin = true;
             _this.state.auto = true;
         };
 
-        this.disableSpin = function () {
+        this.disableSpinAndAuto = function () {
             _this.state.spin = false;
             _this.state.auto = false;
         };
@@ -12097,6 +12267,14 @@ var InterfaceController = function () {
 
         this.disableTakeWin = function () {
             return _this.state.takeWin = false;
+        };
+
+        this.enableSpeedUpTransferWin = function () {
+            return _this.state.speedUpTakeWin = true;
+        };
+
+        this.disableSpeedUpTransferWin = function () {
+            return _this.state.speedUpTakeWin = false;
         };
 
         this.enableLines = function () {
@@ -12152,8 +12330,6 @@ var InterfaceController = function () {
         };
 
         this.enableInterface = function () {
-            var bannedStates = ['spin', 'stop', 'takeWin'];
-
             var _iteratorNormalCompletion2 = true;
             var _didIteratorError2 = false;
             var _iteratorError2 = undefined;
@@ -12165,8 +12341,8 @@ var InterfaceController = function () {
                     // Skip private properties
                     if (stateKey.charAt(0) === '_') continue;
 
-                    // Skip if state is in bannedStates array
-                    if (bannedStates.includes(stateKey)) continue;
+                    // Skip if state is in SSTButtonStates array
+                    if (SSTButtonStates.includes(stateKey)) continue;
 
                     _this.state[stateKey] = true;
                 }
@@ -12197,6 +12373,8 @@ var InterfaceController = function () {
             containerNode: this.props.containerNode
         });
 
+        this.alertWindow = new _Alert2.default({ node: document.querySelector('#alert') });
+
         // Init toggling blocks like lines, betPerLine and denomination
         this._initTogglingBlocks();
 
@@ -12212,6 +12390,7 @@ var InterfaceController = function () {
             _spin: false,
             _stop: false,
             _takeWin: false,
+            _speedUpTakeWin: false,
             _denomination: false,
             _lines: false,
             _betPerLine: false,
@@ -12247,6 +12426,13 @@ var InterfaceController = function () {
             },
             get takeWin() {
                 return this._takeWin;
+            },
+            set speedUpTakeWin(newState) {
+                this._speedUpTakeWin = newState;
+                that._handleDisablingSSTBtn();
+            },
+            get speedUpTakeWin() {
+                return this._speedUpTakeWin;
             },
 
             set denomination(newState) {
@@ -12319,7 +12505,7 @@ var InterfaceController = function () {
             var _this2 = this;
 
             var noAvailableState = true;
-            ['spin', 'stop', 'takeWin'].forEach(function (SSTBtnState) {
+            SSTButtonStates.forEach(function (SSTBtnState) {
                 if (_this2.state[SSTBtnState]) noAvailableState = false;
             });
 
@@ -12335,7 +12521,7 @@ var InterfaceController = function () {
         value: function _initKeyboardListeners() {
             var _this3 = this;
 
-            window.onkeyup = function (event) {
+            window.onkeydown = function (event) {
                 var keyCode = event.which || event.keyCode;
 
                 switch (keyCode) {
@@ -12591,7 +12777,7 @@ var LinePresenter = function () {
         this.line = line;
         // Create node
         this.node = document.createElement('div');
-        this.node.style.background = color;
+        this.node.style.backgroundColor = color;
         this.node.text = '';
         this.node.className += 'line_presenter';
         // Init listners
@@ -12706,9 +12892,10 @@ var Panel = function () {
         this.userWinFields = {
             points: document.querySelector('#win_points_field'),
             kups: document.querySelector('#win_kups_field')
+        };
 
-            // TEMP
-        };this.setUserInsurance({
+        // TEMP
+        this.setUserInsurance({
             points: 1000,
             kups: 10.00
         });
@@ -13270,7 +13457,7 @@ var MenuBtn = function (_Button) {
         _this.props = props;
 
         _this.node.onclick = function () {
-            return console.log('Relocate to main page');
+            return console.log('Menu clicked');
         };
         return _this;
     }
@@ -13314,7 +13501,7 @@ var GambleBtn = function (_Button) {
         _this.props = props;
 
         _this.node.onclick = function () {
-            return console.log('Gamble!');
+            return console.log('Gamble clicked');
         };
         return _this;
     }
@@ -13358,7 +13545,7 @@ var AutoBtn = function (_Button) {
         _this.props = props;
 
         _this.node.onclick = function () {
-            return console.log('Auto');
+            return console.log('Auto clicked');
         };
         return _this;
     }
@@ -13454,11 +13641,11 @@ var ToggleBlock = function () {
         key: 'toggle',
         value: function toggle() {
             if (this.isToggled) {
-                this.node.style.transform = '';
+                this.node.style.transform = 'translateY(50px)';
                 this.isToggled = false;
             } else {
                 this.node.style.display = 'block';
-                this.node.style.transform = 'translateY(-' + this.node.getBoundingClientRect().height + 'px)';
+                this.node.style.transform = 'translateY(-' + this.node.offsetHeight + 'px)';
                 this.isToggled = true;
             }
             // Disable interface while toggling
@@ -13475,7 +13662,53 @@ exports.default = ToggleBlock;
 /* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(367);
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Alert = function () {
+    function Alert(props) {
+        _classCallCheck(this, Alert);
+
+        this.node = props.node;
+        this.contentNode = this.node.querySelector('.content');
+    }
+
+    _createClass(Alert, [{
+        key: 'show',
+        value: function show() {
+            this.node.style.display = 'flex';
+        }
+    }, {
+        key: 'hide',
+        value: function hide() {
+            this.node.style.display = 'none';
+        }
+    }, {
+        key: 'text',
+        set: function set(newText) {
+            this.contentNode.innerText = newText;
+        }
+    }, {
+        key: 'isOn',
+        get: function get() {
+            if (this.node.style.display !== 'none') return true;
+
+            return false;
+        }
+    }]);
+
+    return Alert;
+}();
+
+exports.default = Alert;
 
 /***/ }),
 /* 367 */
@@ -13484,9 +13717,29 @@ module.exports = __webpack_require__(367);
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var freeSpinsInFreeSpins = exports.freeSpinsInFreeSpins = { "won_points": 3, "spin_result": [{ "line_symbol": 3, "list": [{ "row": 1, "col": 0, "value": 3 }, { "row": 1, "col": 1, "value": 3 }, { "row": 1, "col": 2, "value": 3 }], "points": 3 }], "scatter_count": 3, "won": true, "won_coins": 3, "final_symbols": [[6, 1, 9, 4, 4], [3, 3, 3, 0, 7], [4, 6, 6, 6, 6]], "bonus_spins": { "spins": [{ "spin_result": [{ "line_symbol": 3, "list": [{ "row": 1, "col": 1, "value": 3 }, { "row": 2, "col": 0, "value": 3 }, { "row": 2, "col": 3, "value": 3 }], "points": 3 }], "final_symbols": [[1, 5, 2, 6, 9], [4, 3, 5, 0, 2], [3, 8, 0, 3, 6]], "won": true }, { "spin_result": [{ "line_symbol": 3, "list": [{ "row": 0, "col": 4, "value": 3 }, { "row": 1, "col": 1, "value": 3 }, { "row": 1, "col": 3, "value": 3 }], "points": 3 }], "final_symbols": [[8, 7, 5, 1, 3], [1, 3, 6, 3, 7], [9, 4, 2, 5, 4]], "won": true }, { "spin_result": [], "final_symbols": [[8, 2, 0, 9, 4], [7, 4, 6, 4, 3], [3, 5, 4, 2, 2]], "won": false }, { "spin_result": [], "final_symbols": [[6, 7, 4, 0, 9], [5, 2, 7, 4, 0], [0, 5, 0, 2, 4]], "won": false }, { "spin_result": [], "final_symbols": [[2, 5, 4, 6, 3], [9, 1, 5, 1, 1], [1, 8, 0, 9, 7]], "won": false }, { "spin_result": [], "final_symbols": [[8, 0, 4, 0, 3], [0, 8, 9, 5, 4], [3, 5, 8, 7, 7]], "won": false }, { "spin_result": [], "final_symbols": [[7, 9, 5, 8, 6], [4, 6, 8, 9, 4], [3, 7, 0, 1, 1]], "won": false }, { "spin_result": [], "final_symbols": [[3, 7, 4, 8, 8], [2, 1, 2, 9, 9], [6, 5, 0, 1, 4]], "won": false }, { "spin_result": [], "final_symbols": [[2, 5, 9, 9, 7], [9, 0, 2, 3, 8], [8, 2, 8, 0, 2]], "won": false }, { "spin_result": [], "final_symbols": [[6, 8, 2, 7, 0], [4, 7, 9, 1, 5], [3, 6, 5, 4, 9]], "won": false }], "type": "free_spins", "won_points": 6, "won_coins": 6 }, "total_won_coins": 9, "total_won_points": 9, "bet": 1, "player_cash": 155.28, "player_coins": 15527, "game": "Bananas" };
+
+var freeSpin = exports.freeSpin = { "won_points": 40, "spin_result": [{ "line_index": 2, "line_symbol": 8, "list": [{ "row": 2, "col": 0, "value": 3 }, { "row": 2, "col": 1, "value": 8 }], "points": 5 }, { "line_index": 8, "line_symbol": 8, "list": [{ "row": 2, "col": 0, "value": 3 }, { "row": 2, "col": 1, "value": 8 }], "points": 5 }, { "line_symbol": 3, "list": [{ "row": 1, "col": 4, "value": 3 }, { "row": 2, "col": 0, "value": 3 }, { "row": 2, "col": 3, "value": 3 }], "points": 30 }], "scatter_count": 3, "won": true, "won_coins": 40, "final_symbols": [[1, 6, 6, 9, 2], [2, 1, 1, 1, 3], [3, 8, 2, 3, 4]], "bonus_spins": { "spins": [{ "spin_result": [{ "line_index": 5, "line_symbol": 8, "list": [{ "row": 1, "col": 0, "value": 8 }, { "row": 0, "col": 1, "value": 8 }], "points": 5 }, { "line_index": 9, "line_symbol": 8, "list": [{ "row": 1, "col": 0, "value": 8 }, { "row": 0, "col": 1, "value": 8 }], "points": 5 }], "final_symbols": [[7, 8, 2, 1, 1], [8, 7, 4, 2, 0], [1, 0, 1, 6, 8]], "won": true }, { "spin_result": [], "final_symbols": [[4, 6, 2, 5, 6], [7, 5, 6, 6, 0], [1, 1, 7, 0, 8]], "won": false }, { "spin_result": [{ "line_index": 9, "line_symbol": 7, "list": [{ "row": 1, "col": 0, "value": 7 }, { "row": 0, "col": 1, "value": 7 }, { "row": 1, "col": 2, "value": 3 }], "points": 10 }], "final_symbols": [[5, 7, 8, 7, 6], [7, 1, 3, 6, 5], [8, 5, 0, 2, 0]], "won": true }, { "spin_result": [{ "line_index": 6, "line_symbol": 1, "list": [{ "row": 1, "col": 0, "value": 1 }, { "row": 2, "col": 1, "value": 1 }, { "row": 2, "col": 2, "value": 1 }], "points": 5 }], "final_symbols": [[0, 7, 9, 5, 9], [1, 9, 0, 2, 7], [8, 1, 1, 4, 8]], "won": true }, { "spin_result": [{ "line_index": 8, "line_symbol": 7, "list": [{ "row": 2, "col": 0, "value": 7 }, { "row": 2, "col": 1, "value": 7 }, { "row": 1, "col": 2, "value": 7 }], "points": 5 }], "final_symbols": [[6, 4, 6, 0, 2], [1, 0, 7, 6, 5], [7, 7, 4, 2, 0]], "won": true }, { "spin_result": [], "final_symbols": [[5, 9, 9, 4, 8], [0, 7, 8, 6, 9], [1, 4, 2, 5, 1]], "won": false }, { "spin_result": [], "final_symbols": [[2, 2, 9, 3, 3], [7, 1, 1, 8, 2], [1, 4, 0, 5, 0]], "won": false }, { "spin_result": [], "final_symbols": [[6, 4, 4, 1, 1], [9, 0, 3, 2, 0], [4, 5, 2, 6, 3]], "won": false }, { "spin_result": [], "final_symbols": [[4, 7, 3, 2, 4], [1, 9, 7, 6, 8], [8, 0, 8, 1, 1]], "won": false }, { "spin_result": [{ "line_index": 2, "line_symbol": 0, "list": [{ "row": 2, "col": 0, "value": 0 }, { "row": 2, "col": 1, "value": 0 }, { "row": 2, "col": 2, "value": 0 }], "points": 5 }], "final_symbols": [[3, 7, 8, 6, 0], [5, 1, 9, 1, 3], [0, 0, 0, 5, 8]], "won": true }], "type": "free_spins", "won_points": 35, "won_coins": 35 }, "total_won_coins": 75, "total_won_points": 75, "bet": 10, "player_cash": 155.21000000000001, "player_coins": 15521, "game": "Bananas" };
+
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(369);
+
+/***/ }),
+/* 369 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var utils = __webpack_require__(18);
 var bind = __webpack_require__(130);
-var Axios = __webpack_require__(369);
+var Axios = __webpack_require__(371);
 var defaults = __webpack_require__(93);
 
 /**
@@ -13521,14 +13774,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(135);
-axios.CancelToken = __webpack_require__(383);
+axios.CancelToken = __webpack_require__(385);
 axios.isCancel = __webpack_require__(134);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(384);
+axios.spread = __webpack_require__(386);
 
 module.exports = axios;
 
@@ -13537,7 +13790,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 368 */
+/* 370 */
 /***/ (function(module, exports) {
 
 /*!
@@ -13564,7 +13817,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 369 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13572,8 +13825,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(93);
 var utils = __webpack_require__(18);
-var InterceptorManager = __webpack_require__(378);
-var dispatchRequest = __webpack_require__(379);
+var InterceptorManager = __webpack_require__(380);
+var dispatchRequest = __webpack_require__(381);
 
 /**
  * Create a new instance of Axios
@@ -13650,7 +13903,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 370 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13669,7 +13922,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 371 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13702,7 +13955,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 372 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13730,7 +13983,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 373 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13805,7 +14058,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 374 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13865,7 +14118,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 375 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13940,7 +14193,7 @@ module.exports = (
 
 
 /***/ }),
-/* 376 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13983,7 +14236,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 377 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14043,7 +14296,7 @@ module.exports = (
 
 
 /***/ }),
-/* 378 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14102,18 +14355,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 379 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(18);
-var transformData = __webpack_require__(380);
+var transformData = __webpack_require__(382);
 var isCancel = __webpack_require__(134);
 var defaults = __webpack_require__(93);
-var isAbsoluteURL = __webpack_require__(381);
-var combineURLs = __webpack_require__(382);
+var isAbsoluteURL = __webpack_require__(383);
+var combineURLs = __webpack_require__(384);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -14195,7 +14448,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 380 */
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14222,7 +14475,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 381 */
+/* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14243,7 +14496,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 382 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14264,7 +14517,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 383 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14328,7 +14581,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 384 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
