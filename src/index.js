@@ -1,5 +1,3 @@
 import Game from './Game';
 
-(function() {
-	const game = new Game('babyOnFire');
-})();
+window.divSlot = { Game: Game };
